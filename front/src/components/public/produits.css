@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Oleo+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Marck+Script&family=Yanone+Kaffeesatz:wght@500&display=swap');
+
+.produits_parent_container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 100px;
+}
+
+.produits_img_englob {
+    height: 450px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 50px;
+}
+
+.produits_img_container {
+    height: 270px;
+    width: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+    position: absolute;
+    top: 50px;
+}
+
+.produit_info {
+    height: 120px;
+    width: 300px;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 10px;
+    justify-content: space-between;
+}
+
+.produits_name {
+    width: 100%;
+    text-align: left;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.produits_note {
+    color: green;
+}
+
+.produits_note::before {
+    content: "|";
+    margin-right: 10px;
+}
+
+.prix_notes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.add_cart {
+    height: 30px;
+    width: 100%;
+    background-color: rgb(38, 124, 7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+
+.fa-heart {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 25px;
+    color: rgba(0, 128, 0, 0.452);
+}

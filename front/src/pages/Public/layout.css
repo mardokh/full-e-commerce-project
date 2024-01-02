@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Oleo+Script&display=swap');
+
+/* Banner */
+.slides_container {
+    position: relative;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+/* Section */
+.nutrition {
+    margin-top: 80px;
+}
+
+/* Section */
+.recettes {
+    margin-top: 80px;
+    padding-top: 50px;
+    height: 600px;
+    margin-bottom: 1000px;
+
+}
+
+/* Footer */
+.footer {
+    display: block;
+}

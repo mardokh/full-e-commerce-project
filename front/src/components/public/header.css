@@ -1,0 +1,97 @@
+header {
+    margin-bottom: 50px;
+    height: 30px;
+
+}
+
+header nav {
+    margin-top: 30px;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    align-items: center;
+    height: 50px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #268703;
+}
+
+.fa-bag-shopping {
+    font-size: 25px;
+}
+
+.search_barre {
+    position: relative;
+}
+
+.search_barre input {
+    width: 600px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(196, 195, 195);
+}
+
+.search_barre input::placeholder {
+    color: rgb(99, 97, 97);
+}
+
+.fa-magnifying-glass {
+    position: absolute;
+    margin-left: -35px;
+    margin-top: 8px;
+    cursor: pointer;
+    color:  #268703;
+    font-size: 20px;
+}
+
+.produits {
+    position: relative;
+}
+
+.under_list p:hover a {
+    color: white;
+}
+
+.logo {
+    height: 100px;
+    width: 150px;
+}
+
+.panier span {
+    margin-left: 10px;
+}
+
+
+.angles {
+    width: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.home a {
+    background-color: #268703;
+    padding: 8px;
+    border-radius: 50%;
+    width: 80px;
+    color: white;
+}
+
+.home, .produits, .services {
+    display: inline;
+    position: absolute;
+}
+
+.produits {
+    left: 140px;
+}
+
+.services {
+    left: 280px;
+}

@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+
+.banner_container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.img_banner {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+}
+
+.frame {
+    height: 80%;
+    width: 96%;
+    border: 5px solid white;
+    top: 50px;
+    left: 30px;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.sub_fram {
+    height: 90px;
+    width: 900px;
+    background-color: white;
+    position: absolute;
+    top: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: green;
+    font-family: 'Marck Script';
+}
+
+.sub_link a {
+    background-color: white;
+    padding: 40px;
+    position: absolute;
+    text-decoration: none;
+    left: 600px;
+    top: 200px;
+    color: black;
+}
+
+.fa-caret-up {
+    left: 5px;
+    top: 35px;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size: 30px;
+    color: green;
+}
+
+.fa_right {
+    right: -230px;
+    position: absolute;
+    transform: rotate(270deg);
+    font-size: 30px;
+    color: green;
+}
