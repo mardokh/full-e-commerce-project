@@ -4,11 +4,12 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const shopping = require('./routes/shoppingCart')
 const products = require('./routes/products')
-
+const recipes = require('./routes/recipes')
 
 // MODULES //
 const shoppingCart = require('./models/shoppingCart')
 const product = require('./models/product')
+const recipe = require('./models/recipe')
 
 
 // IMPORT DATABASE CONNECTER //
@@ -37,6 +38,7 @@ app.use('/uploads', express.static('uploads'));
 app.get('/', (req, res) => res.send('Welcom you are connected'))
 app.use('/shopping', shopping)
 app.use('/products', products)
+app.use('/recipes', recipes)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 
@@ -54,6 +56,7 @@ DB.authenticate()
     // synchronizate models
     shoppingCart.sync({ alter: true })
     product.sync({alter: true})
+    recipe.sync({alter: true})
     
     // start server
     app.listen(8989, () => { 

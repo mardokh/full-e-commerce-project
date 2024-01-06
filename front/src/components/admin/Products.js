@@ -8,7 +8,7 @@ const Produits = () => {
 
     // States //
     const [products, setProducts] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
+    const [isLoad, setISload] = useState(false) // while false block acces to products state
     const [refNotfound, setRefNotfound] = useState(false)
 
     // Reference // 
@@ -20,34 +20,33 @@ const Produits = () => {
         if (flag.current === false) {
             productService.getAllproducts()
                 .then(res => {            
-                    setProducts(res.data.data);
-                    setISload(true);  // when true allow access to cocktails var  
+                    setProducts(res.data.data)
+                    setISload(true)  // when true allow access to products state  
                 })
                 .catch(err => {
                     if (err.response && err.response.status) {
                         setRefNotfound(true)
                         setISload(true)
                     } else {
-                        console.log('Error:', err.message);
+                        console.log('Error:', err.message)
                     }
-                });
+                })
         }
-        return () => (flag.current = true);
-    }, []);
+        return () => flag.current = true
+    }, [])
 
 
-    // DELETE PRODUCT
+    // DELETE PRODUCT //
     const deleteProcut = async (productId) => {
 
         // Api call for delete product
         await productService.deleteProduct(productId)
 
-        // Api call for get product
+        // Api call for get all products
         const productsGet = await productService.getAllproducts()
 
         // Update state
         setProducts(productsGet.data.data)
-
     }
 
     

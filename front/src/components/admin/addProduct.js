@@ -8,11 +8,11 @@ const AddProduct = () => {
 
 
     const [product, setProduct] = useState({
-        name: '',
-        price: '',
-        description: '',
+        name: "",
+        price: "",
+        description: "",
         image: null 
-    });
+    })
 
     // GLOBAL VARIABLES //
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ const AddProduct = () => {
             navigate('../products_manage')
         }
         catch (error) {
-            console.error('Error:', error)
+            console.error('Error : ', error)
         }
     }
 
@@ -66,14 +66,14 @@ const AddProduct = () => {
     return (
         <div>
             <form className='add_product_container' onSubmit={handleSubmit}>
-                <di className='add_product_item'>
+                <div className='add_product_item'>
                     <label>Name</label>
                     <input type='text' name='name' onChange={(e) => handleInputChange(e.target.name, e.target.value)}/>
-                </di>
-                <di className='add_product_item'>
+                </div>
+                <div className='add_product_item'>
                     <label>Price</label>
                     <input type='number' name='price' onChange={(e) => handleInputChange(e.target.name, e.target.value)}/>
-                </di>
+                </div>
                 <div className='add_product_item'>
                     <label>Description</label>
                     <textarea name='description' onChange={(e) => handleInputChange(e.target.name, e.target.value)}></textarea>

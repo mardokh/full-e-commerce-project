@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './produits.css'
 import { productService } from '../../_services/product.service'
 import { shoppingSerive } from '../../_services/shoppingCart.service'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Produits = () => {
 
@@ -31,12 +31,12 @@ const Produits = () => {
                         setRefNotfound(true)
                         setISload(true)
                     } else {
-                        console.log('Error:', err.message);
+                        console.error('Error:', err.message)
                     }
-                });
+                })
         }
-        return () => (flag.current = true);
-    }, []);
+        return () => flag.current = true
+    }, [])
 
 
     const addToCart = async (productId) => {
@@ -65,7 +65,7 @@ const Produits = () => {
                 products.map(product => (
                 <div key={product.id} className='produits_img_englob'>
                     <i class="fa-regular fa-heart"></i>
-                    {<div className='produits_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>}
+                    <Link to={`/produit_details/${product.id}`}>{<div className='produits_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>}</Link>
                     <div className='produit_info'>
                         <p className='produits_name'>{product.name}</p>
                         <div className='prix_notes'>

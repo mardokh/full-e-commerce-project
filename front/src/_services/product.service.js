@@ -6,6 +6,10 @@ let getAllproducts = () => {
     return Axios.get('/products')
 }
 
+let getOneProduct = (productId) => {
+    return Axios.get('/products/'+productId)
+}
+
 let addProduct = (product) => {
     return Axios.put('/products/add', product)
 }
@@ -18,5 +22,5 @@ let deleteProduct = (productId) => {
 
 // EXPORTS //
 export const productService = { 
-    getAllproducts,addProduct, deleteProduct 
+    getAllproducts, getOneProduct, addProduct, deleteProduct 
 }

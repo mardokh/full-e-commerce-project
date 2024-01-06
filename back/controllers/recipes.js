@@ -1,0 +1,108 @@
+// MODULES IMPORT //
+const { where } = require('sequelize')
+const Recipe = require('../models/recipe')
+
+
+// GET ALL RECIPES //
+exports.getAllRecipes = async (req, res) => {
+
+    try {
+        // Get all recipes from table
+        const recipes = await Recipe.findAll()
+
+        // Check if find recipes
+        if (recipes.length === 0) {
+            return res.status(404).json({data: "Vous n'avez ajouter aucune recette"})
+        }
+
+        // Send successfully 
+        return res.json({data: recipes})
+    }
+    catch (err) {
+        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+    }
+}
+
+
+// GET ONE RECIPE //
+exports.getOnRecipe = async (req, res) => {
+
+    try {
+        // Extract id from request
+        const recipeId = parseInt(req.params.id)
+
+        // Check id validity
+        if (!recipeId) {
+            return res.status(400).json({message: 'Missing id params !'})
+        }
+
+        // Get product from database
+        const recipe = await Recipe.findOne({where: {id: recipeId}})
+
+        // Check if recipe exist
+        if (recipe === null) {
+            return res.status(404).json({message: 'This recipe do not exist !'})
+        }
+
+        // Send recipe successfully
+        return res.json({data: recipe}) 
+    }
+    catch (err) {
+        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack}) 
+    }
+}
+
+
+// PUT RECIPE //
+exports.putRecipe = async (req, res) => {
+    try {
+        // Body request destructuring
+        const {name, description} = req.body
+
+        // img path extract
+        const image = req.file.filename
+
+        // Check inputs
+        if (!name || !description || !image) {
+            return res.status(400).json({message: 'Missing input !'})
+        }
+
+        // Set data inputs
+        const inputs = {name: name, description: description, image: image}
+
+        // Check if recipe exist
+        const recipe = await Recipe.findOne({where: {name: name}})
+
+        if (recipe !== null) {
+            return res.status(409).json({message: `this product : ${name} is already exist !`})
+        }
+
+        // Create recipe
+        await Recipe.create(inputs)
+
+        // Send successfylly
+        return res.status(201).json({message: 'Recipe successfully creating'})
+    }
+    catch (err) {
+        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+    }
+}
+
+
+// DELETE RECIPE //
+exports.deleteRecipes = async (req, res) => {
+
+    try {
+        // Exctract id from request
+        const recipeId = parseInt(req.params.id)
+
+        // Delete recipe
+        await Recipe.destroy({where: {id: recipeId}, force: true})
+
+        // Send successfully
+        return res.json({message: 'Product successfully delete'})
+    }
+    catch (err) {
+        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+    }
+}

@@ -1,6 +1,8 @@
-import React from 'react';
+import React from 'react'
+
 
 const Produits = () => {
+
      return (
         <div>
             Produits
@@ -8,4 +10,4 @@ const Produits = () => {
      )
 }
 
-export default Produits;
+export default Produits

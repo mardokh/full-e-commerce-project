@@ -16,7 +16,6 @@ exports.getAllProducts = async (req, res) => {
         
         // send successfylly response
         return res.json({data: products})
-        
     }
     catch(err) {
         return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
@@ -33,7 +32,7 @@ exports.getOneProduct = async (req, res) => {
         
         // check id validity
         if (!productId) {
-            return res.status(400).json({message: 'Missing params !'})
+            return res.status(400).json({message: 'Missing id params !'})
         }
 
         // get product from database
@@ -41,7 +40,7 @@ exports.getOneProduct = async (req, res) => {
         
         // check if product exist
         if (product === null) {
-            return res.status(404).json({message: `This product do not exist !`})
+            return res.status(404).json({message: 'This product do not exist !'})
         }
 
         // send successfylly response
@@ -53,7 +52,7 @@ exports.getOneProduct = async (req, res) => {
 }
 
 
-// PUT PRODUCTS //
+// PUT PRODUCT //
 exports.putProduct = async (req, res) => {
 
     try {
@@ -61,16 +60,15 @@ exports.putProduct = async (req, res) => {
         const {name, details, price} = req.body
 
         // img path extract
-        const imgPath = req.file.filename
-
-        // set data inputs
-        const inputs = {name: name, details: details, price: price, image: imgPath}
-
+        const image = req.file.filename
 
         // check inputs
-        if (!name || !details || !price || !imgPath) {
+        if (!name || !details || !price || !image) {
             return res.status(400).json({message: 'Missing data input !'})
         }
+
+        // set data inputs
+        const inputs = {name: name, details: details, price: price, image: image}
 
         // check if product exist
         const product = await Product.findOne({where: {name:name}})
@@ -82,7 +80,7 @@ exports.putProduct = async (req, res) => {
         // create new product
         await Product.create(inputs)
 
-        // send successfylly response
+        // send successfylly
         return res.status(201).json({message: 'Product successfully creating'})
 
     }
@@ -92,7 +90,7 @@ exports.putProduct = async (req, res) => {
 }
 
 
-// UPDATE PRODUCTS //
+// UPDATE PRODUCT //
 exports.updateProduct = async (req, res) => {
 
     try {
@@ -155,7 +153,7 @@ exports.trasProduct = async (req, res) => {
 }
 
 
-//  UNTRASH PRODUCTS //
+//  UNTRASH PRODUCT //
 exports.untrashProduct = async (req, res) => {
 
     try {
@@ -179,7 +177,7 @@ exports.untrashProduct = async (req, res) => {
 }
 
 
-// DELETE PRODUCTS  //
+// DELETE PRODUCT  //
 exports.deleteProduct = async (req, res) => { 
 
     try {

@@ -1,0 +1,39 @@
+.recipe_manage_container {
+    width: 800px;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: lightgreen;
+    margin-bottom: 20px;
+}
+
+.recipe_manage {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.icon_add_recipe {
+    width: 100px;
+    padding: 15px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border: 1px solid green;
+    cursor: pointer;
+}
+
+.fa-plus {
+    font-size: 3rem;
+    color: green;
+}
+
+.fa-pen-to-square {
+    cursor: pointer;
+}
+
+.fa-trash {
+    color: brown;
+    cursor: pointer;
+}
