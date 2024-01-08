@@ -1,0 +1,30 @@
+.recipe_details_global_container {
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 150px auto;
+}
+
+.recipe_details_img_container {
+    height: 400px;
+    width: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: gainsboro;
+}
+
+.recipe_details_btn {
+    padding: 15px;
+    width: 150px;
+}
+
+.recipe_details_info_container {
+    height: 300px;
+    width: 400px;
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    justify-content: space-between;
+}

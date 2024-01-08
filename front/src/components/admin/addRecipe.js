@@ -55,7 +55,7 @@ const AddRecipe = () => {
     }
 
 
-    // UPDATE INPUTS STATE //
+    // INSERT IMAGE //
     const handleImageChange = (image) => {
         setRecipe({
             ...recipe,

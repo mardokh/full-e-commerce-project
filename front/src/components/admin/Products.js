@@ -79,7 +79,7 @@ const Produits = () => {
                             <p className='p_createdAt'>{product.createdAt}</p>
                         </div>
                         <div className='product_manage manage_icons'>
-                            <Link to="../edit_product"><i class="fa-solid fa-pen-to-square"></i></Link>
+                            <Link to={`../edit_product/${product.id}`}><i class="fa-solid fa-pen-to-square"></i></Link>
                             <i onClick={() => deleteProcut(product.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>

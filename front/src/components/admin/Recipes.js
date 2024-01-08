@@ -80,7 +80,7 @@ const Recipes = () => {
                             <p className='r_createdAt'>{recipe.createdAt}</p>
                         </div>
                         <div className='recipe_manage manage_icons_r'>
-                            <Link to="../edit_product"><i class="fa-solid fa-pen-to-square"></i></Link>
+                            <Link to={`../edit_recipe/${recipe.id}`}><i class="fa-solid fa-pen-to-square"></i></Link>
                             <i onClick={() => deleteRecipe(recipe.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>

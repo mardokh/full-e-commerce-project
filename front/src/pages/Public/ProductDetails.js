@@ -19,7 +19,7 @@ const ProductDetails = () => {
     const flag = useRef(false)
 
 
-    // API CALL FOR ADD PRODUCT //
+    // API CALL FOR GET PRODUCT //
     useEffect(() => {
 
         if (flag.current === false) {
@@ -28,9 +28,9 @@ const ProductDetails = () => {
                 setProduct(res.data.data)
                 setISload(true)
             })
-            .catch(err => console.error(err))
+            .catch(err => console.error('Error : ', err))
         }
-        return () => (flag.current = true)
+        return () => flag.current = true
     }, [])
     
 

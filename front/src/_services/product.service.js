@@ -14,6 +14,10 @@ let addProduct = (product) => {
     return Axios.put('/products/add', product)
 }
 
+let updateProcut = (product) => {
+    return Axios.patch('/products/update', product)
+}
+
 let deleteProduct = (productId) => {
     return Axios.delete('/products/delete/'+productId)
 }
@@ -22,5 +26,5 @@ let deleteProduct = (productId) => {
 
 // EXPORTS //
 export const productService = { 
-    getAllproducts, getOneProduct, addProduct, deleteProduct 
+    getAllproducts, getOneProduct, addProduct, updateProcut, deleteProduct 
 }

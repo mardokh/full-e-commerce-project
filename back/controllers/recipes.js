@@ -1,5 +1,5 @@
 // MODULES IMPORT //
-const { where } = require('sequelize')
+const {sequelize} = require('sequelize')
 const Recipe = require('../models/recipe')
 
 
@@ -59,7 +59,7 @@ exports.putRecipe = async (req, res) => {
         // Body request destructuring
         const {name, description} = req.body
 
-        // img path extract
+        // Extract image path
         const image = req.file.filename
 
         // Check inputs
@@ -80,11 +80,54 @@ exports.putRecipe = async (req, res) => {
         // Create recipe
         await Recipe.create(inputs)
 
-        // Send successfylly
+        // Send successfully
         return res.status(201).json({message: 'Recipe successfully creating'})
     }
     catch (err) {
         return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+    }
+}
+
+// UPDATE RECIPE //
+exports.updateRecipe = async (req, res) => {
+    
+    try {
+        // Body request destructuring
+        const { id, name, description, image } = req.body
+
+        // Check id validity
+        if (!id) {
+            return res.status(400).json({ message: 'Missing id params !' })
+        }
+
+        // Check if recipe exist
+        const recipe = await Recipe.findOne({ where: {id: id}})
+
+        if (recipe === null) {
+            return res.status(404).json({ message: 'This recipe do not exist !' })
+        }
+
+        // Set image input
+        let newImage = image
+        if (req.file && req.file.filename) {
+            newImage = req.file.filename
+        }
+
+        // Set inputs
+        const updatedRecipe = {
+            name,
+            description,
+            image: newImage,
+        }
+
+        // Update recipe
+        await Recipe.update(updatedRecipe, {where: {id: id}})
+
+        // Send successfully
+        return res.json({ message: 'Recipe updated successfully' })
+    } 
+    catch (err) {
+        return res.status(500).json({ message: 'Database error !', error: err.message })
     }
 }
 
@@ -99,7 +142,7 @@ exports.deleteRecipes = async (req, res) => {
         // Delete recipe
         await Recipe.destroy({where: {id: recipeId}, force: true})
 
-        // Send successfully
+        // Send successffully
         return res.json({message: 'Product successfully delete'})
     }
     catch (err) {

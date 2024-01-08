@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import './recettes.css';
-//import Springbeef from '../../images/Springbeef.jpg';
 import { recipeService } from '../../_services/recipe.service'
+import { Link } from "react-router-dom";
 
 
 const Recettes = () => {
@@ -35,7 +35,7 @@ const Recettes = () => {
             recipes.map(recipe => (
                 <div key={recipe.id} className='pics_container_sub'>
                     <div className='pics_englob'>
-                        <div className='pics_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${recipe.image}')`}}></div>
+                    <Link to={`/recette_details/${recipe.id}`}><div className='pics_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${recipe.image}')`}}></div></Link>
                         <div className='info_container'>
                             <p className='recette_name'>{recipe.name}</p>
                             <div className="recettes_interactions">

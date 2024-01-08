@@ -4,11 +4,14 @@ const controller = require('../controllers/recipes')
 const multer = require('multer')
 //const path = require('path')
 
+
 // EXPRESS ROUTER INSTANCIATE //
 let router = express.Router()
 
-//  GET ALL RECIPES  //
+
+// GET ALL RECIPES  //
 router.get('', controller.getAllRecipes)
+
 
 // GET ONE RECIPE //
 router.get('/:id', controller.getOnRecipe)
@@ -32,8 +35,14 @@ var upload = multer({
 router.put('/add', upload.single('image'), controller.putRecipe)
 
 
+// UPDATE RECIPE //
+router.patch('/update', upload.single('image'), controller.updateRecipe)
+
+
 // DELETE RECIPE //
 router.delete('/delete/:id', controller.deleteRecipes)
+
+
 
 
 

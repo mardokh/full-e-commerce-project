@@ -94,28 +94,42 @@ exports.putProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
 
     try {
-        // extract id from request
-        const productId = parseInt(req.params.id)
+        // Body request destructuring
+        const {id, name, details, price, image} = req.body
 
-        // check id validity
-        if (!productId) {
-            return res.status(400).json({message: 'Missing params !'})
+        // Check id validity
+        if (!id) {
+            return res.status(400).json({message: 'Missing id params !'})
         }
 
-        // check if product exist
-        const product = await Product.findOne({where: {id: productId}})
-        
+        // Check if product exist
+        const product = await Product.findOne({where: {id: id}})
+
         if (product === null) {
-            return res.status(409).json({message: `this product do not exist !`})
+            return res.status(404).json({message: 'This product do not exist !'})
         }
 
-        // update product
-        await Product.update(req.body, {where: {id: productId}})
-        
-        // send successfully response
-        return res.json({message: 'Product updated successfully'})            
+        // Set image input
+        let newImage = image
+        if (req.file && req.file.filename) {
+            newImage = req.file.filename
+        }
+
+       // Set inputs
+       const updateProduct = {
+        name,
+        details,
+        price,
+        image: newImage,
+       }
+
+       // Update product
+       await Product.update(updateProduct, {where: {id: id}})
+
+       // Send successfully
+       return res.json({message: 'Product updated successfully'})
     }
-    catch(err) {
+    catch (err) {
         return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
     }
 }

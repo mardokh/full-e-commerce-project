@@ -32,11 +32,11 @@ var upload = multer({
 
 
 // PUT PRODUCT //
-router.put('/add',upload.single('image'), controller.putProduct)
+router.put('/add', upload.single('image'), controller.putProduct)
 
 
 // UPDATE PRODUCT //
-router.patch('/update/:id', controller.updateProduct)
+router.patch('/update', upload.single('image'), controller.updateProduct)
 
 
 // TRASH PRODUCT //
