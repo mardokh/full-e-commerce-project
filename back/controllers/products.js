@@ -1,6 +1,6 @@
 // MODULES IMPORTS // 
 const Product = require('../models/product')
-
+const fs = require('fs')
 
 // GET ALL PRODUCTS //
 exports.getAllProducts = async (req, res) => {
@@ -197,6 +197,13 @@ exports.deleteProduct = async (req, res) => {
     try {
         // exctract id from request
         const productId = parseInt(req.params.id)
+
+        // Check if product exist 
+        const product = await Product.findOne({where: {id: productId}})
+        
+        if (product === null) {
+            return res.status(404).json({message: 'Product not found !'})
+        }
 
         // delete product
         await Product.destroy({where: {id: productId}, force: true})

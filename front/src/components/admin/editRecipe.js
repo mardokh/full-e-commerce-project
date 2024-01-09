@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from "react"
 import "./editRecipe.css"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { recipeService } from "../../_services/recipe.service"
 
 
@@ -14,6 +14,10 @@ const EditRecipe = () => {
 
     // GET ID PARAMS //
     const {id} = useParams()
+
+
+    // REDIRECTION //
+    const navigate = useNavigate()
 
 
     // REFERENCE //
@@ -41,20 +45,18 @@ const EditRecipe = () => {
         e.preventDefault()
 
         try {
+            // Create form data
             const formData = new FormData()
             formData.append('name', recipe.name)
             formData.append('description', recipe.description)
             formData.append('image', recipe.image)
             formData.append('id', id)
 
-            
-            console.log('Name : ', formData.get('name'))
-            console.log('Description : ', formData.get('description'))
-            console.log('Image : ', formData.get('image'))
-            console.log('Id : ', formData.get('id'))
-            
+            // Api call for update recipe
             await recipeService.updateRecipe(formData)
 
+            // Redirect to main recipes manage
+            navigate('../recipes_manage')
         }
         catch (err) {
             console.error('Error: ', err)

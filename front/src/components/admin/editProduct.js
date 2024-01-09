@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './editProduct.css'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { productService } from '../../_services/product.service'
 
 
@@ -14,6 +14,10 @@ const EditProduct = () => {
 
     // GET ID PARAMS //
     const {id} = useParams()
+
+
+    // REDIRECTION //
+    const navigate = useNavigate()
 
 
     // REFERENCE //
@@ -42,6 +46,7 @@ const EditProduct = () => {
         e.preventDefault()
 
         try {
+            // Create form data
             const formData = new FormData()
             formData.append('name', product.name)
             formData.append('details', product.details)
@@ -49,16 +54,11 @@ const EditProduct = () => {
             formData.append('image', product.image)
             formData.append('id', id)
 
-            /* Debug
-            console.log('Name : ', formData.get('name'))
-            console.log('Details : ', formData.get('details'))
-            console.log('Price : ', formData.get('price'))
-            console.log('Image : ', formData.get('image'))
-            console.log('Id : ', formData.get('id'))
-            */
-
+            // Api call for update recipe
             await productService.updateProcut(formData)
 
+            // Redirect to main products manage
+            navigate('../products_manage')
         }
         catch (err) {
             console.error('Error: ', err)
@@ -75,7 +75,7 @@ const EditProduct = () => {
     }
 
 
-    // INSERT IMAGE //
+    // UPDATE IMAGE STATE //
     const handleImageChange = (image) => {
 
         if (imageFlag.current === false) {

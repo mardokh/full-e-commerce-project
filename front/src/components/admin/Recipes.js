@@ -7,13 +7,25 @@ import "./recipes.css"
 const Recipes = () => {
 
     // STATES //
-    const [recipes, setRecipes] = useState([])
+    const [recipes, setRecipes] = useState()
     const [isLoad, setISload] = useState(false) // while false block acces to recipes state
     const [refNotfound, setRefNotfound] = useState(false)
 
 
     // REFERENCE //
     const flag = useRef(false)
+
+
+    // Handle errors
+    const handleError = (err) => {
+        if (err.response && err.response.status) {
+            setRefNotfound(true)
+            setRecipes(err.response.data.data)
+            setISload(true)
+        } else {
+            console.log('Error:', err.message)
+        }
+    }
 
 
     // GET ALL RECIPES //
@@ -24,14 +36,7 @@ const Recipes = () => {
                     setRecipes(res.data.data)
                     setISload(true)
                 })
-                .catch(err => {
-                    if (err.response && err.response.status) {
-                        setRefNotfound(true)
-                        setISload(true) // when true allow access to products state 
-                    } else {
-                        console.log('Error:', err.message)
-                    }
-                })
+                .catch(err => handleError(err))
         }
         return () => flag.current = true 
     }, [])
@@ -40,14 +45,19 @@ const Recipes = () => {
     // DELETE RECIPE //
     const deleteRecipe = async (recipeId) => {
 
-        // Api call for delete recipe
-        await recipeService.deleteRecipe(recipeId)
+        try {
+            // Api call for delete recipe
+            await recipeService.deleteRecipe(recipeId)
 
-        // Api call for get all recipes
-        const recipesGet = await recipeService.getAllRecipes()
+            // Api call for get all recipes
+            const recipesGet = await recipeService.getAllRecipes()
 
-        // Update state
-        setRecipes(recipesGet.data.data)
+            // Update state
+            setRecipes(recipesGet.data.data)
+        }
+        catch (err) {
+            handleError(err)
+        }
     }
 
 
@@ -84,7 +94,7 @@ const Recipes = () => {
                             <i onClick={() => deleteRecipe(recipe.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>
-                )) : <div>aucune recette ajouter</div> 
+                )) : <div>{recipes}</div> 
             }
         </div>
     )

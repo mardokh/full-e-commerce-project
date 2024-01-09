@@ -7,7 +7,7 @@ import { useNavigate, Link } from 'react-router-dom'
 const Produits = () => {
 
     // States //
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState()
     const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
     const [refNotfound, setRefNotfound] = useState(false)
 
@@ -16,6 +16,18 @@ const Produits = () => {
 
     // Reference //
     const flag = useRef(false)
+
+
+    // Handle errors
+    const handleError = (err) => {
+        if (err.response && err.response.status) {
+            setRefNotfound(true)
+            setProducts(err.response.data.data)
+            setISload(true)
+        } else {
+            console.log('Error:', err.message)
+        }
+    }
 
     
     // Get all cocktails //
@@ -26,14 +38,7 @@ const Produits = () => {
                     setProducts(res.data.data);
                     setISload(true);  // when true allow access to cocktails var  
                 })
-                .catch(err => {
-                    if (err.response && err.response.status) {
-                        setRefNotfound(true)
-                        setISload(true)
-                    } else {
-                        console.error('Error:', err.message)
-                    }
-                })
+                .catch(err => handleError(err))
         }
         return () => flag.current = true
     }, [])
@@ -81,7 +86,7 @@ const Produits = () => {
                         <button className='add_cart' onClick={() => addToCart(product.id)}>ajouter au panier</button>
                     </div>
                 </div>
-                )) : <div>aucun produit ajouter</div> 
+                )) : <div>{products}</div> 
             }
         </div>
     )

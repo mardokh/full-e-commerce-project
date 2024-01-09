@@ -7,12 +7,25 @@ import './product.css'
 const Produits = () => {
 
     // States //
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState()
     const [isLoad, setISload] = useState(false) // while false block acces to products state
     const [refNotfound, setRefNotfound] = useState(false)
+    
 
     // Reference // 
     const flag = useRef(false)
+
+    
+    // Handle errors
+    const handleError = (err) => {
+        if (err.response && err.response.status) {
+            setRefNotfound(true);
+            setProducts(err.response.data.data);
+            setISload(true);
+        } else {
+            console.log('Error:', err.message);
+        }
+    }
 
 
     // Get all products //
@@ -23,14 +36,7 @@ const Produits = () => {
                     setProducts(res.data.data)
                     setISload(true)  // when true allow access to products state  
                 })
-                .catch(err => {
-                    if (err.response && err.response.status) {
-                        setRefNotfound(true)
-                        setISload(true)
-                    } else {
-                        console.log('Error:', err.message)
-                    }
-                })
+                .catch(err => handleError(err))
         }
         return () => flag.current = true
     }, [])
@@ -39,14 +45,19 @@ const Produits = () => {
     // DELETE PRODUCT //
     const deleteProcut = async (productId) => {
 
-        // Api call for delete product
-        await productService.deleteProduct(productId)
+        try {
+            // Api call for delete product
+            await productService.deleteProduct(productId)
 
-        // Api call for get all products
-        const productsGet = await productService.getAllproducts()
+            // Api call for get all products
+            const productsGet = await productService.getAllproducts()
 
-        // Update state
-        setProducts(productsGet.data.data)
+            // Update state
+            setProducts(productsGet.data.data)
+        }
+        catch (err) {
+            handleError(err)
+        }
     }
 
     
@@ -83,7 +94,7 @@ const Produits = () => {
                             <i onClick={() => deleteProcut(product.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>
-                )) : <div>aucun produit ajouter</div> 
+                )) : <div>{products}</div> 
             }
         </div>
 

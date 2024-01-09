@@ -8,6 +8,8 @@ const Recettes = () => {
 
     // STATES //
     const [recipes, setRecipes] = useState([])
+    const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
+    const [refNotfound, setRefNotfound] = useState(false)
 
 
     // REFERENCES //
@@ -20,18 +22,32 @@ const Recettes = () => {
         if (flag.current === false) {
             recipeService.getAllRecipes()
             .then(res => {
-                console.log(res.data.data)
                 setRecipes(res.data.data)
+                setISload(true) // when true allow access to recipes state 
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                if (err.response && err.response.status) {
+                    setRecipes(err.response.data.data)
+                    setRefNotfound(true)
+                    setISload(true)
+                } else {
+                    console.log('Error:', err.message)
+                }
+            })
         }
         return () => flag.current = true
     }, [])
 
 
+    // Loader //
+    if (!isLoad) {
+        return <div>Loading...</div>
+    }
+
+
     return (
         <div className="recipe_global_container">
-            {
+            {!refNotfound ?
             recipes.map(recipe => (
                 <div key={recipe.id} className='pics_container_sub'>
                     <div className='pics_englob'>
@@ -51,7 +67,7 @@ const Recettes = () => {
                         </div>
                     </div>
                 </div>
-            ))
+            )) : <div>{recipes}</div>
             }
         </div>
     )
