@@ -1,9 +1,25 @@
+.add_product_global_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    margin: 150px auto;
+}
+
+.add_product_image {
+    height: 440px;
+    width: 400px;
+    border: 1px solid;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .add_product_container {
     display: flex;
     flex-direction: column;
     width: 600px;
     text-align: left;
-    margin: 200px auto;
 }
 
 .add_product_item {

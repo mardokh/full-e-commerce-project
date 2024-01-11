@@ -1,21 +1,23 @@
-import React, { useState } from "react"
-import { useNavigate } from 'react-router-dom'
-import { recipeService } from '../../_services/recipe.service'
+import React, { useRef, useState } from "react"
 import "./addRecipe.css"
+import { recipeService } from '../../_services/recipe.service'
+import { useNavigate } from 'react-router-dom'
+const AddImage = require('../../images/AddImage.jpg')
 
 
 const AddRecipe = () => {
 
     // STATES //
-    const [recipe, setRecipe] = useState({
-        name: "",
-        description: "",
-        image: null
-    })
+    const [recipe, setRecipe] = useState({name: "", description: "", image: ""})
+    const [imageUrl, setImageUrl] = useState()
 
 
-    // GLOBAL VARIABLES //
+    // REDERECTIONS //
     const navigate = useNavigate()
+
+
+    // REFERENCE //
+    const imageFlag = useRef(false)
 
 
     // SUBMIT FROM //
@@ -27,12 +29,6 @@ const AddRecipe = () => {
             formData.append('name', recipe.name)
             formData.append('description', recipe.description)
             formData.append('image', recipe.image)
-            
-            /* Debug
-            console.log('name : ', formData.get('name'))
-            console.log('description : ', formData.get('description'))
-            console.log('image : ', formData.get('image'))
-            */
 
             // Api call for add recipe
             await recipeService.addRecipe(formData)
@@ -55,18 +51,25 @@ const AddRecipe = () => {
     }
 
 
-    // INSERT IMAGE //
+    // UPDATE IMAGE STATE //
     const handleImageChange = (image) => {
         setRecipe({
             ...recipe,
             image: image
         })
+
+        if (image) {
+            const urlImage = URL.createObjectURL(image)
+            setImageUrl(urlImage)
+            imageFlag.current = true
+        }
     }
 
 
 
     return (
-        <div>
+        <div className="add_recipe_global_container">
+            <div className="add_recipe_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
             <form className='add_recipe_container' onSubmit={handleSubmit}>
                 <div className='add_recipe_item'>
                     <label>Name</label>

@@ -75,18 +75,16 @@ const EditRecipe = () => {
 
     // INSERT IMAGE //
     const handleImageChange = (image) => {
+        
+        setRecipe({
+            ...recipe,
+            image: image
+        })
 
-        if (imageFlag.current === false) {
-            setRecipe({
-                ...recipe,
-                image: image
-            })
-    
-            if (image) {
-                const urlImage = URL.createObjectURL(image)
-                setImageUrl(urlImage)
-                imageFlag.current = true
-            }
+        if (image) {
+            const urlImage = URL.createObjectURL(image)
+            setImageUrl(urlImage)
+            imageFlag.current = true
         }
     }
     
@@ -99,7 +97,7 @@ const EditRecipe = () => {
 
     return (
     <div className="edit_recipe_global_container">
-       <div className="edit_recipe_image" style={{backgroundImage: `url('${imageFlag.current === false ? `http://localhost:8989/uploads/${recipe.image}` : imageUrl}')`}}></div>
+       <div className="edit_recipe_image" style={{backgroundImage: `url('${!imageFlag.current ? `http://localhost:8989/uploads/${recipe.image}` : imageUrl}')`}}></div>
         <form className='edit_recipe_container' onSubmit={handleSubmit}>
             <div className='edit_recipe_item'>
                 <label>Name</label>

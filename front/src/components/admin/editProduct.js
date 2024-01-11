@@ -40,7 +40,6 @@ const EditProduct = () => {
     }, [])
 
 
-
     // FORM SUBMIT //
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -77,18 +76,16 @@ const EditProduct = () => {
 
     // UPDATE IMAGE STATE //
     const handleImageChange = (image) => {
+        
+        setProduct({
+            ...product,
+            image: image
+        })
 
-        if (imageFlag.current === false) {
-            setProduct({
-                ...product,
-                image: image
-            })
-
-            if (image) {
-                const urlImage = URL.createObjectURL(image)
-                setImageUrl(urlImage)
-                imageFlag.current = true
-            }
+        if (image) {
+            const urlImage = URL.createObjectURL(image)
+            setImageUrl(urlImage)
+            imageFlag.current = true
         }
     }
 
@@ -102,7 +99,7 @@ const EditProduct = () => {
 
     return (
         <div className="edit_product_global_container">
-           <div className="edit_product_image" style={{backgroundImage: `url('${imageFlag.current === false ? `http://localhost:8989/uploads/${product.image}` : imageUrl}')`}}></div>
+            <div className="edit_product_image" style={{backgroundImage: `url('${!imageFlag.current ? `http://localhost:8989/uploads/${product.image}` : imageUrl}')`}}></div>
             <form className='edit_product_container' onSubmit={handleSubmit}>
                 <div className='edit_product_item'>
                     <label>Name</label>
@@ -125,7 +122,7 @@ const EditProduct = () => {
                 </div>
             </form>
         </div>
-        )
+    )
 }
 
 export default EditProduct

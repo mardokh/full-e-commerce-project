@@ -1,20 +1,23 @@
 // MODULES IMPORTS // 
 const Product = require('../models/product')
 const fs = require('fs')
+const path = require('path')
+
+
 
 // GET ALL PRODUCTS //
 exports.getAllProducts = async (req, res) => {
 
     try {
-        // get all products from table
+        // Get all products from database
         const products = await Product.findAll()
 
-        // check if products exist
+        // Check if some products exists
         if (products.length === 0) {
-            return res.status(404).json({data: "vous n'avez ajouté aucun produit"})
+            return res.status(404).json({data: "No product found"})
         } 
         
-        // send successfylly response
+        // Send successfylly response
         return res.json({data: products})
     }
     catch(err) {
@@ -27,23 +30,23 @@ exports.getAllProducts = async (req, res) => {
 exports.getOneProduct = async (req, res) => {
 
     try {
-        // extract id from request
+        // Extract product id from request
         const productId = parseInt(req.params.id)
         
-        // check id validity
+        // Check product id validity
         if (!productId) {
             return res.status(400).json({message: 'Missing id params !'})
         }
 
-        // get product from database
+        // Get product from database
         const product = await Product.findOne({where: {id: productId}})
         
-        // check if product exist
+        // Check if product exist
         if (product === null) {
             return res.status(404).json({message: 'This product do not exist !'})
         }
 
-        // send successfylly response
+        // Send successfylly response
         return res.json({data: product})
     }
     catch(err) {
@@ -56,31 +59,31 @@ exports.getOneProduct = async (req, res) => {
 exports.putProduct = async (req, res) => {
 
     try {
-        // body request destructuring
+        // Body request destructuring
         const {name, details, price} = req.body
 
-        // img path extract
+        // Img product path extract
         const image = req.file.filename
 
-        // check inputs
+        // Check product inputs
         if (!name || !details || !price || !image) {
             return res.status(400).json({message: 'Missing data input !'})
         }
 
-        // set data inputs
+        // Set product inputs
         const inputs = {name: name, details: details, price: price, image: image}
 
-        // check if product exist
+        // Check if product exist
         const product = await Product.findOne({where: {name:name}})
 
         if (product !== null) {
             return res.status(409).json({message: `this product : ${name} is already exist !`})
         }
 
-        // create new product
+        // Create product from database
         await Product.create(inputs)
 
-        // send successfylly
+        // Send successfylly response
         return res.status(201).json({message: 'Product successfully creating'})
 
     }
@@ -97,25 +100,26 @@ exports.updateProduct = async (req, res) => {
         // Body request destructuring
         const {id, name, details, price, image} = req.body
 
-        // Check id validity
+        // Check product id validity
         if (!id) {
             return res.status(400).json({message: 'Missing id params !'})
         }
 
-        // Check if product exist
+        // Get product from database
         const product = await Product.findOne({where: {id: id}})
 
+        // Check if product exist
         if (product === null) {
             return res.status(404).json({message: 'This product do not exist !'})
         }
 
-        // Set image input
+        // Set image product input
         let newImage = image
         if (req.file && req.file.filename) {
             newImage = req.file.filename
         }
 
-       // Set inputs
+       // Set product inputs
        const updateProduct = {
         name,
         details,
@@ -123,10 +127,18 @@ exports.updateProduct = async (req, res) => {
         image: newImage,
        }
 
-       // Update product
+       // Update product from database
        await Product.update(updateProduct, {where: {id: id}})
 
-       // Send successfully
+       // Get the image filename associated
+       const imageFilename = product.image
+
+       // Delete the associated image file
+       if (imageFilename !== image) {
+            fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
+       }
+
+       // Send successfully response
        return res.json({message: 'Product updated successfully'})
     }
     catch (err) {
@@ -139,25 +151,26 @@ exports.updateProduct = async (req, res) => {
 exports.trasProduct = async (req, res) => {
 
     try {
-        // extract id from request
+        // Extract product id from request
         const productId = parseInt(req.params.id)
 
-        // check id validity
+        // Check product id validity
         if (!productId) {
             return res.status(400).json({message: 'Missing id params !'})
         }
 
-        // check product exist
+        // Get product from database
         const product = await Product.findOne({where: {id: productId}})
 
+        // Check if product exist
         if (product === null) {
             return res.status(409).json({message: 'This product do not exist !'})
         }
 
-        // delete product
+        // Delete product from database
         await Product.destroy({where: {id: productId}})
 
-        // send successfully reponse
+        // Send successfully reponse
         return res.json({message: 'Product successfully trash'})
 
     }
@@ -167,22 +180,22 @@ exports.trasProduct = async (req, res) => {
 }
 
 
-//  UNTRASH PRODUCT //
+// UNTRASH PRODUCT //
 exports.untrashProduct = async (req, res) => {
 
     try {
-        // extract id from request
+        // Extract product id from request
         const productId = parseInt(req.params.id)
 
-        // check id validity
+        // Check product id validity
         if (!productId) {
             return res.status(400).json({message: 'Missing id params !'})
         }
 
-        // untrash product
+        // Untrash product from database
         await Product.restore({where: {id: productId}})
 
-        // send successfully response
+        // Send successfully response
         return res.json({message: 'product successfully untrash'})
     }
     catch(err) {
@@ -191,27 +204,34 @@ exports.untrashProduct = async (req, res) => {
 }
 
 
-// DELETE PRODUCT  //
-exports.deleteProduct = async (req, res) => { 
+// DELETE PRODUCT //
+exports.deleteProduct = async (req, res) => {
 
     try {
-        // exctract id from request
+        // Extract product id from request
         const productId = parseInt(req.params.id)
 
-        // Check if product exist 
-        const product = await Product.findOne({where: {id: productId}})
-        
+        // Get product from database 
+        const product = await Product.findOne({ where: { id: productId } })
+
+        // Check if product exist
         if (product === null) {
-            return res.status(404).json({message: 'Product not found !'})
+            return res.status(404).json({ message: 'Product not found !' })
         }
 
-        // delete product
-        await Product.destroy({where: {id: productId}, force: true})
+        // Delete product from database
+        await Product.destroy({ where: { id: productId }, force: true })
 
-        // send successfully response
-        return res.json({message: 'Product successfully delete'}) 
+        // Get the image filename associated
+        const imageFilename = product.image
+
+        // Delete the associated image file
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
+            
+        // Send successfully response
+        return res.json({ message: 'Product and associated image successfully deleted' })
     }
-    catch(err) {
-        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+    catch (err) {
+        return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack })
     }
 }
