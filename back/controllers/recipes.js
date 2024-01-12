@@ -12,7 +12,7 @@ exports.getAllRecipes = async (req, res) => {
 
         // Check if find recipes
         if (recipes.length === 0) {
-            return res.status(404).json({data: "Vous n'avez ajouter aucune recette"})
+            return res.status(404).json({data: "No recipe found"})
         }
 
         // Send successfully 

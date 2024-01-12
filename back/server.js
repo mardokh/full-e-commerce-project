@@ -50,8 +50,9 @@ DB.authenticate()
     console.log('Database connected sucessfully')
     
     // tables associations
-    shoppingCart.belongsTo(product, {foreignKey: 'product_id'}) 
-    product.hasMany(shoppingCart, {foreignKey: 'product_id'})
+    shoppingCart.belongsTo(product, { foreignKey: 'product_id', onDelete: 'CASCADE' });
+    product.hasMany(shoppingCart, { foreignKey: 'product_id', onDelete: 'SET NULL' });
+
     
     // synchronizate models
     shoppingCart.sync({ alter: true })
