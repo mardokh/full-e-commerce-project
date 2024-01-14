@@ -111,7 +111,7 @@ exports.getShoppingCart = async (req, res) => {
                     [Sequelize.fn('COUNT', Sequelize.col('product_id')), 'product_count'],
                     [Sequelize.fn('SUM', Sequelize.col('price')), 'total_price']
                 ],
-                include: [{ model: Product, attributes: ['id', 'name', 'price'] }],
+                include: [{ model: Product, attributes: ['id', 'name', 'price'], as: 'shopping_cart_product' }],
                 group: ['product_id']
             })
 
@@ -136,7 +136,7 @@ exports.getShoppingCart = async (req, res) => {
 }
 
 
-// DELETE SHOPPING CARTS //
+// DELETE ONE SHOPPING CART //
 exports.deleteShoppingCart = async (req, res) => {
 
     try {
@@ -145,6 +145,25 @@ exports.deleteShoppingCart = async (req, res) => {
         
         // Delete product
         await ShoppingCart.destroy({where: {product_id: productId}, force: true, limit: 1})
+
+        // Send successfully
+        return res.json({data: 'product deleted successfully'})
+    }
+    catch(err) {
+        return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
+    }
+}
+
+
+// DELETE SOME SHOPPING CARTS //
+exports.deleteSomeShoppingCarts = async (req, res) => {
+
+    try {
+        // Extract id
+        const productId = req.params.id
+        
+        // Delete product
+        await ShoppingCart.destroy({where: {product_id: productId}})
 
         // Send successfully
         return res.json({data: 'product deleted successfully'})

@@ -13,6 +13,11 @@ let shoppingDelete = (cartItem) => {
     return Axios.delete('/shopping/carts/delete/'+cartItem)
 }
 
+let shoppingSomesDelete = (cartItem) => {
+    return Axios.delete('/shopping/carts/delete/somes/'+cartItem)
+}
+
+
 export const shoppingSerive = {
-    shoppingGet, shoppingAdd, shoppingDelete
+    shoppingGet, shoppingAdd, shoppingDelete, shoppingSomesDelete
 }

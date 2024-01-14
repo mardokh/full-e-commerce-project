@@ -81,3 +81,17 @@
 .btn_confirm_quantity:active {
   background-color: gray;
 }
+
+.shopping_remove_icon_contenaire {
+  display: flex;
+  align-items: center;
+}
+
+.fa-circle-xmark {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.fa-circle-xmark:hover {
+  color: gray;
+}

@@ -8,7 +8,7 @@ const Panier = () => {
 
     // STATES //
     const [products, setProducts] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to products state
+    const [isLoad, setISload] = useState(false) // while false block acces to products state   
     const [refConfirm, setRefConfirm] = useState()
 
     
@@ -22,11 +22,10 @@ const Panier = () => {
         if (refuseEffect.current === false) {
             shoppingSerive.shoppingGet()
             .then(res => {
-             // console.log(res) * debug
-                if (res.data.data && res.data.data[0] && res.data.data[0].product) {      
+                if (res.data.data && res.data.data[0] && res.data.data[0].shopping_cart_product) {      
                     refProducts.current = true
                 }
-                // console.log(res.data.data) * debug 
+                console.log(res.data.data)
                 setProducts(res.data.data)
                 setISload(true) // when true allow acces to products state
             })
@@ -92,10 +91,8 @@ const Panier = () => {
     //CHOOSED PRODUCTS QUANTITY HANDLE //
     const choosedQuantity = async (newQuantity, productId) => {
         try {
-            //const updatedProducts = [...products]
+           
             newQuantity === "" && (newQuantity = 1)
-            //updatedProducts[index].product_count = newQuantity
-            //setProducts(updatedProducts)
     
             // Set product id
             const cartItem = { id: productId, quantity: newQuantity }
@@ -108,6 +105,31 @@ const Panier = () => {
 
             // Update state
             setProducts(product.data.data)
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+
+
+    // DELETE AN SHOPPING CART //
+    const deleteCarts = async (productId) => {
+
+        try {
+            // api call for add product
+            await shoppingSerive.shoppingSomesDelete(productId)
+
+            // api call for get product
+            const product = await shoppingSerive.shoppingGet()
+
+            console.log(product)
+            
+            // Update state
+            setProducts(product.data.data)
+
+            if (product.data.data && product.data.data[0] && !product.data.data[0].shopping_cart_product) {      
+                refProducts.current = false
+            }
         }
         catch (err) {
             console.error(err)
@@ -126,14 +148,14 @@ const Panier = () => {
         <div className="main_container">
             {refProducts.current ? (    
             products.map((product, index) => (
-                <div key={product.product.id} className="shopping_product_container">
+                <div key={product.shopping_cart_product.id} className="shopping_product_container">
                     <div className="shopping_product_item">
                         <p>produit</p>
-                        <p>{product.product.name}</p>
+                        <p>{product.shopping_cart_product.name}</p>
                     </div>
                     <div className="shopping_product_item">
                         <p>prix unitaire</p>
-                        <p>{product.product.price}</p>
+                        <p>{product.shopping_cart_product.price}</p>
                     </div>
                     <div className="shopping_product_item">
                         <p>quantité</p>
@@ -141,10 +163,10 @@ const Panier = () => {
                             <input type="number" max="90" min="1" className="quantity_input" value={product.product_count}
                                 onChange={(e) => writeQuantity(index, e.target.value)}
                             />
-                            {index === refConfirm && <div onClick={() => choosedQuantity(product.product_count, product.product.id)} className="btn_confirm_quantity" >confirmer</div>}
+                            {index === refConfirm && <div onClick={() => choosedQuantity(product.product_count, product.shopping_cart_product.id)} className="btn_confirm_quantity" >confirmer</div>}
                             <div className="btn_up_down">
-                                <button onClick={() => upQuantity(product.product.id)}>+</button>
-                                <button onClick={() => downQuantity(product.product.id)}>-</button>
+                                <button onClick={() => upQuantity(product.shopping_cart_product.id)}>+</button>
+                                <button onClick={() => downQuantity(product.shopping_cart_product.id)}>-</button>
                             </div>
                         </div>
                     </div>
@@ -155,6 +177,7 @@ const Panier = () => {
                     <div className="btn_commande shopping_product_item">
                         <button className="btn_button">commander</button>
                     </div>
+                    <div className="shopping_remove_icon_contenaire" title="supprimer"><i onClick={() => deleteCarts(product.shopping_cart_product.id)} class="fa-solid fa-circle-xmark"></i></div>
                 </div>
             ))
             )
