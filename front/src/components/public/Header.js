@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.css';
 import logo from '../../images/logo.png';
-import sun from '../../images/sun.png';
+import heart from '../../images/heart.png';
 
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
                             <li className='services'><Link to="/services">services</Link></li>
                         </div>
                         <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"></i></li>
-                        <img src={sun} style={{height:'20px', width:'20px'}}/>
+                        <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
                         <li className='panier'><Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping"></i><span>0</span></Link></li>
                     </ul>
                 </nav>

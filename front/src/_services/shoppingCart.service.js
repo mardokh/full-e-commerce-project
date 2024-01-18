@@ -1,3 +1,4 @@
+// MODULES IMPORTS //
 import Axios from "./caller.service"
 
 
@@ -17,7 +18,7 @@ let shoppingSomesDelete = (cartItem) => {
     return Axios.delete('/shopping/carts/delete/somes/'+cartItem)
 }
 
-
+// EXPORTS //
 export const shoppingSerive = {
     shoppingGet, shoppingAdd, shoppingDelete, shoppingSomesDelete
 }

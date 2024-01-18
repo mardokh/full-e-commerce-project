@@ -1,0 +1,17 @@
+.favorites_Products_main_container {
+    margin-top: 150px;
+}
+
+.favorites_Products_container {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    height: 80px;
+    background-color: green;
+    margin-left: 80px;
+}
+
+.favorites_Products_items {
+    margin-left: 50px;
+    color: white;
+}

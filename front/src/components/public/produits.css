@@ -83,3 +83,7 @@
     font-size: 25px;
     color: rgba(0, 128, 0, 0.452);
 }
+
+.favorite {
+    color: red;
+}

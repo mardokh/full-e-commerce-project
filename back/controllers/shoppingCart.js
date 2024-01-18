@@ -6,7 +6,7 @@ const {Sequelize} = require('sequelize')
 
 
 // GLOBALS VARIABLS //
-const cookieName = 'client_id'
+const cookieName = 'client_id_shopping_carts'
 
 
 // ADD SHOPPING CARTS //
@@ -81,7 +81,7 @@ exports.addShoppingCart = async (req, res) => {
             }
 
             // Create & send cookie
-            res.cookie('client_id', clientId, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+            res.cookie(cookieName, clientId, { maxAge: 30 * 24 * 60 * 60 * 1000})
 
             // Send Successfully 
             return res.json({ data: product })
