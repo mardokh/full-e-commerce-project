@@ -7,11 +7,15 @@
     align-items: center;
     width: 500px;
     height: 80px;
-    background-color: green;
+    background-color: lightgreen;
     margin-left: 80px;
+    margin-bottom: 30px;
 }
 
 .favorites_Products_items {
     margin-left: 50px;
-    color: white;
+}
+
+.fa-trash {
+    margin-left: 150px;
 }

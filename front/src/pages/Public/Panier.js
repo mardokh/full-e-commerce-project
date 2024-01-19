@@ -121,8 +121,6 @@ const Panier = () => {
 
             // api call for get product
             const product = await shoppingSerive.shoppingGet()
-
-            console.log(product)
             
             // Update state
             setProducts(product.data.data)

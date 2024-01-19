@@ -33,34 +33,68 @@ const Produits = () => {
         }
     }
 
-    
-    // Get all products //
+
+    const getProducts = async () => {
+
+        try {
+            // Get all products 
+            const productsResponse = await productService.getAllproducts()
+
+            const productsData = productsResponse.data.data
+
+            // Get cookie from browser
+            const isFavoritesCookieExists = Cookies.get('client_id_favorites_products')
+
+            // If cookie exist
+            if (isFavoritesCookieExists) {
+
+                // Get all favotes products
+                const favoritesProducts = await favoriteProductService.favoriteProductGetAll()
+
+                if (favoritesProducts.data.data === "aucun produit favori") {
+
+                    //Update state
+                    setProducts(productsData)
+
+                    // Update loader 
+                    setISload(true)
+                }
+                else {
+                    // Get favorite produt id from favoritesProducts table
+                    const favoriteIds = favoritesProducts.data.data.map(favorite => favorite.product_id)
+
+                    // Update state
+                    setProducts(productsData.map(product => ({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        favorite: favoriteIds.includes(product.id) ? true : false
+                    })))
+
+                    // Update loader 
+                    setISload(true)
+                }
+            }
+            else {
+                //Update state
+                setProducts(productsData)
+
+                // Update loader 
+                setISload(true)
+            }
+        }
+        catch (err) {
+            handleError(err)
+        }
+    }
+
+
+    // GET ALL PRODUCTS //
     useEffect(() => {
+
         if (flag.current === false) {
-            productService.getAllproducts()
-                .then(res => {
-                    let productsData = res.data.data
-                    const isFavoritesCookieExists = Cookies.get('client_id_favorites_products')
-                    if (isFavoritesCookieExists) {
-                        favoriteProductService.favoriteProductGetAll()
-                            .then(res => {
-                                const favoriteIds = res.data.data.map(favorite => favorite.product_id)
-                                setProducts(productsData.map(product => ({
-                                    id: product.id,
-                                    name: product.name,
-                                    price: product.price,
-                                    image: product.image,
-                                    favorite: favoriteIds.includes(product.id) ? true : false
-                                })))
-                                setISload(true)
-                            })
-                            .catch(err => handleError(err))
-                    }else {
-                        setProducts(res.data.data)
-                        setISload(true) 
-                    }             
-                })
-                .catch(err => handleError(err))
+            getProducts()
         }
         return () => flag.current = true
     }, [])

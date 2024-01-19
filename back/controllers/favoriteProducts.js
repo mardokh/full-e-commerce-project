@@ -104,7 +104,7 @@ exports.getFavoritesProducts = async (req, res) => {
             
             // IF THE CLIENT HASN'T ADDED ANY FAVORITE
             if (!favoritesProducts.length > 0) {
-                return res.json({ data: "vous n'avez ajouté aucun produit favori" })
+                return res.json({ data: "aucun produit favori" })
             }
             else {
                 // Send favorites products to the client
@@ -113,7 +113,7 @@ exports.getFavoritesProducts = async (req, res) => {
         }
         else {
             // IF CLIENT DOESN'T HAVE (client_id) COOKIE
-            return res.json({ data: "vous n'avez ajouté aucun produit favori" })
+            return res.json({ data: "aucun produit favori" })
         }
     }
     catch (err) {

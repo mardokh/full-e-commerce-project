@@ -7,7 +7,7 @@ const FavoritesProducts = () => {
 
     // STATES //
     const [products, setProducts] = useState([])
-    //const [isLoad, setISload] = useState(false) // while false block acces to products state
+    const [isLoad, setISload] = useState(false) // while false block acces to products state
      
 
     // REFERENCE //
@@ -20,12 +20,37 @@ const FavoritesProducts = () => {
             favoriteProductService.favoriteProductGetAll()
             .then(res => {
                 setProducts(res.data.data)
+                setISload(true)
             })
             .catch(err => console.error(err))
         }
         return () => refUseEffect.current = true
     }, [])
 
+
+    // DELETE FAVORITE //
+    const deleteFavoriteProduct = async (productId) => {
+
+        try {
+            // Api call for delete favorite product
+            await favoriteProductService.favoriteProductDelete(productId)
+
+            // APi call for get favorites products
+            const favoriteProduct = await favoriteProductService.favoriteProductGetAll()
+
+            // Update state
+            setProducts(favoriteProduct.data.data)
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+    
+
+    // Loader //
+    if (!isLoad) {
+        return <div>Loading...</div>
+    }
 
 
     return (
@@ -38,6 +63,9 @@ const FavoritesProducts = () => {
                         </div>
                         <div className="favorites_Products_price favorites_Products_items">
                             <p>{product.favorite_product.price} Da</p>
+                        </div>
+                        <div>
+                            <i onClick={() => deleteFavoriteProduct(product.favorite_product.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>  
                 ))
