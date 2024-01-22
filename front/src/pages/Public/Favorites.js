@@ -1,11 +1,15 @@
 import React from "react"
 import FavoritesProducts from "../../components/public/FavoritesProducts"
+import FavoritesRecipes from "../../components/public/favoritesRecipes"
 
 
 const Favorites = () => {
 
     return (
-        <FavoritesProducts />
+        <div>
+            <FavoritesProducts />
+            <FavoritesRecipes />
+        </div>
     )
 }
 

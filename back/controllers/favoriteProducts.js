@@ -8,22 +8,22 @@ const Product = require('../models/product')
 const cookieName = 'client_id_favorites_products'
 
 
-// ADD FAVORITEPRODUCT //
+// ADD FAVORITE PRODUCT //
 exports.addFavoriteProduct = async (req, res) => {
 
     try {
-        // IF CLIENT HAS (client_id) COOKIE //
+        // IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME //
         if (req.cookies && req.cookies[cookieName]) {
 
             // Extract cookie 
             const client_id = req.cookies[cookieName]
 
             // Extract id
-            const product_id = req.body.id;
+            const product_id = req.body.id
             
             // Check params
             if (!product_id) {
-                return res.status(400).json({ message: 'Product ID is missing in the request body!' });
+                return res.status(400).json({ message: 'Product ID is missing in the request body !' });
             }
 
             // Set entrie
@@ -32,54 +32,55 @@ exports.addFavoriteProduct = async (req, res) => {
                 product_id: product_id
             }
 
-            // Entries loop creator
-            await FavoriteProduct.create(client_favoriteProduct);
+            // Create favorite product
+            await FavoriteProduct.create(client_favoriteProduct)
             
-            // Get product
-            const product = await Product.findOne({ where: { id: product_id } })
+            // Get favorites products
+            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: client_id } })
 
             // Check products
-            if (!product) {
-                return res.status(404).json({ message: 'Favorite product not found' })
+            if (!favorites_products) {
+                return res.status(404).json({ message: 'Favorites products not found' })
             }
 
             // Send successfully 
-            return res.json({ data: product })
+            return res.json({ data: favorites_products })
         }
 
         else {
-            // IF CLIENT DOESN'T HAVE (client_id) COOKIE //
+            // IF CLIENT DOESN'T HAVE COOKIE WITH SPECIFIED COOKIENAME //
             const productId = req.body.id
 
             // Check params
             if (!productId) {
-                return res.status(400).json({ message: 'Product ID is missing in the request body' })
+                return res.status(400).json({ message: 'Product ID is missing in the request body !' })
             }
 
-            // Set entrie
+            // Create clien id
             const clientId = uuidv4()
 
+            // Set entrie
             const client_favoriteProduct = {
                 client_id: clientId,
                 product_id: productId
             }
 
-            // Create entrie
+            // Create favorite product
             await FavoriteProduct.create(client_favoriteProduct)
 
-            // Get product
-            const product = await Product.findOne({ where: { id: productId } })
+            // Get favorites products
+            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: clientId} })
 
-            // Check product
-            if (!product) {
-                return res.status(404).json({ message: 'Favorite product not found' })
+            // Check products
+            if (!favorites_products) {
+                return res.status(404).json({ message: 'Favorites products not found' })
             }
 
             // Create & send cookie
             res.cookie(cookieName, clientId, { maxAge: 30 * 24 * 60 * 60 * 1000})
 
             // Send Successfully 
-            return res.json({ data: product })
+            return res.json({ data: favorites_products })
         } 
     }
     catch (err) {
@@ -92,7 +93,7 @@ exports.addFavoriteProduct = async (req, res) => {
 exports.getFavoritesProducts = async (req, res) => {
 
     try {
-        // CHECK IF CLIENT HAS (client_id) COOKIE
+        // CHECK IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME
         if (req.cookies && req.cookies[cookieName]) {
 
             // Extract client id 
@@ -112,7 +113,7 @@ exports.getFavoritesProducts = async (req, res) => {
             }    
         }
         else {
-            // IF CLIENT DOESN'T HAVE (client_id) COOKIE
+            // IF CLIENT DOESN'T HAVE CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME
             return res.json({ data: "aucun produit favori" })
         }
     }

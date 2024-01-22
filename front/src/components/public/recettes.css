@@ -60,3 +60,10 @@
     font-size: 15px;
 }
 
+.fa-bookmark {
+    color: rgba(0, 128, 0, 0.452);
+}
+
+.favRecipe {
+    color: red;
+}

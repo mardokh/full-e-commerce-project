@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import './produits.css'
 import { productService } from '../../_services/product.service'
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import { useNavigate, Link } from 'react-router-dom'
 import { favoriteProductService } from '../../_services/favoriteProduct.service'
 import Cookies from 'js-cookie'
+import MyContext from '../../_utils/contexts'
+
 
 const Produits = () => {
 
@@ -12,9 +14,10 @@ const Produits = () => {
     const [products, setProducts] = useState()
     const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
     const [refNotfound, setRefNotfound] = useState(false)
+    const { updateFavoriteCount } = useContext(MyContext)
 
 
-    // globals variabls
+    // Navigate
     const navigate = useNavigate() 
 
     
@@ -120,10 +123,11 @@ const Produits = () => {
         try {
             const heartIcon = event.currentTarget
             const computedStyle = window.getComputedStyle(heartIcon)
-            const color = computedStyle.color;
+            const color = computedStyle.color
     
             if (color === 'rgba(0, 128, 0, 0.45)') {  
-                await favoriteProductService.favoriteProductAdd({ id: productId })
+                const favorites_products = await favoriteProductService.favoriteProductAdd({ id: productId })
+                updateFavoriteCount(favorites_products.data.data.length)
                 heartIcon.style.color = 'red'
             } else {
                 await favoriteProductService.favoriteProductDelete(productId)

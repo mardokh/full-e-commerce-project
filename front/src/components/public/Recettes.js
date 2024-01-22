@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import './recettes.css';
+import React, { useEffect, useState, useRef } from "react"
+import './recettes.css'
 import { recipeService } from '../../_services/recipe.service'
-import { Link } from "react-router-dom";
+import { favoriteRecipeService } from '../../_services/favoriteRecipe.service'
+import { Link } from "react-router-dom"
+import Cookies from 'js-cookie'
 
 
 const Recettes = () => {
@@ -9,34 +11,111 @@ const Recettes = () => {
     // STATES //
     const [recipes, setRecipes] = useState([])
     const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
-    const [refNotfound, setRefNotfound] = useState(false)
+    const [refNotfound, setRefNotfound] = useState(false) 
 
 
     // REFERENCES //
     const flag = useRef(false)
 
 
+    // Handle errors
+    const handleError = (err) => {
+        if (err.response && err.response.status) {
+            setRefNotfound(true)
+            setRecipes(err.response.data.data)
+            setISload(true)
+        } else {
+            console.log('Error:', err.message)
+        }
+    }
+
+
+    const getRecipes = async () => {
+
+        try {
+            // Get all recipes 
+            const RecipesResponse = await recipeService.getAllRecipes()
+
+            const recipesData = RecipesResponse.data.data
+
+            // Get cookie from browser
+            const isFavoritesCookieExists = Cookies.get('client_id_favorites_recipes')
+
+            // If cookie exist
+            if (isFavoritesCookieExists) {
+
+                // Get all favotes recipes
+                const favoritesRecipes = await favoriteRecipeService.favoriteRecipeGetAll()
+
+                console.log(favoritesRecipes)
+
+                if (favoritesRecipes.data.data === "aucune recette favorite") {
+
+                    //Update state
+                    setRecipes(recipesData)
+
+                    // Update loader 
+                    setISload(true)
+                }
+                else {
+                    // Get favorite produt id from favoritesRecipes table
+                    const favoriteIds = favoritesRecipes.data.data.map(favorite => favorite.recipe_id)
+
+                    // Update state
+                    setRecipes(recipesData.map(recipe => ({
+                        id: recipe.id,
+                        name: recipe.name,
+                        image: recipe.image,
+                        favorite: favoriteIds.includes(recipe.id) ? true : false
+                    })))
+
+                    // Update loader 
+                    setISload(true)
+                }
+            }
+            else {
+                //Update state
+                setRecipes(recipesData)
+
+                // Update loader 
+                setISload(true)
+            }
+        }
+        catch (err) {
+            handleError(err)
+        }
+    }
+
+
     // API CALL FOR GET RECIPES //
     useEffect(() => {
 
         if (flag.current === false) {
-            recipeService.getAllRecipes()
-            .then(res => {
-                setRecipes(res.data.data)
-                setISload(true) // when true allow access to recipes state 
-            })
-            .catch(err => {
-                if (err.response && err.response.status) {
-                    setRecipes(err.response.data.data)
-                    setRefNotfound(true)
-                    setISload(true)
-                } else {
-                    console.log('Error:', err.message)
-                }
-            })
+            getRecipes()
         }
         return () => flag.current = true
     }, [])
+
+
+    // ADD RECIPE TO FAVORITES //
+    const addTofavorite = async (recipeId, event) => {
+        try {
+            const heartIcon = event.currentTarget
+            const computedStyle = window.getComputedStyle(heartIcon)
+            const color = computedStyle.color
+    
+            if (color === 'rgba(0, 128, 0, 0.45)') {  
+                await favoriteRecipeService.favoriteRecipeAdd({ id: recipeId })
+                //updateFavoriteCount(favorites_recipes.data.data.length)
+                heartIcon.style.color = 'red'
+            } else {
+                await favoriteRecipeService.favoriteRecipeDelete(recipeId)
+                heartIcon.style.color = 'rgba(0, 128, 0, 0.45)'
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
 
     // Loader //
@@ -62,7 +141,7 @@ const Recettes = () => {
                                     <i class="fa-regular fa-star"></i>
                                     <i class="fa-regular fa-star"></i>
                                 </div>
-                                <i class="fa-regular fa-bookmark"></i>
+                                <Link><i class={`fa-regular fa-bookmark ${recipe.favorite && 'favRecipe'}`} onClick={(e) => addTofavorite(recipe.id, e)}></i></Link>
                             </div>
                         </div>
                     </div>

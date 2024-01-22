@@ -9,7 +9,7 @@ const shopping = require('./routes/shoppingCart')
 const products = require('./routes/products')
 const recipes = require('./routes/recipes')
 const favoritesProducts = require('./routes/favoriteProducts')
-//const favoritesRecipes = require('./routes/favoriteRecipes')
+const favoritesRecipes = require('./routes/favoriteRecipes')
 
 
 // MODELS IMPORTS //
@@ -48,7 +48,7 @@ app.use('/shopping', shopping)
 app.use('/products', products)
 app.use('/recipes', recipes)
 app.use('/favorites/products', favoritesProducts)
-//app.use('/favorites/recipes', favoritesRecipes)
+app.use('/favorites/recipes', favoritesRecipes)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 
@@ -68,7 +68,7 @@ DB.authenticate()
     product.hasOne(favoriteProduct, { foreignKey: 'product_id', onDelete: 'SET NULL' })
 
     // tables associations : favoriteRecipes to recipes - recipes to favoriteRecipes
-    favoriteRecipe.belongsTo(recipe, { foreignKey: 'recipe_id', onDelete: 'CASCADE' })
+    favoriteRecipe.belongsTo(recipe, { foreignKey: 'recipe_id', as: 'favorite_recipe', onDelete: 'CASCADE' })
     recipe.hasOne(favoriteRecipe, { foreignKey: 'recipe_id', onDelete: 'SET NULL' })
 
     // synchronizate models

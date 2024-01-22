@@ -1,17 +1,22 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from '../../components/public/Header';
-import './layout.css';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Header from '../../components/public/Header'
+import './layout.css'
+import { MyProvider } from '../../_utils/contexts'
+
 
 const Layout = () => {
-     return (
-        <div className='public_layout'>
-            <Header/>
-            <Outlet/>
-        </div>
-     )
+    return (
+        <MyProvider>
+            <div className='public_layout'>
+                <Header/>
+                <Outlet/>
+            </div>
+        </MyProvider>
+    )
 }
 
-export default Layout;
+
+export default Layout
 
 

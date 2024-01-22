@@ -1,11 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './header.css';
-import logo from '../../images/logo.png';
-import heart from '../../images/heart.png';
-
+import React, {useContext} from 'react'
+import { Link } from 'react-router-dom'
+import './header.css'
+import logo from '../../images/logo.png'
+import heart from '../../images/heart.png'
+import MyContext from '../../_utils/contexts'
 
 const Header = () => {
+
+    const { favoriteCount } = useContext(MyContext)
 
     return (
         <div className='header_div'>
@@ -19,7 +21,10 @@ const Header = () => {
                             <li className='services'><Link to="/services">services</Link></li>
                         </div>
                         <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"></i></li>
-                        <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
+                        <div className='favorites_products_icon'>
+                            <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
+                            <span className='favorites_products_count'>{favoriteCount}</span>
+                        </div>
                         <li className='panier'><Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping"></i><span>0</span></Link></li>
                     </ul>
                 </nav>
@@ -28,6 +33,6 @@ const Header = () => {
     )
 }
 
-export default Header;
+export default Header
 
 
