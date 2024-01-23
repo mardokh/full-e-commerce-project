@@ -1,0 +1,21 @@
+.favorites_Recipes_main_container {
+    margin-top: 150px;
+}
+
+.favorites_Recipes_container {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    height: 80px;
+    background-color: lightgreen;
+    margin-left: 80px;
+    margin-bottom: 30px;
+}
+
+.favorites_Recipes_items {
+    margin-left: 50px;
+}
+
+.fa-trash {
+    margin-left: 150px;
+}

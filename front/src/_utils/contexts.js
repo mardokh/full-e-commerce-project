@@ -9,14 +9,21 @@ const MyContext = createContext()
 export const MyProvider = ({ children }) => {
 
     // Favorites products count 
-    const [favoriteCount, setFavoriteCount] = useState(0)
+    const [favoritesProductsCount, setFavoritesProductsCount] = useState(0)
 
-    const updateFavoriteCount = (count) => {
-        setFavoriteCount(count)
+    // Favorites recipes count 
+    const [favoritesRecipesCount, setFavoritesRecipesCount] = useState(0)
+
+    const updateFavoritesProductsCount = (count) => {
+        setFavoritesProductsCount(count)
+    }
+
+    const updateFavoritesRecipesCount = (count) => {
+        setFavoritesRecipesCount(count)
     }
 
     return (
-        <MyContext.Provider value={{ favoriteCount, updateFavoriteCount }}>
+        <MyContext.Provider value={{ favoritesProductsCount, updateFavoritesProductsCount, favoritesRecipesCount, updateFavoritesRecipesCount }}>
         {children}
         </MyContext.Provider>
     )
@@ -24,4 +31,4 @@ export const MyProvider = ({ children }) => {
 
 
 // MODULES EXPORTS //
-export default MyContext;
+export default MyContext

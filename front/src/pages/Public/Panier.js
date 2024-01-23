@@ -25,9 +25,8 @@ const Panier = () => {
                 if (res.data.data && res.data.data[0] && res.data.data[0].shopping_cart_product) {      
                     refProducts.current = true
                 }
-                console.log(res.data.data)
                 setProducts(res.data.data)
-                setISload(true) // when true allow acces to products state
+                setISload(true)
             })
             .catch(err => console.log(err))
         }

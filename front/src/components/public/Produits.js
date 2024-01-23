@@ -14,7 +14,7 @@ const Produits = () => {
     const [products, setProducts] = useState()
     const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
     const [refNotfound, setRefNotfound] = useState(false)
-    const { updateFavoriteCount } = useContext(MyContext)
+    const { updateFavoritesProductsCount } = useContext(MyContext)
 
 
     // Navigate
@@ -127,8 +127,8 @@ const Produits = () => {
     
             if (color === 'rgba(0, 128, 0, 0.45)') {  
                 const favorites_products = await favoriteProductService.favoriteProductAdd({ id: productId })
-                updateFavoriteCount(favorites_products.data.data.length)
-                heartIcon.style.color = 'red'
+                updateFavoritesProductsCount(favorites_products.data.data.length)
+                heartIcon.style.color = 'rgb(228, 60, 60)'
             } else {
                 await favoriteProductService.favoriteProductDelete(productId)
                 heartIcon.style.color = 'rgba(0, 128, 0, 0.45)'
@@ -151,7 +151,7 @@ const Produits = () => {
             {!refNotfound ?
                 products.map(product => (
                 <div key={product.id} className='produits_img_englob'>
-                    <Link><i class={`fa-regular fa-heart ${product.favorite && 'favorite'}`} onClick={(e) => addTofavorite(product.id, e)}></i></Link>
+                    <Link><i class={`fa-solid fa-heart ${product.favorite && 'favorite'}`} onClick={(e) => addTofavorite(product.id, e)}></i></Link>
                     <Link to={`/produit_details/${product.id}`}>{<div className='produits_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>}</Link>
                     <div className='produit_info'>
                         <p className='produits_name'>{product.name}</p>

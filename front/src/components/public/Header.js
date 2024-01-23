@@ -7,7 +7,7 @@ import MyContext from '../../_utils/contexts'
 
 const Header = () => {
 
-    const { favoriteCount } = useContext(MyContext)
+    const { favoritesProductsCount, favoritesRecipesCount } = useContext(MyContext)
 
     return (
         <div className='header_div'>
@@ -23,7 +23,7 @@ const Header = () => {
                         <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"></i></li>
                         <div className='favorites_products_icon'>
                             <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
-                            <span className='favorites_products_count'>{favoriteCount}</span>
+                            <span className='favorites_products_count'>{favoritesProductsCount+favoritesRecipesCount}</span>
                         </div>
                         <li className='panier'><Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping"></i><span>0</span></Link></li>
                     </ul>

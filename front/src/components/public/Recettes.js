@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useContext } from "react"
 import './recettes.css'
 import { recipeService } from '../../_services/recipe.service'
 import { favoriteRecipeService } from '../../_services/favoriteRecipe.service'
 import { Link } from "react-router-dom"
 import Cookies from 'js-cookie'
-
+import MyContext from '../../_utils/contexts'
 
 const Recettes = () => {
 
     // STATES //
     const [recipes, setRecipes] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
-    const [refNotfound, setRefNotfound] = useState(false) 
+    const [isLoad, setISload] = useState(false)
+    const [refNotfound, setRefNotfound] = useState(false)
+    const { updateFavoritesRecipesCount } = useContext(MyContext) 
 
 
     // REFERENCES //
@@ -105,9 +106,9 @@ const Recettes = () => {
             const color = computedStyle.color
     
             if (color === 'rgba(0, 128, 0, 0.45)') {  
-                await favoriteRecipeService.favoriteRecipeAdd({ id: recipeId })
-                //updateFavoriteCount(favorites_recipes.data.data.length)
-                heartIcon.style.color = 'red'
+                const favorites_recipes = await favoriteRecipeService.favoriteRecipeAdd({ id: recipeId })
+                updateFavoritesRecipesCount(favorites_recipes.data.data.length)
+                heartIcon.style.color = 'gold'
             } else {
                 await favoriteRecipeService.favoriteRecipeDelete(recipeId)
                 heartIcon.style.color = 'rgba(0, 128, 0, 0.45)'
@@ -141,7 +142,7 @@ const Recettes = () => {
                                     <i class="fa-regular fa-star"></i>
                                     <i class="fa-regular fa-star"></i>
                                 </div>
-                                <Link><i class={`fa-regular fa-bookmark ${recipe.favorite && 'favRecipe'}`} onClick={(e) => addTofavorite(recipe.id, e)}></i></Link>
+                                <Link><i class={`fa-solid fa-bookmark ${recipe.favorite && 'favRecipe'}`} onClick={(e) => addTofavorite(recipe.id, e)}></i></Link>
                             </div>
                         </div>
                     </div>
