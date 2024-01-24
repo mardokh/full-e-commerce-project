@@ -19,6 +19,9 @@ router.get('', controller.getFavoritesProducts)
 router.delete('/delete/:id', controller.deleteFavoritesProducts)
 
 
+// GET FAVORITES PRODUCTS COUNT //
+router.get('/count', controller.getFavoritesProductsCount)
+
 
 // EXPORTS //
 module.exports = router

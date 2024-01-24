@@ -8,7 +8,7 @@ const Panier = () => {
 
     // STATES //
     const [products, setProducts] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to products state   
+    const [isLoad, setISload] = useState(false)   
     const [refConfirm, setRefConfirm] = useState()
 
     

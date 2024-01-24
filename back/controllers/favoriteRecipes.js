@@ -140,3 +140,30 @@ exports.deleteFavoritesRecipes = async (req, res) => {
         return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
     }
 }
+
+// GET FAVORITES RECIPES COUNT //
+exports.getFavoritesRecipesCount = async (req, res) => {
+
+    try {
+        // IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME //
+        if (req.cookies && req.cookies[cookieName]) {
+
+            // Extract cookie 
+            const client_id = req.cookies[cookieName]
+
+            // Get favorites recipes
+            const favorites_recipes = await FavoriteRecipe.findAll({ where: { client_id: client_id } })
+
+            // Check if favorites recipes exists
+            if (!favorites_recipes) {
+                return res.status(404).json({ message: 'Favorites recipes not found' })
+            }
+
+            // Send successfully 
+            return res.json({ data: favorites_recipes })
+        }
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
+    }
+}

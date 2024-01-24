@@ -48,8 +48,6 @@ const Recettes = () => {
                 // Get all favotes recipes
                 const favoritesRecipes = await favoriteRecipeService.favoriteRecipeGetAll()
 
-                console.log(favoritesRecipes)
-
                 if (favoritesRecipes.data.data === "aucune recette favorite") {
 
                     //Update state
@@ -101,16 +99,32 @@ const Recettes = () => {
     // ADD RECIPE TO FAVORITES //
     const addTofavorite = async (recipeId, event) => {
         try {
+            // Get css style of icon 
             const heartIcon = event.currentTarget
             const computedStyle = window.getComputedStyle(heartIcon)
             const color = computedStyle.color
     
-            if (color === 'rgba(0, 128, 0, 0.45)') {  
-                const favorites_recipes = await favoriteRecipeService.favoriteRecipeAdd({ id: recipeId })
-                updateFavoritesRecipesCount(favorites_recipes.data.data.length)
+            if (color === 'rgba(0, 128, 0, 0.45)') {
+                
+                // Api call for add favorite recipe
+                const favorites_recipes_add = await favoriteRecipeService.favoriteRecipeAdd({ id: recipeId })
+
+                // Update state context
+                updateFavoritesRecipesCount(favorites_recipes_add.data.data.length)
+
+                // Change icon color
                 heartIcon.style.color = 'gold'
             } else {
+                // Api call for delete favorite recipe
                 await favoriteRecipeService.favoriteRecipeDelete(recipeId)
+
+                // Api call for get all favorites recipes
+                const favorites_recipes_del = await favoriteRecipeService.favoriteRecipeCount()
+
+                // Update state context
+                updateFavoritesRecipesCount(favorites_recipes_del.data.data.length)
+
+                // Change icon color
                 heartIcon.style.color = 'rgba(0, 128, 0, 0.45)'
             }
         } catch (err) {

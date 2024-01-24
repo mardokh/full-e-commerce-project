@@ -37,6 +37,7 @@ const Produits = () => {
     }
 
 
+    // GET ALL PRODUCTS FUNCTION //
     const getProducts = async () => {
 
         try {
@@ -93,7 +94,7 @@ const Produits = () => {
     }
 
 
-    // GET ALL PRODUCTS //
+    // API CALL FOR GET ALL PRODUCTS //
     useEffect(() => {
 
         if (flag.current === false) {
@@ -121,16 +122,33 @@ const Produits = () => {
     // ADD PRODUCT TO FAVORITES //
     const addTofavorite = async (productId, event) => {
         try {
+            // Get css style of icon 
             const heartIcon = event.currentTarget
             const computedStyle = window.getComputedStyle(heartIcon)
             const color = computedStyle.color
     
-            if (color === 'rgba(0, 128, 0, 0.45)') {  
-                const favorites_products = await favoriteProductService.favoriteProductAdd({ id: productId })
-                updateFavoritesProductsCount(favorites_products.data.data.length)
+            if (color === 'rgba(0, 128, 0, 0.45)') {
+                
+                // Api call for add favorite product
+                const favorites_products_add = await favoriteProductService.favoriteProductAdd({ id: productId })
+
+                // Update state context
+                updateFavoritesProductsCount(favorites_products_add.data.data.length)
+
+                // Change icon color
                 heartIcon.style.color = 'rgb(228, 60, 60)'
+
             } else {
+                // Api call for delete favorite product
                 await favoriteProductService.favoriteProductDelete(productId)
+
+                // Api call for get all favorites products
+                const favorites_products_del = await favoriteProductService.favoriteProductCount()
+
+                // Update state context
+                updateFavoritesProductsCount(favorites_products_del.data.data.length)
+
+                // Change icon color
                 heartIcon.style.color = 'rgba(0, 128, 0, 0.45)'
             }
         } catch (err) {

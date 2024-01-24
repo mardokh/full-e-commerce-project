@@ -71,7 +71,7 @@ exports.addFavoriteProduct = async (req, res) => {
             // Get favorites products
             const favorites_products = await FavoriteProduct.findAll({ where: { client_id: clientId} })
 
-            // Check products
+            // Check if favorites products exists
             if (!favorites_products) {
                 return res.status(404).json({ message: 'Favorites products not found' })
             }
@@ -135,6 +135,33 @@ exports.deleteFavoritesProducts = async (req, res) => {
 
         // Send successfully
         return res.json({data: 'favorite product deleted successfully'})
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
+    }
+}
+
+// GET FAVORITES PRODUCTS COUNT //
+exports.getFavoritesProductsCount = async (req, res) => {
+
+    try {
+        // IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME //
+        if (req.cookies && req.cookies[cookieName]) {
+
+            // Extract cookie 
+            const client_id = req.cookies[cookieName]
+
+            // Get favorites products
+            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: client_id } })
+
+            // Check if favorites products exists
+            if (!favorites_products) {
+                return res.status(404).json({ message: 'Favorites products not found' })
+            }
+
+            // Send successfully 
+            return res.json({ data: favorites_products })
+        }
     }
     catch (err) {
         return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
