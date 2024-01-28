@@ -10,6 +10,7 @@ const products = require('./routes/products')
 const recipes = require('./routes/recipes')
 const favoritesProducts = require('./routes/favoriteProducts')
 const favoritesRecipes = require('./routes/favoriteRecipes')
+const productNotes = require('./routes/productNotes')
 
 
 // MODELS IMPORTS //
@@ -18,6 +19,7 @@ const product = require('./models/product')
 const recipe = require('./models/recipe')
 const favoriteProduct = require('./models/favoriteProduct')
 const favoriteRecipe = require('./models/favoriteRecipe')
+const productNote = require('./models/productNote')
 
 
 // IMPORT DATABASE CONNECTER //
@@ -49,6 +51,7 @@ app.use('/products', products)
 app.use('/recipes', recipes)
 app.use('/favorites/products', favoritesProducts)
 app.use('/favorites/recipes', favoritesRecipes)
+app.use('/products/notes', productNotes)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 
@@ -77,6 +80,7 @@ DB.authenticate()
     favoriteProduct.sync({alter: true})
     recipe.sync({alter: true})
     favoriteRecipe.sync({alter: true})
+    productNote.sync({alter: true})
     
     // start server
     app.listen(8989, () => { 

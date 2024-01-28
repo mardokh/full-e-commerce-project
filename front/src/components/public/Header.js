@@ -21,6 +21,7 @@ const Header = () => {
     const [favoritesProducts, setFavoriteProducts] = useState(0)
     const [favoritesRecipes, setFavoriteRecipes] = useState(0)
     const [useEffectFlag, setUseEffectFlag] = useState(false)
+    const [isLoad, setIsload] = useState(false)
 
 
     // GET FAVORITES FUNCTION //
@@ -38,6 +39,9 @@ const Header = () => {
 
                 // Update state
                 setFavoriteProducts(favoties_products.data.data.length)
+
+                // Update loading
+                setIsload(true)
             }
 
             if (FavoritesRecipesCookie) {
@@ -46,6 +50,9 @@ const Header = () => {
 
                 // Update state
                 setFavoriteRecipes(favorites_recipes.data.data.length)
+
+                // Update loading
+                setIsload(true)
             }
         }
         catch (err) {
