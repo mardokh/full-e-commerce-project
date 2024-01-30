@@ -11,7 +11,7 @@ const productNote = DB.define('product_note', {
         primaryKey: true,
         autoIncrement: true
     },
-    email: {
+    client_id: {
         type: DataTypes.STRING(255),
     },
     product_id: {

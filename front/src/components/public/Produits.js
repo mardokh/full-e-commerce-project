@@ -12,9 +12,11 @@ const Produits = () => {
 
     // States //
     const [products, setProducts] = useState()
-    const [isLoad, setISload] = useState(false) // while false block acces to cocktails var
+    const [isLoad, setISload] = useState(false)
     const [refNotfound, setRefNotfound] = useState(false)
     const { updateFavoritesProductsCount } = useContext(MyContext)
+    const { updateProductsNotesDisplay } = useContext(MyContext)
+    const { updateProductsNotesId } = useContext(MyContext)
 
 
     // Navigate
@@ -155,8 +157,13 @@ const Produits = () => {
             console.error(err)
         }
     }
-    
 
+    const displayNotesForm = (productId) => {
+        updateProductsNotesDisplay(true)
+        updateProductsNotesId(productId)
+    }
+
+    
     // Loader //
     if (!isLoad) {
         return <div>Loading...</div>
@@ -176,20 +183,24 @@ const Produits = () => {
                         <div className='prix_notes'>
                             <p>{product.price} Da</p>
                             <div className='produits_note'>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
+                                <Link onClick={() => displayNotesForm(product.id)}>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </Link>
                             </div>
                         </div>
                         <button className='add_cart' onClick={() => addToCart(product.id)}>ajouter au panier</button>
                     </div>
                 </div>
-                )) : <div>{products}</div> 
+                )) : <div>{products}</div>
             }
         </div>
     )
 }
 
+
+// MODULES EXPORTS //
 export default Produits 

@@ -15,10 +15,10 @@ exports.addFavoriteProduct = async (req, res) => {
         // IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME //
         if (req.cookies && req.cookies[cookieName]) {
 
-            // Extract cookie 
+            // Extract client id
             const client_id = req.cookies[cookieName]
 
-            // Extract id
+            // Extract product id
             const product_id = req.body.id
             
             // Check params

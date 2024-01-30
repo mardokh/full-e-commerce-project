@@ -87,3 +87,7 @@
 .favorite {
     color: rgb(228, 60, 60);
 }
+
+.fa-star {
+    color: green;
+}

@@ -14,6 +14,20 @@ export const MyProvider = ({ children }) => {
     // Favorites recipes count 
     const [favoritesRecipesCount, setFavoritesRecipesCount] = useState(0)
 
+    // Products notes displaying
+    const [productsNotesDisplay, setProducstNotesDisplay] = useState(false)
+
+    // Products notes id
+    const [productsNotesId, setProducstNotesId] = useState(false)
+
+    const updateProductsNotesDisplay = (switchDisp) => {
+        setProducstNotesDisplay(switchDisp)
+    }
+
+    const updateProductsNotesId = (productId) => {
+        setProducstNotesId(productId)
+    }
+
     const updateFavoritesProductsCount = (count) => {
         setFavoritesProductsCount(count)
     }
@@ -23,7 +37,16 @@ export const MyProvider = ({ children }) => {
     }
 
     return (
-        <MyContext.Provider value={{ favoritesProductsCount, updateFavoritesProductsCount, favoritesRecipesCount, updateFavoritesRecipesCount }}>
+        <MyContext.Provider value={{
+            favoritesProductsCount, 
+            updateFavoritesProductsCount, 
+            favoritesRecipesCount, 
+            updateFavoritesRecipesCount,
+            productsNotesDisplay,
+            updateProductsNotesDisplay,
+            productsNotesId,
+            updateProductsNotesId
+        }}>
         {children}
         </MyContext.Provider>
     )
