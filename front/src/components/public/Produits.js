@@ -74,6 +74,7 @@ const Produits = () => {
                         id: product.id,
                         name: product.name,
                         price: product.price,
+                        note: product.note,
                         image: product.image,
                         favorite: favoriteIds.includes(product.id) ? true : false
                     })))
@@ -184,11 +185,11 @@ const Produits = () => {
                             <p>{product.price} Da</p>
                             <div className='produits_note'>
                                 <Link onClick={() => displayNotesForm(product.id)}>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star" style={{ color: product.note >= 1 ? 'gold' : '' }}></i>
+                                    <i className="fa-solid fa-star" style={{ color: product.note >= 2 ? 'gold' : '' }}></i>
+                                    <i className="fa-solid fa-star" style={{ color: product.note >= 3 ? 'gold' : '' }}></i>
+                                    <i className="fa-solid fa-star" style={{ color: product.note >= 4 ? 'gold' : '' }}></i>
+                                    <i className="fa-solid fa-star" style={{ color: product.note >= 5 ? 'gold' : '' }}></i>
                                 </Link>
                             </div>
                         </div>

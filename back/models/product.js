@@ -21,7 +21,7 @@ const product = DB.define('product', {
         type: DataTypes.DECIMAL(30, 2),
     },
     note: {
-        type: DataTypes.DECIMAL(30, 2)
+        type: DataTypes.INTEGER
     },
     image: {
         type: DataTypes.STRING(255),
