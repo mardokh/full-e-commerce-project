@@ -26,7 +26,9 @@ const Home = () => {
 
         {/* Products notes */}
         {productsNotesDisplay &&
+        <div className="container_products_notes">
             <ProductNotes />
+        </div>
         }
 
         {/* Section produits */}

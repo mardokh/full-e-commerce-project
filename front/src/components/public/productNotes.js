@@ -9,6 +9,7 @@ const ProductNotes = () => {
 
     // STATES //
     const { productsNotesId } = useContext(MyContext)
+    const { updateProductsNotesDisplay } = useContext(MyContext)
     const [note, setNote] = useState(1)
 
 
@@ -27,7 +28,8 @@ const ProductNotes = () => {
             // Api call
             productNoteService.productNotesAdd(formData)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
+                    updateProductsNotesDisplay(false)
                 })
                 .catch(err => console.error('Error: ', err))
 
@@ -42,17 +44,27 @@ const ProductNotes = () => {
         setNote(value)
     }
 
+    // CLOSE NOTE FROM //
+    const closeNoteForm = () => {
+        updateProductsNotesDisplay(false)
+    }
+
+
 
     return (
-        <div>
-            <form className="products_notes_container" onSubmit={subNotesFrom}>
+        <div className="products_notes_container">
+            <i class="fa-solid fa-rectangle-xmark" onClick={closeNoteForm}></i>
+            <form className="products_notes_form_container" onSubmit={subNotesFrom}>
+                <label>Note sur /5</label>
                 <div>
-                    <label>Note sur /5</label>
-                    <input type="number" name="note" onChange={(e) => handlInputChange(e.target.value)}/>
+                    <i className="fa-solid fa-star" style={{color: 'gold'}}></i>
+                    <i className="fa-solid fa-star" style={{color: 'gold'}}></i>
+                    <i className="fa-solid fa-star" style={{color: 'gold'}}></i>
+                    <i className="fa-solid fa-star" style={{color: 'gold'}}></i>
+                    <i className="fa-solid fa-star" style={{color: 'gold'}}></i>
                 </div>
-                <div>
-                    <input className='btn_products_notes' type='submit' value="soumettre"/>
-                </div>
+                <input className="input_product_notes" type="number" name="note" max="5" min="1" onChange={(e) => handlInputChange(e.target.value)}/>
+                <input className='btn_products_notes' type='submit' value="soumettre"/>
             </form>
         </div>
     )
