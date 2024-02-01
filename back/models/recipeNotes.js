@@ -4,7 +4,7 @@ const DB = require('../db.config')
 
 
 // DEFINE MODEL //
-const productNote = DB.define('product_note', {
+const recipeNote = DB.define('recipe_note', {
     id: {
         type: DataTypes.INTEGER(11),
         primaryKey: true,
@@ -13,7 +13,7 @@ const productNote = DB.define('product_note', {
     client_id: {
         type: DataTypes.STRING(255),
     },
-    product_id: {
+    recipe_id: {
         type: DataTypes.INTEGER(11)
     },
     note: {
@@ -23,4 +23,4 @@ const productNote = DB.define('product_note', {
 
 
 // EXPORTING //
-module.exports = productNote
+module.exports = recipeNote

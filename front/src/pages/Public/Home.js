@@ -5,6 +5,7 @@ import Recettes from '../../components/public/Recettes'
 import Footer from '../../components/public/Footer'
 import RecettesBanner from '../../components/public/Recettes_banner'
 import ProductNotes from '../../components/public/productNotes'
+import RecipeNotes from '../../components/public/recipeNotes'
 import './layout.css'
 import MyContext from "../../_utils/contexts"
 
@@ -13,6 +14,7 @@ const Home = () => {
 
     // STATES //
     const { productsNotesDisplay } = useContext(MyContext)
+    const { recipesNotesDisplay } = useContext(MyContext)
 
 
     // RENDERING //
@@ -28,6 +30,13 @@ const Home = () => {
         {productsNotesDisplay &&
         <div className="container_products_notes">
             <ProductNotes />
+        </div>
+        }
+
+        {/* Recipes notes */}
+        {recipesNotesDisplay &&
+        <div className="container_recipes_notes">
+            <RecipeNotes />
         </div>
         }
 

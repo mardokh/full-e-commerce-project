@@ -12,7 +12,9 @@ const Recettes = () => {
     const [recipes, setRecipes] = useState([])
     const [isLoad, setISload] = useState(false)
     const [refNotfound, setRefNotfound] = useState(false)
-    const { updateFavoritesRecipesCount } = useContext(MyContext) 
+    const { updateFavoritesRecipesCount } = useContext(MyContext)
+    const { updateRecipesNotesDisplay } = useContext(MyContext)
+    const { updateRecipesNotesId } = useContext(MyContext)
 
 
     // REFERENCES //
@@ -64,6 +66,7 @@ const Recettes = () => {
                     setRecipes(recipesData.map(recipe => ({
                         id: recipe.id,
                         name: recipe.name,
+                        note: recipe.note,
                         image: recipe.image,
                         favorite: favoriteIds.includes(recipe.id) ? true : false
                     })))
@@ -133,6 +136,12 @@ const Recettes = () => {
     }
 
 
+    const displayNotesForm = (recipeId) => {
+        updateRecipesNotesDisplay(true)
+        updateRecipesNotesId(recipeId)
+    }
+
+
     // Loader //
     if (!isLoad) {
         return <div>Loading...</div>
@@ -150,11 +159,13 @@ const Recettes = () => {
                             <p className='recette_name'>{recipe.name}</p>
                             <div className="recettes_interactions">
                                 <div className="recettes_note">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
+                                    <Link onClick={() => displayNotesForm(recipe.id)}>
+                                        <i className="fa-solid fa-star" style={{ color: recipe.note >= 1 ? 'gold' : '' }}></i>
+                                        <i className="fa-solid fa-star" style={{ color: recipe.note >= 2 ? 'gold' : '' }}></i>
+                                        <i className="fa-solid fa-star" style={{ color: recipe.note >= 3 ? 'gold' : '' }}></i>
+                                        <i className="fa-solid fa-star" style={{ color: recipe.note >= 4 ? 'gold' : '' }}></i>
+                                        <i className="fa-solid fa-star" style={{ color: recipe.note >= 5 ? 'gold' : '' }}></i>
+                                    </Link>
                                 </div>
                                 <Link><i class={`fa-solid fa-bookmark ${recipe.favorite && 'favRecipe'}`} onClick={(e) => addTofavorite(recipe.id, e)}></i></Link>
                             </div>
@@ -168,4 +179,4 @@ const Recettes = () => {
 }
 
 
-export default Recettes;
+export default Recettes

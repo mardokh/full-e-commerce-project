@@ -33,6 +33,18 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    z-index: 100;
-    
+    z-index: 100;   
+}
+
+.container_recipes_notes {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(144, 238, 144, 0.526);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 100;   
 }
