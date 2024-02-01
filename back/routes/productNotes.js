@@ -7,22 +7,11 @@ const multer = require('multer')
 // EXPRESS ROUTER INSTANCIATE //
 let router = express.Router()
 
-// MULTER CONFIGURATION FOR STORING IMAGES //
-var storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null,"./uploads")
-    },
-    filename: (req, file, callback) => {
-        callback(null, `image-${Date.now()}.${file.originalname}`)
-    }
-})
-var upload = multer({
-    storage: storage
-})
-
+// MULTER INSTANCIATE //
+const upload = multer()
 
 // ADD PRODUCT NOTE //
-router.put('/add', upload.single('image'), controller.addProductNote)
+router.put('/add', upload.none(), controller.addProductNote)
 
 
 // EXPORTS //
