@@ -2,7 +2,7 @@
 const express = require('express')
 const controller = require('../controllers/recipes')
 const multer = require('multer')
-//const path = require('path')
+const path = require('path')
 
 
 // EXPRESS ROUTER INSTANCIATE //
@@ -20,7 +20,7 @@ router.get('/:id', controller.getOnRecipe)
 // MULTER CONFIGURATION FOR STORING IMAGES //
 var storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "./uploads")
+        callback(null,"./uploads")
     },
     filename: (req, file, callback) => {
         callback(null, `image-${Date.now()}.${file.originalname}`)
@@ -40,7 +40,7 @@ router.patch('/update', upload.single('image'), controller.updateRecipe)
 
 
 // DELETE RECIPE //
-router.delete('/delete/:id', controller.deleteRecipes)
+router.delete('/delete/:id', controller.deleteRecipe)
 
 
 

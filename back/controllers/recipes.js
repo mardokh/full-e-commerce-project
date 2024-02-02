@@ -1,6 +1,7 @@
 // MODULES IMPORT //
-const {sequelize} = require('sequelize')
 const Recipe = require('../models/recipe')
+const fs = require('fs')
+const path = require('path')
 
 
 // GET ALL RECIPES //
@@ -133,19 +134,35 @@ exports.updateRecipe = async (req, res) => {
 
 
 // DELETE RECIPE //
-exports.deleteRecipes = async (req, res) => {
+exports.deleteRecipe = async (req, res) => {
 
     try {
-        // Exctract id from request
+        // Extract recipe id from request
         const recipeId = parseInt(req.params.id)
 
-        // Delete recipe
-        await Recipe.destroy({where: {id: recipeId}, force: true})
+        // Get recipe from database 
+        const recipe = await Recipe.findOne({ where: { id: recipeId } })
 
-        // Send successffully
-        return res.json({message: 'Product successfully delete'})
+        // Check if recipe exist or not
+        if (recipe === null) {
+            return res.status(404).json({ message: 'Recipe not found !' })
+        }
+
+        // Delete recipe
+        await Recipe.destroy({ where: { id: recipeId }, force: true })
+
+        // Get the image filename associated
+        const imageFilename = recipe.image
+
+        // Delete the associated image file
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
+            
+        // Send successfully response
+        return res.json({ message: 'Recipe and associated image successfully deleted' })
     }
     catch (err) {
-        return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
+        return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack })
     }
 }
+
+

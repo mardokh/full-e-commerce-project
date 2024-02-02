@@ -54,20 +54,23 @@ const Panier = () => {
         }
     }
 
-    
+
     // DECREASE PRODUCT QUANTITY HANDLE //
     const downQuantity = async (productId) => {
         try {
-            // api call for add product
-            await shoppingSerive.shoppingDelete(productId)
+            const currentProduct = products.find(product => product.shopping_cart_product.id === productId)
 
-            // api call for get product
-            const product = await shoppingSerive.shoppingGet()
-            
-            // Update state
-            setProducts(product.data.data)
-        }
-        catch (err) {
+            if (currentProduct.product_count > 1) {
+                // api call for subtracting product
+                await shoppingSerive.shoppingDelete(productId)
+
+                // api call for get product
+                const product = await shoppingSerive.shoppingGet()
+
+                // Update state
+                setProducts(product.data.data)
+            }
+        } catch (err) {
             console.error(err)
         }
     }

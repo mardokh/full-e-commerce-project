@@ -214,12 +214,12 @@ exports.deleteProduct = async (req, res) => {
         // Get product from database 
         const product = await Product.findOne({ where: { id: productId } })
 
-        // Check if product exist
+        // Check if product exist or not
         if (product === null) {
             return res.status(404).json({ message: 'Product not found !' })
         }
 
-        // Delete product from database
+        // Delete product
         await Product.destroy({ where: { id: productId }, force: true })
 
         // Get the image filename associated

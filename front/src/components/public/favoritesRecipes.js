@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useContext } from "react"
 import { favoriteRecipeService } from "../../_services/favoriteRecipe.service"
 import "./favorites_recipes.css"
+import MyContext from '../../_utils/contexts'
 
 
 const FavoritesRecipes = () => {
@@ -8,6 +9,7 @@ const FavoritesRecipes = () => {
     // STATES //
     const [recipes, setRecipes] = useState([])
     const [isLoad, setISload] = useState(false)
+    const { updateFavoritesRecipesCount } = useContext(MyContext)
     
 
     // REFERENCE //
@@ -38,6 +40,12 @@ const FavoritesRecipes = () => {
         try {
             // Api call for delete favorite recipe
             await favoriteRecipeService.favoriteRecipeDelete(recipeId)
+
+            // Api call for get all favorites recipes
+            const favorites_recipes_del = await favoriteRecipeService.favoriteRecipeCount()
+
+            // Update state context
+            updateFavoritesRecipesCount(favorites_recipes_del.data.data.length)
 
             // APi call for get favorites recipes
             const favoriteRecipe = await favoriteRecipeService.favoriteRecipeGetAll()

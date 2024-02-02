@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useContext } from "react"
 import { favoriteProductService } from "../../_services/favoriteProduct.service"
 import "./favorites_products.css"
+import MyContext from '../../_utils/contexts'
 
 
 const FavoritesProducts = () => {
 
     // STATES //
     const [products, setProducts] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to products state
+    const [isLoad, setISload] = useState(false)
+    const { updateFavoritesProductsCount } = useContext(MyContext)
      
 
     // REFERENCE //
@@ -38,6 +40,12 @@ const FavoritesProducts = () => {
         try {
             // Api call for delete favorite product
             await favoriteProductService.favoriteProductDelete(productId)
+
+            // Api call for get all favorites products
+            const favorites_products_del = await favoriteProductService.favoriteProductCount()
+
+            // Update state context
+            updateFavoritesProductsCount(favorites_products_del.data.data.length)
 
             // APi call for get favorites products
             const favoriteProduct = await favoriteProductService.favoriteProductGetAll()
