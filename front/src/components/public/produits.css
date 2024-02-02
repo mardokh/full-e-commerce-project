@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Marck+Script&family=Yanone+Kaffeesatz:wght@500&display=swap');
 
 .produits_parent_container {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 100px;
 }
 
@@ -19,6 +19,7 @@
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin-bottom: 50px;
+    margin-left: 80px;
 }
 
 .produits_img_container {

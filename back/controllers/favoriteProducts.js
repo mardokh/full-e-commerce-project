@@ -4,6 +4,7 @@ const FavoriteProduct = require('../models/favoriteProduct')
 const Product = require('../models/product')
 
 
+
 // GLOBALS VARIABLS //
 const cookieName = 'client_id_favorites_products'
 
