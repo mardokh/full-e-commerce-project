@@ -12,6 +12,7 @@ const favoritesProducts = require('./routes/favoriteProducts')
 const favoritesRecipes = require('./routes/favoriteRecipes')
 const productNotes = require('./routes/productNotes')
 const recipeNotes = require('./routes/recipeNotes')
+const searchBar = require('./routes/searchBar')
 
 
 // MODELS IMPORTS //
@@ -55,6 +56,7 @@ app.use('/favorites/products', favoritesProducts)
 app.use('/favorites/recipes', favoritesRecipes)
 app.use('/products/notes', productNotes)
 app.use('/recipes/notes', recipeNotes)
+app.use('/search', searchBar)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 

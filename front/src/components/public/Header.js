@@ -7,6 +7,7 @@ import { favoriteProductService } from '../../_services/favoriteProduct.service'
 import { favoriteRecipeService } from '../../_services/favoriteRecipe.service'
 import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
+import { searchBarService } from '../../_services/searchBar.service'
 
 
 
@@ -87,7 +88,7 @@ const Header = () => {
                             <li className='produits'><Link to="/produits">Produits</Link></li>
                             <li className='services'><Link to="/services">services</Link></li>
                         </div>
-                        <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"></i></li>
+                        <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"/></li>
                         <div className='favorites_products_icon'>
                             <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
                             <span style={{display: (favoritesProducts + favoritesRecipes === 0) ? 'none' : 'initial'}} className='favorites_products_count'>{favoritesProducts + favoritesRecipes}</span>
