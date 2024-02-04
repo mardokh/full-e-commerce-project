@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './header.css'
 import logo from '../../images/logo.png'
 import heart from '../../images/heart.png'
@@ -23,6 +23,12 @@ const Header = () => {
     const [favoritesRecipes, setFavoriteRecipes] = useState(0)
     const [useEffectFlag, setUseEffectFlag] = useState(false)
     const [isLoad, setIsload] = useState(false)
+    const [research, setResearch] = useState()
+    const [searchActive, setSearchActive] = useState(false)
+
+
+    // REDIRECTION //
+    const navigate = useNavigate()
 
 
     // GET FAVORITES FUNCTION //
@@ -71,10 +77,33 @@ const Header = () => {
     }, [])
 
 
-    // Update states
+    // UPDATE STATE //
     useEffect(() => {
         getFavorites()
     }, [favoritesProductsCount, updateFavoritesRecipesCount])
+
+
+    // SERACH BAR HANDLE //
+    const searchGet = (searchTerm) => {
+        
+        if (searchTerm.trim() !== "") {
+            searchBarService.searchBar(searchTerm)
+                .then(res => {
+                    setResearch(res.data.data)
+                    setSearchActive(true)
+                })
+                .catch(err => console.error('Error : ', err))
+        } else {
+            setResearch(null)
+            setSearchActive(false)
+        }
+    }
+
+    // REDIRECT TO ITEM DETAILS //
+    const redirection = (itemId) => {
+        navigate(`./produit_details/${itemId}`)  
+        setSearchActive(false)
+    }
 
 
     return (
@@ -88,7 +117,22 @@ const Header = () => {
                             <li className='produits'><Link to="/produits">Produits</Link></li>
                             <li className='services'><Link to="/services">services</Link></li>
                         </div>
-                        <li className='search_barre'><input placeholder='recherche'/><i class="fa-solid fa-magnifying-glass"/></li>
+                        <li className='search_barre'>
+                            <input placeholder='recherche'onChange={(e) => searchGet(e.target.value)}/>
+                            <i class="fa-solid fa-magnifying-glass"/>
+                            <div className='serachBar_result_container'>
+                                {searchActive &&
+                                    research.map(search => (
+                                        <div key={search.id}>                                        
+                                            <div className='searchBar_item_container' onClick={() => redirection(search.id)}>
+                                                <div className='searchBar_item_image' style={{backgroundImage: `url('http://localhost:8989/uploads/${search.image}')`}}></div>
+                                                <p>{search.name}</p>
+                                            </div>                                       
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </li>
                         <div className='favorites_products_icon'>
                             <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
                             <span style={{display: (favoritesProducts + favoritesRecipes === 0) ? 'none' : 'initial'}} className='favorites_products_count'>{favoritesProducts + favoritesRecipes}</span>
