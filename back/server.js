@@ -2,7 +2,6 @@
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const multer = require('multer')
 
 
 // ROUTES IMPORTS //
@@ -14,6 +13,8 @@ const favoritesRecipes = require('./routes/favoriteRecipes')
 const productNotes = require('./routes/productNotes')
 const recipeNotes = require('./routes/recipeNotes')
 const searchBar = require('./routes/searchBar')
+const adminAdd = require('./routes/admin')
+const login = require('./routes/auth')
 
 
 // MODELS IMPORTS //
@@ -24,6 +25,7 @@ const favoriteProduct = require('./models/favoriteProduct')
 const favoriteRecipe = require('./models/favoriteRecipe')
 const productNote = require('./models/productNote')
 const recipeNote = require('./models/recipeNotes')
+const admin = require('./models/admin')
 
 
 // IMPORT DATABASE CONNECTER //
@@ -58,6 +60,8 @@ app.use('/favorites/recipes', favoritesRecipes)
 app.use('/products/notes', productNotes)
 app.use('/recipes/notes', recipeNotes)
 app.use('/search', searchBar)
+app.use('/admin', adminAdd)
+app.use('/login', login)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 
@@ -88,6 +92,7 @@ DB.authenticate()
     favoriteRecipe.sync({alter: true})
     productNote.sync({alter: true})
     recipeNote.sync({alter: true})
+    admin.sync({alter: true})
     
     // start server
     app.listen(8989, () => { 

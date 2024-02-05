@@ -24,7 +24,7 @@ exports.addRecipeNote = async (req, res) => {
 
             // Check inputs 
             if (!id || !note) {
-                return res.status(400).json({message: 'Missing inputs in request body !'})
+                return res.status(400).json({message: 'Missing inputs !'})
             }
 
             // check if the client has already rated this recipe
@@ -91,7 +91,7 @@ exports.addRecipeNote = async (req, res) => {
 
             // Check inputs 
             if (!id || !note) {
-                return res.status(400).json({message: 'Missing inputs in request body !'})
+                return res.status(400).json({message: 'Missing inputs !'})
             }
 
             // Create clien id
