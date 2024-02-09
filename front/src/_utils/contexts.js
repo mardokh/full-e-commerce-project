@@ -57,6 +57,13 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Session token
+    const [sessionToken, setSessionToken] = useState(false)
+
+    const updateSessionToken = (token) => {
+        setSessionToken(token)
+    }
+
 
     return (
         <MyContext.Provider value={{
@@ -83,7 +90,11 @@ export const MyProvider = ({ children }) => {
 
             // Recipes notes id
             recipesNotesId,
-            updateRecipesNotesId
+            updateRecipesNotesId,
+
+            // Session token
+            sessionToken,
+            updateSessionToken
         }}>
         {children}
         </MyContext.Provider>

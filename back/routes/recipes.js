@@ -3,7 +3,7 @@ const express = require('express')
 const controller = require('../controllers/recipes')
 const multer = require('multer')
 const path = require('path')
-
+const checkTokenMIddleware = require('../jsonwebtoken/check_jwt_endPoints')
 
 // EXPRESS ROUTER INSTANCIATE //
 let router = express.Router()
@@ -32,16 +32,15 @@ var upload = multer({
 
 
 // PUT RECIPE //
-router.put('/add', upload.single('image'), controller.putRecipe)
+router.put('/add', upload.single('image'), checkTokenMIddleware, controller.putRecipe)
 
 
 // UPDATE RECIPE //
-router.patch('/update', upload.single('image'), controller.updateRecipe)
+router.patch('/update', upload.single('image'), checkTokenMIddleware, controller.updateRecipe)
 
 
 // DELETE RECIPE //
-router.delete('/delete/:id', controller.deleteRecipe)
-
+router.delete('/delete/:id', checkTokenMIddleware, controller.deleteRecipe)
 
 
 

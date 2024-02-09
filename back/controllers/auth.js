@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
 
         // Check if admin exist
         if (admin === null) {
-            res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
+            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
         }
 
         // Check password from database
@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
 
         // Check if password
         if (!passe) {
-            res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
+            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
         }
 
         // Generate json web token

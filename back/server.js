@@ -15,6 +15,7 @@ const recipeNotes = require('./routes/recipeNotes')
 const searchBar = require('./routes/searchBar')
 const adminAdd = require('./routes/admin')
 const login = require('./routes/auth')
+const jwtSession = require('./routes/check_jwt_session')
 
 
 // MODELS IMPORTS //
@@ -62,6 +63,7 @@ app.use('/recipes/notes', recipeNotes)
 app.use('/search', searchBar)
 app.use('/admin', adminAdd)
 app.use('/login', login)
+app.use('/session', jwtSession)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 

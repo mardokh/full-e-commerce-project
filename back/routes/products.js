@@ -3,6 +3,7 @@ const express = require('express')
 const controller = require('../controllers/products')
 const multer = require('multer')
 const path = require('path')
+const checkTokenMIddleware = require('../jsonwebtoken/check_jwt_endPoints')
 
 
 // EXPRESS ROUTER INSTANCIATE //
@@ -32,23 +33,23 @@ var upload = multer({
 
 
 // PUT PRODUCT //
-router.put('/add', upload.single('image'), controller.putProduct)
+router.put('/add', upload.single('image'), checkTokenMIddleware, controller.putProduct)
 
 
 // UPDATE PRODUCT //
-router.patch('/update', upload.single('image'), controller.updateProduct)
+router.patch('/update', upload.single('image'), checkTokenMIddleware, controller.updateProduct)
 
 
 // TRASH PRODUCT //
-router.delete('/trash/:id', controller.trasProduct)
+router.delete('/trash/:id', checkTokenMIddleware, controller.trasProduct)
 
 
 // UNTRASH PRODUCT //
-router.post('/untrash/:id', controller.untrashProduct)
+router.post('/untrash/:id', checkTokenMIddleware, controller.untrashProduct)
 
 
 // DELETE PRODUCT //
-router.delete('/delete/:id', controller.deleteProduct)
+router.delete('/delete/:id', checkTokenMIddleware, controller.deleteProduct)
 
 
 
