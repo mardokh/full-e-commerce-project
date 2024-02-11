@@ -10,12 +10,11 @@ import MyContext from '../../_utils/contexts'
 import { searchBarService } from '../../_services/searchBar.service'
 
 
-
 const Header = () => {
 
     // STATES FROM CONTEXT //
     const { favoritesProductsCount } = useContext(MyContext)
-    const { updateFavoritesRecipesCount } = useContext(MyContext)
+    const { favoritesRecipesCount } = useContext(MyContext)
 
 
     // STATES FROM DATABASE //
@@ -80,7 +79,7 @@ const Header = () => {
     // UPDATE STATE //
     useEffect(() => {
         getFavorites()
-    }, [favoritesProductsCount, updateFavoritesRecipesCount])
+    }, [favoritesProductsCount, favoritesRecipesCount])
 
 
     // SERACH BAR HANDLE //

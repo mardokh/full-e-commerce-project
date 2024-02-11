@@ -11,6 +11,10 @@ let saveToken = (token) => {
     localStorage.setItem('token', token)
 }
 
+let getToken = () => {
+    return localStorage.getItem('token')
+}
+
 let isLogged = () => {
     return new Promise((resolve, reject) => {
         let token = localStorage.getItem('token')
@@ -34,7 +38,11 @@ let isLogged = () => {
     })
 }
 
+let logout = () => {
+    localStorage.removeItem('token')
+}
+
 
 export const AccountService = {
-    login, saveToken, isLogged
+    login, saveToken, isLogged, getToken, logout
 }

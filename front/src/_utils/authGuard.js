@@ -10,6 +10,7 @@ const AuthGuard = ({ children }) => {
     useEffect(() => {
         AccountService.isLogged()
             .then(res => {
+                console.log(res)
                 setLog(res)
                 setIsCheckComplete(true)
             })
