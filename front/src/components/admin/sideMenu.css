@@ -1,0 +1,10 @@
+.admin_sideMenu {
+    width: 200px;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    line-height: 60px;
+    text-align: left;
+    background-color: gainsboro;
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { productService } from '../../_services/product.service'
 import './product.css'
+import { AccountService } from '../../_services/account.service'
 
 
 const Produits = () => {
@@ -15,15 +16,19 @@ const Produits = () => {
     // Reference // 
     const flag = useRef(false)
 
+
+    // REDIRECTION //
+    const navigate = useNavigate()
+
     
     // Handle errors
     const handleError = (err) => {
         if (err.response && err.response.status) {
-            setRefNotfound(true);
-            setProducts(err.response.data.data);
-            setISload(true);
+            setRefNotfound(true)
+            setProducts(err.response.data.data)
+            setISload(true)
         } else {
-            console.log('Error:', err.message);
+            console.log('Error:', err.message)
         }
     }
 
@@ -60,6 +65,16 @@ const Produits = () => {
         }
     }
 
+    // LOGOUT //
+    const logout = () => {
+
+        // Api call for logout
+        AccountService.logout()
+
+        // Redirect to login
+        navigate("/auth/login")
+    }
+
     
     //Loader 
     if (!isLoad) {
@@ -68,36 +83,48 @@ const Produits = () => {
 
 
     return (
-        <div className='product_manage_global_container' title='ajouter un produit'>
-            <Link to="../add_product"><div className='icon_add_product'><i class="fa-solid fa-plus"></i></div></Link>
-            {!refNotfound ?
-                products.map(product => (
-                    <div key={product.id} className='product_manage_container'>
-                        <div className='product_manage manage_name'>
-                            <p className='p_title'>Nom du produit</p>
-                            <p className='p_name'>{product.name}</p>
-                        </div>
-                        <div className='product_manage manage_price'>
-                            <p className='p_title'>Prix</p>
-                            <p className='p_price'>{product.price}</p>
-                        </div>
-                        <div className='product_manage manage_note'>
-                            <p className='p_title'>Note d'evalution</p>
-                            <p className='p_note'>{product.note}</p>
-                        </div>
-                        <div className='product_manage manage_date'>
-                            <p className='p_title'>Date de creation</p>
-                            <p className='p_createdAt'>{product.createdAt}</p>
-                        </div>
-                        <div className='product_manage manage_icons'>
-                            <Link to={`../edit_product/${product.id}`}><i class="fa-solid fa-pen-to-square"></i></Link>
-                            <i onClick={() => deleteProcut(product.id)} class="fa-solid fa-trash"></i>
-                        </div>
+        <div className='product_manage_global_container'>
+                <div>
+                    <input className='product_manage_searchBar' type='text' placeholder='search'/>
+                </div>
+                <div className='product_manage_addBtn_adminWelcom'>
+                    <div className='adminWelcom'>
+                        <div className='product_admin_picture'></div>
+                        <p>Welcom beystore administrator</p>
                     </div>
-                )) : <div>{products}</div> 
-            }
+                    <Link to="../add_product" title='add product'><button className='product_manage_btn_add_product'>+ add product</button></Link>
+                </div>
+            <div className='product_manage_container'>
+                <table className='product_manage_table_container'>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Note</th>
+                        <th>CreatedAt</th>
+                        <th>Actions</th>
+                    </tr>
+                    {!refNotfound ?
+                        products.map(product => (
+                            <>
+                                <tr key={product.id}>
+                                    <td className='product_manage_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></td>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.note}</td>
+                                    <td>{product.createdAt}</td>
+                                    <td className='product_manage manage_icons'>
+                                        <Link to={`../edit_product/${product.id}`}><button className='product_manage_btn_edit' >Edit</button></Link>
+                                        <button className='product_manage_btn_delete'  onClick={() => deleteProcut(product.id)}>delete</button>
+                                    </td>
+                                </tr>
+                            </>
+                        )) 
+                        : <div>{products}</div> 
+                    }
+                </table>
+            </div>
         </div>
-
     )
 }    
 

@@ -1,15 +1,19 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom';
-import Header from '../../components/admin/Header'
+import SideMenu from '../../components/admin/sideMenu'
+import './layout.css'
+
 
 const Layout = () => {
     
     return (
-       <div>
-            <Header/>
-            <Outlet/>
-       </div>
+
+        <div className='admin_layout'>
+            <SideMenu />
+            <Outlet />
+        </div>
+        
     )
 }
 
-export default Layout;
+export default Layout
