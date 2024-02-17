@@ -84,45 +84,38 @@ const Produits = () => {
 
     return (
         <div className='product_manage_global_container'>
-                <div>
-                    <input className='product_manage_searchBar' type='text' placeholder='search'/>
+            <div className='product_manage_sub_container'>
+                <div className='product_manager_add'><p>+ add product</p></div>
+                <div className='product_manage_container'>
+                    <table className='product_manage_table_container'>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Note</th>
+                            <th>CreatedAt</th>
+                            <th>Actions</th>
+                        </tr>
+                        {!refNotfound ?
+                            products.map(product => (
+                                <>
+                                    <tr key={product.id}>
+                                        <td className='product_manage_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></td>
+                                        <td>{product.name}</td>
+                                        <td>{product.price}</td>
+                                        <td>{product.note}</td>
+                                        <td>{product.createdAt}</td>
+                                        <td className='product_manage manage_icons'>
+                                            <Link to={`../edit_product/${product.id}`}><button className='product_manage_btn_edit' >Edit</button></Link>
+                                            <button className='product_manage_btn_delete'  onClick={() => deleteProcut(product.id)}>delete</button>
+                                        </td>
+                                    </tr>
+                                </>
+                            )) 
+                            : <div>{products}</div> 
+                        }
+                    </table>
                 </div>
-                <div className='product_manage_addBtn_adminWelcom'>
-                    <div className='adminWelcom'>
-                        <div className='product_admin_picture'></div>
-                        <p>Welcom beystore administrator</p>
-                    </div>
-                    <Link to="../add_product" title='add product'><button className='product_manage_btn_add_product'>+ add product</button></Link>
-                </div>
-            <div className='product_manage_container'>
-                <table className='product_manage_table_container'>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Note</th>
-                        <th>CreatedAt</th>
-                        <th>Actions</th>
-                    </tr>
-                    {!refNotfound ?
-                        products.map(product => (
-                            <>
-                                <tr key={product.id}>
-                                    <td className='product_manage_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></td>
-                                    <td>{product.name}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.note}</td>
-                                    <td>{product.createdAt}</td>
-                                    <td className='product_manage manage_icons'>
-                                        <Link to={`../edit_product/${product.id}`}><button className='product_manage_btn_edit' >Edit</button></Link>
-                                        <button className='product_manage_btn_delete'  onClick={() => deleteProcut(product.id)}>delete</button>
-                                    </td>
-                                </tr>
-                            </>
-                        )) 
-                        : <div>{products}</div> 
-                    }
-                </table>
             </div>
         </div>
     )

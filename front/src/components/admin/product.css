@@ -1,32 +1,21 @@
 .product_manage_global_container {
     padding: 10px;
-    height: 900px;
+    height: 800px;
+    width: 100%;
     background-color: rgb(241, 241, 248);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.product_manage_sub_container {
     display: flex;
     flex-direction: column;
 }
 
-.product_manage_searchBar {
-    width: 600px;
-    height: 50px;
-    float: left;
-    padding: 10px;
-    font-size: 15px;
-    margin-bottom: 100px;
-}
-
 .product_manage_addBtn_adminWelcom {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.adminWelcom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    width: 300px;
+    justify-content: end; 
 }
 
 .product_manage_table_container {
@@ -37,20 +26,12 @@
     background-color: rgb(241, 241, 248);
 }
 
-.product_admin_picture {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background-color: gainsboro;
-
-}
-
-.product_manage_container th {
+.product_manage_table_container th {
     padding: 10px;
     background-color: white;
 }
 
-.product_manage_container td {
+.product_manage_table_container td {
     background-color: white;
 }
 
@@ -85,16 +66,32 @@
     height: 40px;
     cursor: pointer;
     border: 2px solid gainsboro;
-    background-color: green;
+    background-color: rgba(10, 127, 10, 0.576);
     color: white;
-    float: right;
-    border-radius: 10px;
 }
 
 .product_manage_btn_add_product:hover {
-    background-color: rgba(144, 238, 144, 0.18);
+    background-color: rgb(111, 200, 111);
 }
 
 a {
     text-decoration: none;
+}
+
+.product_manager_add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 250px;
+    margin: 20px auto;
+    border: 1px solid rgba(128, 128, 128, 0.488);
+    border-style: dashed;
+    border-width: 2px;
+    cursor: pointer;
+}
+
+.product_manager_add p {
+    color: gray;
+    font-size: 15px;
 }

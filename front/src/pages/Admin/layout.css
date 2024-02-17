@@ -1,8 +1,17 @@
+.admin_layout_global {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 800px;
+}
+
 .admin_layout {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    margin: 0 auto;
     background-color: rgb(241, 241, 248);
+}
+
+.admin_layout_header {
+    width: 100%;
 }
