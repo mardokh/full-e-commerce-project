@@ -9,7 +9,7 @@ const SideMenu = () => {
             <div className='admin_sideMenu'>
                     <Link to="products_manage" >
                         <p className='admin_menu_list_item'>
-                            <i class="fa-solid fa-list"></i>
+                            <i class="fa-solid fa-boxes-stacked"></i>
                             <span>products</span>
                         </p>
                     </Link>
@@ -21,7 +21,7 @@ const SideMenu = () => {
                         </p>
                     </Link>
 
-                    <Link Link to="recipes_manage" >
+                    <Link to="recipes_manage" >
                         <p className='admin_menu_list_item'>
                             <i class="fa-solid fa-list-check"></i>
                             <span>recipes</span>

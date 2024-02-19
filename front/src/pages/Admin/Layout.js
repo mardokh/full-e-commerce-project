@@ -9,7 +9,7 @@ const Layout = () => {
     
     return (
         <div className='admin_layout_global'>
-            <di className='admin_layout_header'><Header /></di>
+            <div className='admin_layout_header'><Header /></div>
             <div className='admin_layout'>
                 <SideMenu />
                 <Outlet />

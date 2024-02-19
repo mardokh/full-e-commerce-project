@@ -1,86 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { productService } from '../../_services/product.service'
-import './product.css'
-import { AccountService } from '../../_services/account.service'
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { productService } from '../../_services/product.service';
+import './product.css';
+import { AccountService } from '../../_services/account.service';
 
 
 const Produits = () => {
+    const [products, setProducts] = useState([]);
+    const [isLoad, setIsLoad] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage] = useState(4);
+    const [refNotFound, setRefNotFound] = useState(false);
+    const flag = useRef(false);
+    const navigate = useNavigate();
 
-    // States //
-    const [products, setProducts] = useState()
-    const [isLoad, setISload] = useState(false) // while false block acces to products state
-    const [refNotfound, setRefNotfound] = useState(false)
-    
-
-    // Reference // 
-    const flag = useRef(false)
-
-
-    // REDIRECTION //
-    const navigate = useNavigate()
-
-    
-    // Handle errors
-    const handleError = (err) => {
-        if (err.response && err.response.status) {
-            setRefNotfound(true)
-            setProducts(err.response.data.data)
-            setISload(true)
-        } else {
-            console.log('Error:', err.message)
-        }
-    }
-
-
-    // Get all products //
     useEffect(() => {
         if (flag.current === false) {
             productService.getAllproducts()
                 .then(res => {            
-                    setProducts(res.data.data)
-                    setISload(true)  // when true allow access to products state  
+                    setProducts(res.data.data);
+                    setIsLoad(true);
                 })
-                .catch(err => handleError(err))
+                .catch(err => handleError(err));
         }
-        return () => flag.current = true
-    }, [])
+        return () => flag.current = true;
+    }, []);
 
+    const handleError = (err) => {
+        if (err.response && err.response.status) {
+            setRefNotFound(true);
+            setProducts(err.response.data.data);
+            setIsLoad(true);
+        } else {
+            console.log('Error:', err.message);
+        }
+    };
 
-    // DELETE PRODUCT //
-    const deleteProcut = async (productId) => {
-
+    const deleteProduct = async (productId) => {
         try {
-            // Api call for delete product
-            await productService.deleteProduct(productId)
-
-            // Api call for get all products
-            const productsGet = await productService.getAllproducts()
-
-            // Update state
-            setProducts(productsGet.data.data)
+            await productService.deleteProduct(productId);
+            const productsGet = await productService.getAllproducts();
+            setProducts(productsGet.data.data);
+        } catch (err) {
+            handleError(err);
         }
-        catch (err) {
-            handleError(err)
-        }
-    }
+    };
 
-    // LOGOUT //
     const logout = () => {
+        AccountService.logout();
+        navigate("/auth/login");
+    };
 
-        // Api call for logout
-        AccountService.logout()
+    const indexOfLastProduct = productsPerPage * currentPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-        // Redirect to login
-        navigate("/auth/login")
-    }
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    
-    //Loader 
     if (!isLoad) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
-
 
     return (
         <div className='product_manage_global_container'>
@@ -88,17 +67,19 @@ const Produits = () => {
                 <div className='product_manager_add'><p>+ add product</p></div>
                 <div className='product_manage_container'>
                     <table className='product_manage_table_container'>
-                        <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Note</th>
-                            <th>CreatedAt</th>
-                            <th>Actions</th>
-                        </tr>
-                        {!refNotfound ?
-                            products.map(product => (
-                                <>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Note</th>
+                                <th>CreatedAt</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {!refNotFound ? (
+                                currentProducts.map(product => (
                                     <tr key={product.id}>
                                         <td className='product_manage_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></td>
                                         <td>{product.name}</td>
@@ -107,19 +88,28 @@ const Produits = () => {
                                         <td>{product.createdAt}</td>
                                         <td className='product_manage manage_icons'>
                                             <Link to={`../edit_product/${product.id}`}><button className='product_manage_btn_edit' >Edit</button></Link>
-                                            <button className='product_manage_btn_delete'  onClick={() => deleteProcut(product.id)}>delete</button>
+                                            <button className='product_manage_btn_delete'  onClick={() => deleteProduct(product.id)}>Delete</button>
                                         </td>
                                     </tr>
-                                </>
-                            )) 
-                            : <div>{products}</div> 
-                        }
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6">No products found.</td>
+                                </tr>
+                            )}
+                        </tbody>
                     </table>
+                    <ul className='pagination'>
+                        {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, index) => (
+                            <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
+                                <button onClick={() => paginate(index + 1)}>{index + 1}</button>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </div>
-    )
-}    
+    );
+};
 
-
-export default Produits
+export default Produits;

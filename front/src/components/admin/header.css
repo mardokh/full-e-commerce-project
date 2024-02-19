@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+
 .admin_searchBar_container {
     width: 100%;
     height: 80px;
@@ -5,13 +8,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 15px;
+    padding: 20px;
 }
 
 .admin_searchBar_administrator_container {
     display: flex;
     justify-content: space-between;
-    width: 1200px;
+    width: 1800px;
 }
 
 .admin_searchBar {
@@ -20,6 +23,7 @@
     padding: 10px;
     border: 0.2px solid green;
     display: flex;
+    font-size: 17px;
 }
 
 .admin_administrator_seting_container {
@@ -27,8 +31,9 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px;
+    font-family: 'Calibri';
 }
 
 .admin_administrator_seting_img {
@@ -38,10 +43,9 @@
     background-color: rgba(0, 128, 0, 0.27);
 }
 
-.admin_panel_logo {
-    width: 250px;
-    height: 100px;
-    background-color: lightcoral;
+.admin_test {
+    font-family: "Oleo Script", system-ui;
+    font-size: 1.3rem;
 }
 
 .admin_searchBar_input_container {
@@ -50,10 +54,13 @@
     position: relative;
 }
 
-
 #glasses_admin {
     position: absolute;
     right: 15px;
     top: 10px;
     color: rgba(0, 128, 0, 0.584);
+}
+
+#admin_caret_down {
+    cursor: pointer;
 }

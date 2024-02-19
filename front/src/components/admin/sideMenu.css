@@ -17,6 +17,8 @@
     flex-direction: column;
     justify-content: start;
     list-style-type: none;
+    font-family: 'Calibri';
+    font-size: 18px;
 }
 
 .admin_sideMenu p {
@@ -41,10 +43,10 @@
     font-size: 20px;
 }
 
-.fa-list {
+.fa-list-check {
     font-size: 20px;
 }
 
-.fa-list-check {
+.fa-boxes-stacked {
     font-size: 20px;
 }

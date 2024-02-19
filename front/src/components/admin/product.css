@@ -85,13 +85,44 @@ a {
     height: 60px;
     width: 250px;
     margin: 20px auto;
-    border: 1px solid rgba(128, 128, 128, 0.488);
+    border: 1px solid green;
     border-style: dashed;
     border-width: 2px;
     cursor: pointer;
 }
 
+.product_manager_add:hover {
+    background-color: aliceblue;
+}
+
 .product_manager_add p {
-    color: gray;
+    color: green;
     font-size: 15px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li button {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination li button:hover {
+    background: #f0f0f0;
+}
+
+.pagination li.active button {
+    background: rgba(0, 128, 0, 0.676);
+    color: #fff;
 }
