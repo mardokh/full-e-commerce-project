@@ -2,7 +2,8 @@ import React from 'react'
 import Products from '../../components/admin/Products'
 import './products_manage.css'
 
-const productsManage = () => {
+
+const ProductsManage = () => {
 
     return (
         <div className='product_manage_page_container'>
@@ -11,4 +12,4 @@ const productsManage = () => {
     )
 }
 
-export default productsManage
+export default ProductsManage

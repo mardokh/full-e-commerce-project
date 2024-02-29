@@ -15,3 +15,25 @@
 .admin_layout_header {
     width: 100%;
 }
+
+.product_manage_add_product_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 128, 0, 0.433);
+    z-index: 1;
+    position: fixed;
+}
+
+.recipe_manage_add_product_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 128, 0, 0.433);
+    z-index: 1;
+    position: fixed;
+}

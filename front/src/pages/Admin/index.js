@@ -1,7 +1,6 @@
 export { default as Layout } from './Layout'
 export { default as ProductsManage } from './ProductsManage'
 export { default as CommandesManage }  from './CommandesManage'
-export { default as AddProductManage } from './AddProductManage'
 export { default as EditProductManage } from './EditProductManage'
 export { default as AddRecipeManage } from './AddRecipeManage'
 export { default as RecipeManage } from './RecipeManage'

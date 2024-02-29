@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useContext } from "react"
 import "./addRecipe.css"
 import { recipeService } from '../../_services/recipe.service'
-import { useNavigate } from 'react-router-dom'
+import MyContext from '../../_utils/contexts'
 const AddImage = require('../../images/AddImage.jpg')
 
 
@@ -10,10 +10,8 @@ const AddRecipe = () => {
     // STATES //
     const [recipe, setRecipe] = useState({name: "", description: "", image: ""})
     const [imageUrl, setImageUrl] = useState()
-
-
-    // REDERECTIONS //
-    const navigate = useNavigate()
+    const { updateRecipesAddDisplay } = useContext(MyContext)
+    const { updateRecipesOnAdd } = useContext(MyContext)
 
 
     // REFERENCE //
@@ -33,8 +31,11 @@ const AddRecipe = () => {
             // Api call for add recipe
             await recipeService.addRecipe(formData)
 
-            // Redirection 
-            navigate('../recipes_manage')
+            // Update recipes state
+            updateRecipesOnAdd(true)
+
+            // Close add recipe windows
+            updateRecipesAddDisplay(false)
         }
         catch (err) {
             console.error('Error : ', err)
@@ -65,10 +66,14 @@ const AddRecipe = () => {
         }
     }
 
+    const closeAddRecipeWindows = () => {
+        updateRecipesAddDisplay(false)
+    }
 
 
     return (
         <div className="add_recipe_global_container">
+            <i class="fa-solid fa-circle-xmark" id='add_recipe_close_icon' onClick={closeAddRecipeWindows}></i>
             <div className="add_recipe_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
             <form className='add_recipe_container' onSubmit={handleSubmit}>
                 <div className='add_recipe_item'>
@@ -84,7 +89,7 @@ const AddRecipe = () => {
                     <input type='file' name='image' onChange={(e) => handleImageChange(e.target.files[0])}/>
                 </div>
                 <div>
-                    <input className='btn_new_recipe_add' type='submit' value="Ajouter le produit"/>
+                    <input className='btn_new_recipe_add' type='submit' value="confirmer"/>
                 </div>
             </form>
         </div>

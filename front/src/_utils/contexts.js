@@ -65,6 +65,38 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Products add displaying
+    const [productsAddDisplay, setProductsAddDisplay] = useState(false)
+
+    const updateProductsAddDisplay = (switchDisp) => {
+        setProductsAddDisplay(switchDisp)
+    }
+
+
+    // Recipes add displaying
+    const [recipesAddDisplay, setRecipesAddDisplay] = useState(false)
+
+    const updateRecipesAddDisplay = (switchDisp) => {
+        setRecipesAddDisplay(switchDisp)
+    }
+
+
+    // Products on add
+    const [productsOnAdd, setProductsOnAdd] = useState(false)
+
+    const updateProductsOnAdd = (onAdd) => {
+        setProductsOnAdd(onAdd)
+    }
+
+
+    // Recipes on add
+    const [recipesOnadd, setRecipesOnadd] = useState(false)
+
+    const updateRecipesOnAdd = (onAdd) => {
+        setRecipesOnadd(onAdd)
+    }
+
+
     return (
         <MyContext.Provider value={{
 
@@ -94,7 +126,23 @@ export const MyProvider = ({ children }) => {
 
             // Session token
             sessionToken,
-            updateSessionToken
+            updateSessionToken,
+
+            // Products add displaying
+            productsAddDisplay,
+            updateProductsAddDisplay,
+
+            // Recipes add displaying
+            recipesAddDisplay,
+            updateRecipesAddDisplay,
+
+            // Products on add
+            productsOnAdd,
+            updateProductsOnAdd,
+
+            // Recipes on add
+            recipesOnadd,
+            updateRecipesOnAdd
         }}>
         {children}
         </MyContext.Provider>

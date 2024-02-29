@@ -1,20 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { productService } from '../../_services/product.service';
+import Pagination from '../../pagination/Pagination';
 import './product.css';
-import { AccountService } from '../../_services/account.service';
+import MyContext from '../../_utils/contexts'
+//import { AccountService } from '../../_services/account.service';
 
 
 const Produits = () => {
+
+    // STATES / CONTEXTS
     const [products, setProducts] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(4);
     const [refNotFound, setRefNotFound] = useState(false);
     const flag = useRef(false);
-    const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const { updateProductsAddDisplay } = useContext(MyContext)
+    const { productsOnAdd } = useContext(MyContext)
+    let PageSize = 4;
 
-    useEffect(() => {
+
+    // MAIN LOAD PRODUCTS //
+    const loadProducts = () => {
         if (flag.current === false) {
             productService.getAllproducts()
                 .then(res => {            
@@ -24,8 +31,22 @@ const Produits = () => {
                 .catch(err => handleError(err));
         }
         return () => flag.current = true;
-    }, []);
+    }
 
+    
+    // LOAD PRODUCT ON PAGE LOAD //
+    useEffect(() => {
+        loadProducts()
+    }, [])
+
+
+    // LOAD PRODUCT ON PRODUCT ADD //
+    if (productsOnAdd) {
+        loadProducts()
+    }
+
+    
+    // LOAD PRODUCTS ERRORS HANDLE //
     const handleError = (err) => {
         if (err.response && err.response.status) {
             setRefNotFound(true);
@@ -36,6 +57,8 @@ const Produits = () => {
         }
     };
 
+
+    // DELETE AN PRODUCT //
     const deleteProduct = async (productId) => {
         try {
             await productService.deleteProduct(productId);
@@ -45,26 +68,39 @@ const Produits = () => {
             handleError(err);
         }
     };
-
+    
+    /*
     const logout = () => {
         AccountService.logout();
         navigate("/auth/login");
     };
+    */
 
-    const indexOfLastProduct = productsPerPage * currentPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    // PAGINATION HANDLE 
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return products.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage, products]);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    // ADD PRODUCT PAGE DISPLAYER //
+    const displayProductAddForm = () => {
+        updateProductsAddDisplay(true)
+    }
+    
+
+    // AWAIT LOADER //
     if (!isLoad) {
         return <div>Loading...</div>;
     }
 
+
+    // RENDERING //
     return (
         <div className='product_manage_global_container'>
             <div className='product_manage_sub_container'>
-                <div className='product_manager_add'><p>+ add product</p></div>
+                <div className='product_manager_add' onClick={displayProductAddForm}><p>+ add product</p></div>
                 <div className='product_manage_container'>
                     <table className='product_manage_table_container'>
                         <thead>
@@ -79,7 +115,7 @@ const Produits = () => {
                         </thead>
                         <tbody>
                             {!refNotFound ? (
-                                currentProducts.map(product => (
+                                currentTableData.map(product => (
                                     <tr key={product.id}>
                                         <td className='product_manage_img_container' style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></td>
                                         <td>{product.name}</td>
@@ -99,13 +135,13 @@ const Produits = () => {
                             )}
                         </tbody>
                     </table>
-                    <ul className='pagination'>
-                        {Array.from({ length: Math.ceil(products.length / productsPerPage) }).map((_, index) => (
-                            <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
-                                <button onClick={() => paginate(index + 1)}>{index + 1}</button>
-                            </li>
-                        ))}
-                    </ul>
+                    <Pagination
+                        className="pagination-bar"
+                        currentPage={currentPage}
+                        totalCount={products.length}
+                        pageSize={PageSize}
+                        onPageChange={page => setCurrentPage(page)}
+                    />
                 </div>
             </div>
         </div>

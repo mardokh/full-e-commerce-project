@@ -1,8 +1,9 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useContext} from 'react'
 import './addProduct.css'
 import { productService } from '../../_services/product.service'
-import { useNavigate } from 'react-router-dom'
+import MyContext from '../../_utils/contexts'
 const AddImage = require('../../images/AddImage.jpg')
+
 
 
 const AddProduct = () => {
@@ -10,10 +11,8 @@ const AddProduct = () => {
     // STATES //
     const [product, setProduct] = useState({name: "", price: "", details: "", image: ""})
     const [imageUrl, setImageUrl] = useState()
-
-
-    // REDERECTIONS //
-    const navigate = useNavigate()
+    const { updateProductsAddDisplay } = useContext(MyContext)
+    const { updateProductsOnAdd } = useContext(MyContext)
 
 
     // REFERENCE //
@@ -33,8 +32,11 @@ const AddProduct = () => {
             // Api call for add product
             await productService.addProduct(formData)
 
-            // Redirection
-            navigate('../products_manage')
+            // Update products state
+            updateProductsOnAdd(true)
+
+            // Close add product windows
+            updateProductsAddDisplay(false)
         }
         catch (error) {
             console.error('Error : ', error)
@@ -66,10 +68,15 @@ const AddProduct = () => {
         }
     }
 
-    
+
+    const closeAddProductWindows = () => {
+        updateProductsAddDisplay(false)
+    }
+
 
     return (
         <div className="add_product_global_container">
+            <i class="fa-solid fa-circle-xmark" id='add_product_close_icon' onClick={closeAddProductWindows}></i>
             <div className="add_product_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
             <form className='add_product_container' onSubmit={handleSubmit}>
                 <div className='add_product_item'>
@@ -84,7 +91,7 @@ const AddProduct = () => {
                     <label>Price</label>
                     <input type='number' name='price' value={product.price} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></input>
                 </div>
-                <div className='add_product_item'>
+                <div className='add_product_item add_product_img_input'>
                     <label>image</label>
                     <input type='file' name='image' onChange={(e) => handleImageChange(e.target.files[0])} />
                 </div>
