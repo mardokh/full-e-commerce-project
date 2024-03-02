@@ -68,7 +68,8 @@ const AddProduct = () => {
         }
     }
 
-
+    
+    // PRODUCT ADD CLOSE //
     const closeAddProductWindows = () => {
         updateProductsAddDisplay(false)
     }

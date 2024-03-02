@@ -22,9 +22,6 @@ const ProductNotes = () => {
             formData.append('id', productsNotesId)
             formData.append('note', note)
 
-            console.log(formData.get('id'))
-            console.log(formData.get('note'))
-
             // Api call
             productNoteService.productNotesAdd(formData)
                 .then(res => {

@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState, useMemo, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { recipeService } from '../../_services/recipe.service'
-import Pagination from '../../pagination/Pagination';
+import Pagination from '../../pagination/Pagination'
 import "./recipes.css"
 import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const Recipes = () => {
 
     // STATES //
     const [recipes, setRecipes] = useState([])
-    const [isLoad, setISload] = useState(false) // while false block acces to recipes state
+    const [isLoad, setISload] = useState(false)
     const [refNotFound, setRefNotFound] = useState(false)
     const flag = useRef(false)
     const [currentPage, setCurrentPage] = useState(1);
     const { updateRecipesAddDisplay } = useContext(MyContext)
     const { recipesOnadd } = useContext(MyContext)
+    const { recipesOnEdit } = useContext(MyContext)
+    const { updateRecipesEditDisplay } = useContext(MyContext)
+    const { updateRecipesEditId } = useContext(MyContext)
     let PageSize = 4;
 
 
@@ -33,14 +37,14 @@ const Recipes = () => {
     }
 
 
-    // LOAD RECIPE ON PAGE LOAD //
+    // LOAD RECIPES ON PAGE LOAD //
     useEffect(() => {
         loadRecipes()
     }, [])
 
 
-    // LOAD PRODUCT ON PRODUCT ADD //
-    if (recipesOnadd) {
+    // LOAD RECIPES ON PRODUCT ADD //
+    if (recipesOnadd || recipesOnEdit) {
         loadRecipes()
     }
 
@@ -90,9 +94,15 @@ const Recipes = () => {
     }
 
 
+    const displayRecipeEditForm = (recipeId) => {
+        updateRecipesEditDisplay(true)
+        updateRecipesEditId(recipeId)
+    }
+
+
     // AWAIT LOADER //
     if (!isLoad) {
-        return <div>Loading...</div>        
+        return <CustomLoader/>
     }
 
 
@@ -100,7 +110,7 @@ const Recipes = () => {
     return (
         <div className='recipe_manage_global_container'>
             <div className='recipe_manage_sub_container'>
-                <div className='recipe_manager_add' onClick={displayRecipeAddForm}><p>+ add recipe</p></div>
+                <div className='recipe_manager_add' onClick={displayRecipeAddForm}><i class="fa-solid fa-plus" id='recipe_manage_add_icon'></i></div>
                 <div className='recipe_manage_container'>
                     <table className='recipe_manage_table_container'>
                         <thead>
@@ -123,7 +133,7 @@ const Recipes = () => {
                                         <td>{recipe.note}</td>
                                         <td>{recipe.createdAt}</td>
                                         <td className='recipe_manage manage_icons'>
-                                            <Link to={`../edit_recipe/${recipe.id}`}><button className='recipe_manage_btn_edit' >Edit</button></Link>
+                                            <button className='recipe_manage_btn_edit' onClick={() => displayRecipeEditForm(recipe.id)}>Edit</button>
                                             <button className='recipe_manage_btn_delete'  onClick={() => deleteRecipe(recipe.id)}>Delete</button>
                                         </td>
                                     </tr>

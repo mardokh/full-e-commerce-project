@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { productService } from '../../_services/product.service';
 import Pagination from '../../pagination/Pagination';
 import './product.css';
 import MyContext from '../../_utils/contexts'
-//import { AccountService } from '../../_services/account.service';
-
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 const Produits = () => {
 
@@ -17,6 +15,9 @@ const Produits = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const { updateProductsAddDisplay } = useContext(MyContext)
     const { productsOnAdd } = useContext(MyContext)
+    const { productsOnEdit } = useContext(MyContext)
+    const { updateProductsEditDisplay } = useContext(MyContext)
+    const { updateProductsEditId } = useContext(MyContext)
     let PageSize = 4;
 
 
@@ -34,14 +35,14 @@ const Produits = () => {
     }
 
     
-    // LOAD PRODUCT ON PAGE LOAD //
+    // LOAD PRODUCTS ON PAGE LOAD //
     useEffect(() => {
         loadProducts()
     }, [])
 
 
-    // LOAD PRODUCT ON PRODUCT ADD //
-    if (productsOnAdd) {
+    // LOAD PRODUCTS ON PRODUCT ADD //
+    if (productsOnAdd || productsOnEdit) {
         loadProducts()
     }
 
@@ -69,12 +70,6 @@ const Produits = () => {
         }
     };
     
-    /*
-    const logout = () => {
-        AccountService.logout();
-        navigate("/auth/login");
-    };
-    */
 
     // PAGINATION HANDLE 
     const currentTableData = useMemo(() => {
@@ -88,11 +83,18 @@ const Produits = () => {
     const displayProductAddForm = () => {
         updateProductsAddDisplay(true)
     }
+
+
+    // EDIT PRODUCT PAGE DISPLAYER //
+    const displayProductEditForm = (productId) => {
+        updateProductsEditDisplay(true)
+        updateProductsEditId(productId)
+    }
     
 
     // AWAIT LOADER //
     if (!isLoad) {
-        return <div>Loading...</div>;
+        return <CustomLoader/>
     }
 
 
@@ -100,7 +102,7 @@ const Produits = () => {
     return (
         <div className='product_manage_global_container'>
             <div className='product_manage_sub_container'>
-                <div className='product_manager_add' onClick={displayProductAddForm}><p>+ add product</p></div>
+                <div className='product_manager_add' onClick={displayProductAddForm} title='add product'><i class="fa-solid fa-plus" id='product_manage_add_icon'></i></div>
                 <div className='product_manage_container'>
                     <table className='product_manage_table_container'>
                         <thead>
@@ -123,7 +125,7 @@ const Produits = () => {
                                         <td>{product.note}</td>
                                         <td>{product.createdAt}</td>
                                         <td className='product_manage manage_icons'>
-                                            <Link to={`../edit_product/${product.id}`}><button className='product_manage_btn_edit' >Edit</button></Link>
+                                            <button className='product_manage_btn_edit' onClick={() => displayProductEditForm(product.id)}>Edit</button>
                                             <button className='product_manage_btn_delete'  onClick={() => deleteProduct(product.id)}>Delete</button>
                                         </td>
                                     </tr>

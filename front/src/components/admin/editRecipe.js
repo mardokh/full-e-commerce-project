@@ -1,7 +1,8 @@
-import React, {useEffect, useState, useRef} from "react"
+import React, {useEffect, useState, useRef, useContext} from "react"
 import "./editRecipe.css"
-import { useNavigate, useParams } from "react-router-dom"
 import { recipeService } from "../../_services/recipe.service"
+import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const EditRecipe = () => {
@@ -10,14 +11,10 @@ const EditRecipe = () => {
     const [recipe, setRecipe] = useState({name: "", description: "", image: ""})
     const [isLoad, setISload] = useState(false)
     const [imageUrl, setImageUrl] = useState()
+    const { recipesEditId } = useContext(MyContext)
+    const { updateRecipesEditDisplay } = useContext(MyContext)
+    const { updateRecipesOnEdit } = useContext(MyContext)
 
-
-    // GET ID PARAMS //
-    const {id} = useParams()
-
-
-    // REDIRECTION //
-    const navigate = useNavigate()
 
 
     // REFERENCE //
@@ -29,7 +26,7 @@ const EditRecipe = () => {
     useEffect(() => {
 
         if (effectFlag.current === false) {
-            recipeService.getOneRecipe(id)
+            recipeService.getOneRecipe(recipesEditId)
                 .then(res => {
                     setRecipe(res.data.data)
                     setISload(true)
@@ -50,13 +47,17 @@ const EditRecipe = () => {
             formData.append('name', recipe.name)
             formData.append('description', recipe.description)
             formData.append('image', recipe.image)
-            formData.append('id', id)
+            formData.append('id', recipesEditId)
 
             // Api call for update recipe
             await recipeService.updateRecipe(formData)
 
-            // Redirect to main recipes manage
-            navigate('../recipes_manage')
+            // Update recipes state
+            updateRecipesOnEdit(true)
+
+            // Close edit recipe windows
+            updateRecipesEditDisplay(false)
+
         }
         catch (err) {
             console.error('Error: ', err)
@@ -87,16 +88,22 @@ const EditRecipe = () => {
             imageFlag.current = true
         }
     }
+
+
+    const closeEditRecipeWindows = () => {
+        updateRecipesEditDisplay(false)
+    }
     
 
     // LOADER //
     if (!isLoad) {
-        return <div>Loading ...</div>
+        return <CustomLoader/>
     }
     
 
     return (
     <div className="edit_recipe_global_container">
+       <i class="fa-solid fa-circle-xmark" id='edit_recipe_close_icon' onClick={closeEditRecipeWindows}></i>
        <div className="edit_recipe_image" style={{backgroundImage: `url('${!imageFlag.current ? `http://localhost:8989/uploads/${recipe.image}` : imageUrl}')`}}></div>
         <form className='edit_recipe_container' onSubmit={handleSubmit}>
             <div className='edit_recipe_item'>

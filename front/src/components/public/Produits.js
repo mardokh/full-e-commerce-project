@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { favoriteProductService } from '../../_services/favoriteProduct.service'
 import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const Produits = () => {
@@ -167,7 +168,7 @@ const Produits = () => {
     
     // Loader //
     if (!isLoad) {
-        return <div>Loading...</div>
+        return <CustomLoader/>
     }
 
 

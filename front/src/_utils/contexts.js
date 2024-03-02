@@ -34,7 +34,7 @@ export const MyProvider = ({ children }) => {
 
 
     // Products notes id
-    const [productsNotesId, setProducstNotesId] = useState(false)
+    const [productsNotesId, setProducstNotesId] = useState(null)
 
     const updateProductsNotesId = (productId) => {
         setProducstNotesId(productId)
@@ -50,7 +50,7 @@ export const MyProvider = ({ children }) => {
 
 
     // Recipes notes id
-    const [recipesNotesId, setRecipesNotesId] = useState(false)
+    const [recipesNotesId, setRecipesNotesId] = useState(null)
 
     const updateRecipesNotesId = (recipeId) => {
         setRecipesNotesId(recipeId)
@@ -73,11 +73,11 @@ export const MyProvider = ({ children }) => {
     }
 
 
-    // Recipes add displaying
-    const [recipesAddDisplay, setRecipesAddDisplay] = useState(false)
+    // Products edit displaying
+    const [productsEditDisplay, setProductsEditDisplay] = useState(false)
 
-    const updateRecipesAddDisplay = (switchDisp) => {
-        setRecipesAddDisplay(switchDisp)
+    const updateProductsEditDisplay = (switchDisp) => {
+        setProductsEditDisplay(switchDisp)
     }
 
 
@@ -89,11 +89,59 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Products edit id
+    const [productsEditId, setProductsEditId] = useState(null)
+
+    const updateProductsEditId = (productId) => {
+        setProductsEditId(productId)
+    }
+
+
+    // Products on edit
+    const [productsOnEdit, setProductsOnEdit] = useState(false)
+
+    const updateProductsOnEdit = (onEdit) => {
+        setProductsOnEdit(onEdit)
+    }
+
+
+    // Recipes add displaying
+    const [recipesAddDisplay, setRecipesAddDisplay] = useState(false)
+
+    const updateRecipesAddDisplay = (switchDisp) => {
+        setRecipesAddDisplay(switchDisp)
+    }
+
+
     // Recipes on add
     const [recipesOnadd, setRecipesOnadd] = useState(false)
 
     const updateRecipesOnAdd = (onAdd) => {
         setRecipesOnadd(onAdd)
+    }
+
+
+    // Recipes edit displaying
+    const [recipesEditDisplay, setRecipesEditDisplay] = useState(false)
+
+    const updateRecipesEditDisplay = (switchDisp) => {
+        setRecipesEditDisplay(switchDisp)
+    }
+
+
+    // Recipe edit id
+    const [recipesEditId, setRecipesEditId] = useState(null)
+
+    const updateRecipesEditId = (recipeId) => {
+        setRecipesEditId(recipeId)
+    }
+
+
+    // Recipe on edit
+    const [recipesOnEdit, setRecipesOnEdit] = useState(false)
+
+    const updateRecipesOnEdit = (onEdit) => {
+        setRecipesOnEdit(onEdit)
     }
 
 
@@ -142,7 +190,31 @@ export const MyProvider = ({ children }) => {
 
             // Recipes on add
             recipesOnadd,
-            updateRecipesOnAdd
+            updateRecipesOnAdd,
+
+            // Products edit displaying
+            productsEditDisplay,
+            updateProductsEditDisplay,
+
+            // Recipes edit displaying
+            recipesEditDisplay,
+            updateRecipesEditDisplay,
+
+            // Products edit id
+            productsEditId,
+            updateProductsEditId,
+
+            // Products on edit
+            productsOnEdit,
+            updateProductsOnEdit,
+
+            // Recipes edit id
+            recipesEditId,
+            updateRecipesEditId,
+
+            // Recipes on edit
+            recipesOnEdit,
+            updateRecipesOnEdit,
         }}>
         {children}
         </MyContext.Provider>

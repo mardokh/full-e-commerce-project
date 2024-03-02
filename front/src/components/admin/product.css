@@ -138,3 +138,8 @@ a {
 .pagination-bar {
     justify-content: center;
 }
+
+#product_manage_add_icon {
+    font-size: 2rem;
+    color: green;
+}

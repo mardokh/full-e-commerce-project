@@ -121,3 +121,8 @@ a {
 .pagination-bar {
     justify-content: center;
 }
+
+#recipe_manage_add_icon {
+    font-size: 2rem;
+    color: green
+}

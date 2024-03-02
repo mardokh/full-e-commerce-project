@@ -1,23 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './editProduct.css'
-import { useNavigate, useParams } from 'react-router-dom'
 import { productService } from '../../_services/product.service'
+import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const EditProduct = () => {
 
     // STATES //
     const [product, setProduct] = useState({name: "", details: "", price: "", image: ""})
-    const [isLoad, setISload] = useState(false)
     const [imageUrl, setImageUrl] = useState()
-
-
-    // GET ID PARAMS //
-    const {id} = useParams()
-
-
-    // REDIRECTION //
-    const navigate = useNavigate()
+    const [isLoad, setISload] = useState(false)
+    const { productsEditId } = useContext(MyContext)
+    const { updateProductsEditDisplay } = useContext(MyContext)
+    const { updateProductsOnEdit } = useContext(MyContext)
 
 
     // REFERENCE //
@@ -29,7 +25,7 @@ const EditProduct = () => {
     useEffect(() => {
 
         if (effectFlag.current === false) {
-            productService.getOneProduct(id)
+            productService.getOneProduct(productsEditId)
                 .then(res => {
                     setProduct(res.data.data)
                     setISload(true)
@@ -51,13 +47,16 @@ const EditProduct = () => {
             formData.append('details', product.details)
             formData.append('price', product.price)
             formData.append('image', product.image)
-            formData.append('id', id)
+            formData.append('id', productsEditId)
 
             // Api call for update recipe
             await productService.updateProcut(formData)
 
-            // Redirect to main products manage
-            navigate('../products_manage')
+            // Update products state
+            updateProductsOnEdit(true)
+
+            // Close edit product windows
+            updateProductsEditDisplay(false)
         }
         catch (err) {
             console.error('Error: ', err)
@@ -90,15 +89,21 @@ const EditProduct = () => {
     }
 
 
-    // LOADER //
-    if (!isLoad) {
-        return <div>Loading ...</div>
+    // PRODUCT EDIT CLOSE //
+    const closeEditProductWindows = () => {
+        updateProductsEditDisplay(false)
     }
 
+
+    // AWAIT LOADER //
+    if (!isLoad) {
+        return <CustomLoader/>
+    }
 
 
     return (
         <div className="edit_product_global_container">
+            <i class="fa-solid fa-circle-xmark" id='edit_product_close_icon' onClick={closeEditProductWindows}></i>
             <div className="edit_product_image" style={{backgroundImage: `url('${!imageFlag.current ? `http://localhost:8989/uploads/${product.image}` : imageUrl}')`}}></div>
             <form className='edit_product_container' onSubmit={handleSubmit}>
                 <div className='edit_product_item'>
