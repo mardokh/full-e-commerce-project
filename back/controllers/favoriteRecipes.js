@@ -26,14 +26,22 @@ exports.addFavoriteRecipe = async (req, res) => {
                 return res.status(400).json({ message: 'Recipe ID is missing in the request body !' })
             }
 
-            // Set entrie
-            const client_favoriteRecipe = {
-                client_id: client_id,
-                recipe_id: recipe_id
+            // Check if the recipe is already a favorite for this client
+            const existingFavorite = await FavoriteRecipe.findOne({ where: { client_id, recipe_id } });
+            
+            if (!existingFavorite) {
+                // Create favorite recipe
+                await FavoriteRecipe.create({ client_id, recipe_id });
             }
 
-            // Create favorite recipe
-            await FavoriteRecipe.create(client_favoriteRecipe)
+            // Fetch the recipe
+            const recipe = await Recipe.findByPk(recipe_id);
+
+            // Increment favorites occurrences
+            recipe.favrcp += 1;
+
+            // Save the updated recipe
+            await recipe.save();
 
             // Get favorites recipes
             const favorites_recipes = await FavoriteRecipe.findAll({ where: { client_id: client_id } })
@@ -67,6 +75,15 @@ exports.addFavoriteRecipe = async (req, res) => {
 
             // Create favorite recipe
             await FavoriteRecipe.create(client_favoriteRecipe)
+
+            // Fetch the recipe
+            const recipe = await Recipe.findByPk(recipeId);
+
+            // Increment favorites occurrences
+            recipe.favrcp += 1;
+
+            // Save the updated recipe
+            await recipe.save();
 
             // Get favorites recipes
             const favorites_recipes = await FavoriteRecipe.findAll({ where: { client_id: clientId } })

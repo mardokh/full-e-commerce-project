@@ -3,91 +3,103 @@ const { v4: uuidv4 } = require('uuid')
 const FavoriteProduct = require('../models/favoriteProduct')
 const Product = require('../models/product')
 
-
-
 // GLOBALS VARIABLS //
 const cookieName = 'client_id_favorites_products'
 
-
-// ADD FAVORITE PRODUCT //
 exports.addFavoriteProduct = async (req, res) => {
 
     try {
         // IF CLIENT HAS COOKIE WITH SPECIFIED COOKIENAME //
         if (req.cookies && req.cookies[cookieName]) {
-
             // Extract client id
-            const client_id = req.cookies[cookieName]
+            const client_id = req.cookies[cookieName];
 
             // Extract product id
-            const product_id = req.body.id
-            
+            const product_id = req.body.id;
+
             // Check params
             if (!product_id) {
                 return res.status(400).json({ message: 'Product ID is missing in the request body !' });
             }
 
-            // Set entrie
-            const client_favoriteProduct = {
-                client_id: client_id,
-                product_id: product_id
+            // Check if the product is already a favorite for this client
+            const existingFavorite = await FavoriteProduct.findOne({ where: { client_id, product_id } });
+            
+            if (!existingFavorite) {
+                // Create favorite product
+                await FavoriteProduct.create({ client_id, product_id });
             }
 
-            // Create favorite product
-            await FavoriteProduct.create(client_favoriteProduct)
-            
+            // Fetch the product
+            const product = await Product.findByPk(product_id);
+
+            // Increment favorites occurrences
+            product.favprd += 1;
+
+            // Save the updated product
+            await product.save();
+
             // Get favorites products
-            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: client_id } })
+            const favorites_products = await FavoriteProduct.findAll({ where: { client_id } });
 
             // Check products
             if (!favorites_products) {
-                return res.status(404).json({ message: 'Favorites products not found' })
+                return res.status(404).json({ message: 'Favorites products not found' });
             }
 
-            // Send successfully 
-            return res.json({ data: favorites_products })
-        }
+            // Send success
+            return res.json({ data: favorites_products });
+        } 
 
         else {
             // IF CLIENT DOESN'T HAVE COOKIE WITH SPECIFIED COOKIENAME //
-            const productId = req.body.id
+            const productId = req.body.id;
 
             // Check params
             if (!productId) {
-                return res.status(400).json({ message: 'Product ID is missing in the request body !' })
+                return res.status(400).json({ message: 'Product ID is missing in the request body !' });
             }
 
-            // Create clien id
-            const clientId = uuidv4()
+            // Create client id
+            const clientId = uuidv4();
 
-            // Set entrie
+            // Set entry
             const client_favoriteProduct = {
                 client_id: clientId,
                 product_id: productId
-            }
+            };
 
             // Create favorite product
-            await FavoriteProduct.create(client_favoriteProduct)
+            await FavoriteProduct.create(client_favoriteProduct);
+
+            // Fetch the product
+            const product = await Product.findByPk(productId);
+
+            // Increment favorites occurrences
+            product.favprd += 1;
+
+            // Save the updated product
+            await product.save();
 
             // Get favorites products
-            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: clientId} })
+            const favorites_products = await FavoriteProduct.findAll({ where: { client_id: clientId } });
 
-            // Check if favorites products exists
+            // Check if favorites products exist
             if (!favorites_products) {
-                return res.status(404).json({ message: 'Favorites products not found' })
+                return res.status(404).json({ message: 'Favorites products not found' });
             }
 
             // Create & send cookie
-            res.cookie(cookieName, clientId, { maxAge: 30 * 24 * 60 * 60 * 1000})
+            res.cookie(cookieName, clientId, { maxAge: 30 * 24 * 60 * 60 * 1000 });
 
             // Send Successfully 
-            return res.json({ data: favorites_products })
-        } 
+            return res.json({ data: favorites_products });
+        }
     }
     catch (err) {
-        return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack })
+        return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack });
     }
-}
+};
 
 
 // GET FAVORITES PRODUCTS //

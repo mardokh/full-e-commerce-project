@@ -119,6 +119,7 @@ const Recipes = () => {
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Note</th>
+                                <th>Favorites</th>
                                 <th>CreatedAt</th>
                                 <th>Actions</th>
                             </tr>
@@ -131,6 +132,7 @@ const Recipes = () => {
                                         <td>{recipe.name}</td>
                                         <td>{recipe.description}</td>
                                         <td>{recipe.note}</td>
+                                        <td>{recipe.favrcp}</td>
                                         <td>{recipe.createdAt}</td>
                                         <td className='recipe_manage manage_icons'>
                                             <button className='recipe_manage_btn_edit' onClick={() => displayRecipeEditForm(recipe.id)}>Edit</button>

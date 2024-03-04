@@ -111,6 +111,7 @@ const Produits = () => {
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Note</th>
+                                <th>Favorites</th>
                                 <th>CreatedAt</th>
                                 <th>Actions</th>
                             </tr>
@@ -123,6 +124,7 @@ const Produits = () => {
                                         <td>{product.name}</td>
                                         <td>{product.price}</td>
                                         <td>{product.note}</td>
+                                        <td>{product.favprd}</td>
                                         <td>{product.createdAt}</td>
                                         <td className='product_manage manage_icons'>
                                             <button className='product_manage_btn_edit' onClick={() => displayProductEditForm(product.id)}>Edit</button>

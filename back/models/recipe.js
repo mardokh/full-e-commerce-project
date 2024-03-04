@@ -16,6 +16,10 @@ const recipe = DB.define('recipe', {
         type: DataTypes.TEXT,
         defaultValue: ''
     },
+    favrcp: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
     image: {
         type: DataTypes.STRING(255),
         defaultValue: ''

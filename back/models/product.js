@@ -23,6 +23,10 @@ const product = DB.define('product', {
     note: {
         type: DataTypes.INTEGER
     },
+    favprd: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
     image: {
         type: DataTypes.STRING(255),
         defaultValue: ''
