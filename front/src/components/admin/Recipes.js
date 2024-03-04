@@ -29,6 +29,7 @@ const Recipes = () => {
             recipeService.getAllRecipes()
                 .then(res => {
                     setRecipes(res.data.data)
+                    setRefNotFound(false)
                     setISload(true)
                 })
                 .catch(err => handleError(err))
@@ -110,7 +111,7 @@ const Recipes = () => {
     return (
         <div className='recipe_manage_global_container'>
             <div className='recipe_manage_sub_container'>
-                <div className='recipe_manager_add' onClick={displayRecipeAddForm}><i class="fa-solid fa-plus" id='recipe_manage_add_icon'></i></div>
+                <div className='recipe_manager_add' onClick={displayRecipeAddForm} title='add recipe'><i class="fa-solid fa-plus" id='recipe_manage_add_icon'></i></div>
                 <div className='recipe_manage_container'>
                     <table className='recipe_manage_table_container'>
                         <thead>
@@ -142,7 +143,7 @@ const Recipes = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6">No recipes found.</td>
+                                    <td colSpan="7">No recipes found</td>
                                 </tr>
                             )}
                         </tbody>

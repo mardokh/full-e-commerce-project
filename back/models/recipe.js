@@ -25,7 +25,8 @@ const recipe = DB.define('recipe', {
         defaultValue: ''
     },
     note: {
-        type: DataTypes.DECIMAL(30,2)
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 }, {paranoid: true})
 

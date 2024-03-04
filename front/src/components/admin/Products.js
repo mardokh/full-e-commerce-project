@@ -7,7 +7,7 @@ import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 const Produits = () => {
 
-    // STATES / CONTEXTS
+    // STATES / CONTEXTS / CONST
     const [products, setProducts] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [refNotFound, setRefNotFound] = useState(false);
@@ -27,6 +27,7 @@ const Produits = () => {
             productService.getAllproducts()
                 .then(res => {            
                     setProducts(res.data.data);
+                    setRefNotFound(false)
                     setIsLoad(true);
                 })
                 .catch(err => handleError(err));
@@ -38,15 +39,15 @@ const Produits = () => {
     // LOAD PRODUCTS ON PAGE LOAD //
     useEffect(() => {
         loadProducts()
-    }, [])
+    },[])
 
 
-    // LOAD PRODUCTS ON PRODUCT ADD //
+    // LOAD RECIPES ON PRODUCT ADD //
     if (productsOnAdd || productsOnEdit) {
         loadProducts()
     }
 
-    
+
     // LOAD PRODUCTS ERRORS HANDLE //
     const handleError = (err) => {
         if (err.response && err.response.status) {
@@ -77,6 +78,14 @@ const Produits = () => {
         const lastPageIndex = firstPageIndex + PageSize;
         return products.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, products]);
+
+
+    useEffect(() => {
+        if (currentTableData.length === 0 && currentPage > 1) {
+            const curpage = currentPage
+            setCurrentPage(curpage - 1)
+        }
+    })
 
 
     // ADD PRODUCT PAGE DISPLAYER //
@@ -134,13 +143,14 @@ const Produits = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6">No products found.</td>
+                                    <td colSpan="7">No products found</td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
                     <Pagination
                         className="pagination-bar"
+                        currentTableData={currentTableData}
                         currentPage={currentPage}
                         totalCount={products.length}
                         pageSize={PageSize}

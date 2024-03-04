@@ -21,7 +21,8 @@ const product = DB.define('product', {
         type: DataTypes.DECIMAL(30, 2),
     },
     note: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     favprd: {
         type: DataTypes.INTEGER,
