@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import './panier.css'
+import OurProducts from '../../components/public/our_products'
+import Footer from '../../components/public/Footer'
 
 // MAIN FUNCTION //
 const Panier = () => {
@@ -181,12 +183,24 @@ const Panier = () => {
                 </div>
             ))
             )
-            : (<div className="no_product_add">{products}</div>)
+            : (
+                <>
+                    <div className="shopping_no_product_add">
+                        <p>{products}</p>
+                        <div className="shopping_continue_back">continuer vos achats</div>
+                    </div>
+                </>
+              )
             }
             <div className="total_products_price" style={{display: refProducts.current ? "initial" : "none"}}>
                 <p>Total :</p>
                 <p>{refProducts.current ? products.reduce((total, product) => total + parseFloat(product.total_price), 0).toFixed(2): null} da</p>
             </div>
+            <div className="our_products_global_container">
+                <h1>nos produtis</h1>
+                <OurProducts/>
+            </div>
+            <Footer />
         </div>
     ) 
 }

@@ -1,57 +1,86 @@
 .footer {
-    height: 100px;
     width: 100%;
-    background-color: rgb(158, 229, 158);
+    height: 450px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    background-color: rgb(235, 233, 233);
 }
 
-.info_contact {
-    width: 800px;
+.footer_from_container {
+    width: 400px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer_input_email {
+    display: flex;
+    height: 70px;
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.footer_input_message {
+    display: flex;
+    height: 280px;
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.footer_input_email input {
+    height: 40px;
+}
+
+.footer_input_message textarea {
+    height: 250px;
+}
+
+.footer_contact_container {
     display: flex;
     justify-content: space-between;
 }
 
-.copyright {
-    width: 300px;
-    height: 30px;
-    color: rgb(94, 94, 94);
-}
-
-.contact {
-    width: 450px;
+.footer_social_container {
     display: flex;
-    justify-content: space-evenly;
-}
-
-.social {
+    justify-content: space-between;
     width: 200px;
+}
+
+#footer_instagram, #footer_facebook{
+    font-size: 20px;
+
+}
+
+.footer_info_container  {
+    width: 500px;
+    height: 200px;
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
-    margin-right: 50px;
 }
 
-.fa-square-instagram {
-    font-size: 20px;
+.footer_email {
+    display: flex;
+    justify-content: space-between;
+    width: 190px;
 }
 
-.fa-square-facebook {
-    font-size: 20px;
+.footer_phone {
+    display: flex;
+    justify-content: space-between;
+    width: 170px;
 }
 
-.text_contact {
-    color: green;
+.footer_social_icons {
+    display: flex;
+    justify-content: space-between;
+    width: 70px;
 }
 
-.text_social {
-    color: green;
-}
-
-.fa-square-phone {
-    font-size: 20px;
-}
-
-.fa-envelope {
+#footer_email, #footer_phone {
     font-size: 20px;
 }

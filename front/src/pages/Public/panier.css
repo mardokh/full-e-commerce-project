@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Oleo+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Marck+Script&family=Yanone+Kaffeesatz:wght@500&display=swap');
+
 
 .shopping_product_container {
     display: flex;
@@ -94,4 +97,41 @@
 
 .fa-circle-xmark:hover {
   color: gray;
+}
+
+.shopping_no_product_add {
+  width: 90%;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+
+.our_products_global_container {
+  width: 1400px;
+  margin: 0 auto;
+  margin-bottom: 200px;
+}
+
+.our_products_global_container h1 {
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: green;
+  font-family:'Oleo Script';
+}
+
+.shopping_continue_back {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gainsboro;
 }
