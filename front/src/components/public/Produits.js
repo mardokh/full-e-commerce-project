@@ -18,6 +18,7 @@ const Produits = () => {
     const { updateFavoritesProductsCount } = useContext(MyContext)
     const { updateProductsNotesDisplay } = useContext(MyContext)
     const { updateProductsNotesId } = useContext(MyContext)
+    const { updateShoppingCartCount } = useContext(MyContext)
 
 
     // Navigate
@@ -113,6 +114,10 @@ const Produits = () => {
         try {
             // Api call for add product to shopping carts
             await shoppingSerive.shoppingAdd({ id: productId })
+
+            const shopping_cart_add = await shoppingSerive.shoppingGet()
+
+            updateShoppingCartCount(shopping_cart_add.data.data.length)
     
             // Redirect to shopping cart
             navigate('/panier')
@@ -149,7 +154,7 @@ const Produits = () => {
                 // Api call for get all favorites products
                 const favorites_products_del = await favoriteProductService.favoriteProductCount()
 
-                // Update state context
+                // Update context
                 updateFavoritesProductsCount(favorites_products_del.data.data.length)
 
                 // Change icon color

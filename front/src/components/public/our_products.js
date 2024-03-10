@@ -87,12 +87,17 @@ const OurProducts = () => {
             }
             <div className="our_products_go_more">
                 <div className="blinking-arrow">
-                    <i className="fas fa-arrow-right" id="our_products_arrow_more"></i>
+                    <div className="arrow">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
+
 
 
 export default OurProducts

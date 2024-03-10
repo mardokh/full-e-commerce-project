@@ -100,7 +100,7 @@ header nav ul li a {
 
 .favorites_products_count {
     position: absolute;
-    background-color: green;
+    background-color: #7cba00;
     padding: 1px;
     border-radius: 50%;
     font-family: monospace;
@@ -135,4 +135,23 @@ header nav ul li a {
 
 .searchBar_item_container:hover {
     background-color: rgb(214, 246, 214);
+}
+
+.shopping_cart_icon_container {
+    position: relative;
+}
+
+#shopping_cart_icon {
+    color: green;
+}
+
+.shopping_cart_icon_count {
+    position: absolute;
+    background-color: #7cba00;
+    padding: 1px;
+    border-radius: 50%;
+    font-family: monospace;
+    top: -14px;
+    right: -5px;
+    color: white;
 }

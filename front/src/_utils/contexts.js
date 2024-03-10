@@ -145,6 +145,14 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Shopping cart count
+    const [shoppingCartCount, setShoppingCartCount] = useState(0)
+
+    const updateShoppingCartCount = (count) => {
+        setShoppingCartCount(count)
+    }
+
+
     return (
         <MyContext.Provider value={{
 
@@ -215,6 +223,10 @@ export const MyProvider = ({ children }) => {
             // Recipes on edit
             recipesOnEdit,
             updateRecipesOnEdit,
+
+            // Shopping cart count
+            shoppingCartCount,
+            updateShoppingCartCount,
         }}>
         {children}
         </MyContext.Provider>

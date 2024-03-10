@@ -2,29 +2,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Marck+Script&family=Yanone+Kaffeesatz:wght@500&display=swap');
 
 .produits_parent_container {
-    width: 100%;
+    width: 85%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 100px;
 }
 
 .produits_img_englob {
-    height: 450px;
-    width: 300px;
+    height: 400px;
+    width: 230px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin-bottom: 50px;
-    margin-left: 80px;
 }
 
 .produits_img_container {
-    height: 270px;
-    width: 300px;
+    height: 230px;
+    width: 230px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top;
@@ -34,7 +33,7 @@
 
 .produit_info {
     height: 120px;
-    width: 300px;
+    width: 230px;
     position: absolute;
     bottom: 0px;
     display: flex;

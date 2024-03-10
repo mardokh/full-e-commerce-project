@@ -107,9 +107,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: whitesmoke;
-  border: 1px solid gray;
-  border-radius: 10px;
+  background-color:antiquewhite;
   margin-bottom: 100px;
 }
 
@@ -117,14 +115,18 @@
   width: 1400px;
   margin: 0 auto;
   margin-bottom: 200px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  background-color: rgba(0, 128, 0, 0.099);
+  margin-top: 350px;
 }
 
 .our_products_global_container h1 {
   text-align: left;
   margin-bottom: 10px;
-  font-size: 25px;
+  font-size: 20px;
   color: green;
-  font-family:'Oleo Script';
+  font-family: "Petit Formal Script", cursive;
+  padding: 15px;
 }
 
 .shopping_continue_back {
@@ -133,5 +135,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gainsboro;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.shopping_continue_back:hover {
+  background-color: rgba(0, 128, 0, 0.764);
 }

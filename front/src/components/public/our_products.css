@@ -6,7 +6,6 @@
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
 }
 
 .our_products_img_englob {
@@ -37,7 +36,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 10px;
+    
     justify-content: space-between;
 }
 
@@ -73,16 +72,44 @@
 #our_products_arrow_more {
     font-size: 25px;
     color: green;
+    position: relative;
 }
 
+.arrow {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-90deg); /* Rotate the arrow to point from left to right */
+  cursor: pointer;
+}
 
-@keyframes blink {
-    50% {
+.arrow span {
+  display: block;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-bottom: 5px solid green;
+  border-right: 5px solid green;
+  transform: rotate(45deg); /* Keep the arrow shape */
+  margin: -10px;
+  animation: animate 2s infinite;
+}
+
+.arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+@keyframes animate {
+  0% {
       opacity: 0;
-    }
+      transform: rotate(45deg) translate(-20px, -20px); /* Initial position */
   }
-  
-  .blinking-arrow {
-    animation: blink 2s infinite; /* Make the arrow blink */
+  50% {
+      opacity: 1;
   }
-  
+  100% {
+      opacity: 0;
+      transform: rotate(45deg) translate(20px, 20px); /* Final position */
+  }
+}

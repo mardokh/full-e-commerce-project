@@ -154,6 +154,7 @@ exports.deleteFavoritesProducts = async (req, res) => {
     }
 }
 
+
 // GET FAVORITES PRODUCTS COUNT //
 exports.getFavoritesProductsCount = async (req, res) => {
 

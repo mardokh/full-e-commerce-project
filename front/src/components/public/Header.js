@@ -8,6 +8,7 @@ import { favoriteRecipeService } from '../../_services/favoriteRecipe.service'
 import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
 import { searchBarService } from '../../_services/searchBar.service'
+import { shoppingSerive } from '../../_services/shoppingCart.service'
 
 
 const Header = () => {
@@ -15,13 +16,14 @@ const Header = () => {
     // STATES FROM CONTEXT //
     const { favoritesProductsCount } = useContext(MyContext)
     const { favoritesRecipesCount } = useContext(MyContext)
+    const { shoppingCartCount } = useContext(MyContext)
 
 
     // STATES FROM DATABASE //
     const [favoritesProducts, setFavoriteProducts] = useState(0)
     const [favoritesRecipes, setFavoriteRecipes] = useState(0)
+    const [shoppingCarts, setShoppingCarts] = useState(0)
     const [useEffectFlag, setUseEffectFlag] = useState(false)
-    const [isLoad, setIsload] = useState(false)
     const [research, setResearch] = useState()
     const [searchActive, setSearchActive] = useState(false)
 
@@ -31,12 +33,13 @@ const Header = () => {
 
 
     // GET FAVORITES FUNCTION //
-    const getFavorites = async () => {
+    const getFavEndShop = async () => {
 
         try {
             // Get cookies from browser
             const FavoritesProductsCookie = Cookies.get('client_id_favorites_products')
             const FavoritesRecipesCookie = Cookies.get('client_id_favorites_recipes')
+            const ShoppingCartCookies = Cookies.get('client_id_shopping_carts')
 
             if (FavoritesProductsCookie) {
 
@@ -45,9 +48,6 @@ const Header = () => {
 
                 // Update state
                 setFavoriteProducts(favoties_products.data.data.length)
-
-                // Update loading
-                setIsload(true)
             }
 
             if (FavoritesRecipesCookie) {
@@ -56,9 +56,14 @@ const Header = () => {
 
                 // Update state
                 setFavoriteRecipes(favorites_recipes.data.data.length)
+            }
 
-                // Update loading
-                setIsload(true)
+            if (ShoppingCartCookies) {
+
+                // Api call for get shopping carts
+                const shopping_carts = await shoppingSerive.shoppingCount()
+
+                setShoppingCarts(shopping_carts.data.data.length)
             }
         }
         catch (err) {
@@ -70,7 +75,7 @@ const Header = () => {
     // API CALL FOR GET FAVORITE //
     useEffect(() => {
         if (!useEffectFlag) {
-            getFavorites()
+            getFavEndShop()
         }
         return () => setUseEffectFlag(true)
     }, [])
@@ -78,8 +83,8 @@ const Header = () => {
 
     // UPDATE STATE //
     useEffect(() => {
-        getFavorites()
-    }, [favoritesProductsCount, favoritesRecipesCount])
+        getFavEndShop()
+    }, [favoritesProductsCount, favoritesRecipesCount, shoppingCartCount])
 
 
     // SERACH BAR HANDLE //
@@ -136,7 +141,10 @@ const Header = () => {
                             <Link to="/favorites"><img src={heart} style={{height:'22px', width:'23px'}}/></Link> 
                             <span style={{display: (favoritesProducts + favoritesRecipes === 0) ? 'none' : 'initial'}} className='favorites_products_count'>{favoritesProducts + favoritesRecipes}</span>
                         </div>
-                        <li className='panier'><Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping"></i><span>0</span></Link></li>
+                        <div className='shopping_cart_icon_container'>
+                            <Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping" id='shopping_cart_icon'></i></Link>
+                            <span style={{display: shoppingCarts === 0 ? 'none' : 'initial'}} className='shopping_cart_icon_count'>{shoppingCarts}</span>
+                        </div>
                     </ul>
                 </nav>
             </header>

@@ -23,5 +23,9 @@ router.delete('/carts/delete/:id', controller.deleteShoppingCart)
 router.delete('/carts/delete/somes/:id', controller.deleteSomeShoppingCarts)
 
 
+// GET SHOPPING CARTS COUNT //
+router.get('/carts/count', controller.getShoppingCartsCount)
+
+
 // EXPORTS //
 module.exports = router

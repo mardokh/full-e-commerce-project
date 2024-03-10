@@ -172,3 +172,31 @@ exports.deleteSomeShoppingCarts = async (req, res) => {
         return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
     }
 }
+
+
+// GET SHOPPING CARTS COUNT //
+exports.getShoppingCartsCount = async (req, res) => {
+
+    try {
+        // CHECK IF CLIENT HAS (client_id) COOKIE
+        if (req.cookies && req.cookies[cookieName]) {
+
+            // Extract client id 
+            const client_id = req.cookies[cookieName]
+
+            // Get shopping carts
+            const clientShopping = await ShoppingCart.findAll({where: {client_id: client_id}})
+
+            // Check if have shopping carts
+            if (!clientShopping) {
+                return res.status(404).json({message: 'No shopping carts found !'})
+            }
+
+            // Send successfully
+            return res.json({data: clientShopping})
+        }
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Database error!', error: err.message, stack: err.stack })
+    }
+}  

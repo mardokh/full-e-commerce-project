@@ -1,9 +1,12 @@
 // MODULES //
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useContext } from "react"
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import './panier.css'
 import OurProducts from '../../components/public/our_products'
 import Footer from '../../components/public/Footer'
+import MyContext from '../../_utils/contexts'
+
+
 
 // MAIN FUNCTION //
 const Panier = () => {
@@ -12,6 +15,7 @@ const Panier = () => {
     const [products, setProducts] = useState([])
     const [isLoad, setISload] = useState(false)   
     const [refConfirm, setRefConfirm] = useState()
+    const { updateShoppingCartCount } = useContext(MyContext)
 
     
     // REFERENCE //
@@ -125,6 +129,9 @@ const Panier = () => {
 
             // api call for get product
             const product = await shoppingSerive.shoppingGet()
+
+            // Update context
+            updateShoppingCartCount(product.data.data.length)
             
             // Update state
             setProducts(product.data.data)
@@ -197,7 +204,7 @@ const Panier = () => {
                 <p>{refProducts.current ? products.reduce((total, product) => total + parseFloat(product.total_price), 0).toFixed(2): null} da</p>
             </div>
             <div className="our_products_global_container">
-                <h1>nos produtis</h1>
+                <h1>nos derniers produtis</h1>
                 <OurProducts/>
             </div>
             <Footer />
