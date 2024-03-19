@@ -68,7 +68,7 @@ const Produits = () => {
                     setISload(true)
                 }
                 else {
-                    // Get favorite produt id from favoritesProducts table
+                    // Get favorite product id from favoritesProducts table
                     const favoriteIds = favoritesProducts.data.data.map(favorite => favorite.product_id)
 
                     // Update state

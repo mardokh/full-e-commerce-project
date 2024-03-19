@@ -111,13 +111,14 @@ exports.getShoppingCart = async (req, res) => {
                     [Sequelize.fn('COUNT', Sequelize.col('product_id')), 'product_count'],
                     [Sequelize.fn('SUM', Sequelize.col('price')), 'total_price']
                 ],
-                include: [{ model: Product, attributes: ['id', 'name', 'price'], as: 'shopping_cart_product' }],
+                include: [{ model: Product, attributes: ['id', 'name', 'price', 'image'], as: 'shopping_cart_product' }],
                 group: ['product_id']
             })
 
             // IF THE CLIENT HASN'T ADDED ANY PRODUCTS
             if (!clientShopping.length > 0) {
-                return res.json({ data: "vous n'avez ajouté aucun produit" })
+                //return res.json({ data: "vous n'avez ajouté aucun produit" })
+                return res.status(404).json({data: "Votre panier est vide"})
             }
             else {
                 // Send products and counts to the client
@@ -127,7 +128,7 @@ exports.getShoppingCart = async (req, res) => {
 
         else {
             // IF CLIENT DOESN'T HAVE (client_id) COOKIE
-            return res.json({ data: "vous n'avez ajouté aucun produit" })
+            return res.json({ data: "Votre panier est vide" })
         }
     } 
     catch (err) {

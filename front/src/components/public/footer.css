@@ -1,38 +1,29 @@
 .footer_container {
     height: 150px;
     margin: 15px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
-    flex-direction: column;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: rgba(199, 242, 124, 0.463);
     justify-content: space-between;
-    padding: 15px;
-}
-
-.footer_sub_container {
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .footer_contact_container {
     display: flex;
-    justify-content: space-between;
-    width: 500px;
-    height: 30px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 250px;
+    height: 100%;
 }
 
 .footer_social_container {
     display: flex;
-    justify-content: space-between;
-    width: 200px;
-    height: 30px;
-}
-
-#footer_instagram, #footer_facebook{
-    font-size: 20px;
-
+    flex-direction: column;
+    justify-content: space-around;
+    width: 305px;
+    height: 100%;
+    font-size: 25px;
 }
 
 #footer_facebook {
@@ -43,10 +34,12 @@
     color: rgb(204, 61, 142);
 }
 
-.footer_info_container  {
-    width: 900px;
-    display: flex;
-    justify-content: space-evenly;
+#footer_email {
+    color: rgb(136, 57, 69);
+}
+
+#footer_phone {
+    color: green;
 }
 
 .footer_email {
@@ -64,19 +57,17 @@
 .footer_social_icons {
     display: flex;
     justify-content: space-between;
-    width: 70px;
+    width: 300px;
+    align-items: center;
 }
 
-#footer_email, #footer_phone {
-    font-size: 20px;
+.footer_social_icons p:first-child {
+    font-size: 16px;
+    color: green;
 }
 
-#footer_email {
-    color: rgb(214, 82, 101);
-}
-
-#footer_phone {
-    color: rgb(103, 189, 103);
+#footer_email, #footer_phone, #footer_instagram, #footer_facebook{
+    font-size: 22px;
 }
 
 .footer_copyright_container {
@@ -89,8 +80,25 @@
 }
 
 .footer_under_line {
-    width: 200px;
+    width: 130px;
     height: 1px;
     background-color: black;
 }
 
+.footer_subscribe_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer_subscribe_container input {
+    padding: 10px;
+}
+
+.footer_subscribe {
+    width: 100px;
+    height: 40px;
+    font-size: 17px;
+    padding: 10px;
+    background-color: rgba(0, 128, 0, 0.736);
+    color: white;
+}

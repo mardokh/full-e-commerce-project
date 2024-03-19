@@ -76,6 +76,10 @@
     cursor: pointer;
 }
 
+.add_cart:hover {
+    background-color: rgba(0, 128, 0, 0.835);
+}
+
 .fa-heart {
     position: absolute;
     top: 15px;

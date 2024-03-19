@@ -6,6 +6,7 @@ const Product = require('../models/product')
 // GLOBALS VARIABLS //
 const cookieName = 'client_id_favorites_products'
 
+
 exports.addFavoriteProduct = async (req, res) => {
 
     try {
