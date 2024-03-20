@@ -202,11 +202,12 @@ const Panier = () => {
             
             // Update state
             getShopping()
-
-
         }
         catch (err) {
-            handleError(err)
+            if (err.response && err.response.status === 404) {
+                updateShoppingCartCount(0)
+                getShopping()
+            }
         }
     }
 
