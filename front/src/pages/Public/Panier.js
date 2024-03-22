@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react"
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import './panier.css'
-import OurProducts from '../../components/public/our_products'
+//import OurProducts from '../../components/public/our_products'
 import Footer from '../../components/public/Footer'
 import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
@@ -286,7 +286,7 @@ const Panier = () => {
    
     // LOADER //
     if (!isLoad) {
-        return <CustomLoader/>
+        return <div style={{marginTop: '300px'}}><CustomLoader/></div>
     }
 
 
@@ -350,7 +350,7 @@ const Panier = () => {
                     : (
                         <>
                             <div className="shopping_no_product_add">
-                                <p style={{fontSize: '22px'}}>{products}</p>
+                                <p style={{fontSize: '18px'}}>{products}</p>
                                 <div className="shopping_continue_back">
                                     <p>Continuer vos achats</p>
                                     <svg style={{width: '20px', height: '20px', fill: 'white'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
@@ -361,19 +361,23 @@ const Panier = () => {
                     }
                 </div>
                 <div style={{display: !refNotfound ? "flex" : "none", flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: 'white', boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px' , width: '400px', height: '300px'}}>
-                    <div className="shopping_total_price">
-                        <p>Montant global :</p>
-                        <p>{!refNotfound ? products.reduce((total, product) => total + parseFloat(product.total_price), 0).toFixed(2): null} da</p>
-                    </div>
-                    <div className="shopping_commande">
-                        <p>Je commande</p>
+                    <div className="shopping_total_price_and_commande">
+                        <div className="shopping_total_price">
+                            <p>Montant global :</p>
+                            <p>{!refNotfound ? products.reduce((total, product) => total + parseFloat(product.total_price), 0).toFixed(2): null} da</p>
+                        </div>
+                        <div className="shopping_commande">
+                            <p>Je commande</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            {/*
             <div className="our_products_global_container">
                 <h1>nos derniers produtis</h1>
                 <OurProducts/>
             </div>
+            */}
             <Footer />
         </div>
     ) 

@@ -27,6 +27,19 @@ const Header = () => {
     const [research, setResearch] = useState()
     const [searchActive, setSearchActive] = useState(false)
 
+    
+    // GET CURRENT ACTIVE LINK //
+    const url = window.location.href
+    const parts = url.split('/')
+    const lastSegment = parts[parts.length - 1]
+    const [activeLink, setActiveLink] = useState(lastSegment.length === 0 ? 'home' : lastSegment)
+
+
+    // HANDLE ACTIVE LINK //
+    const handleNavLinkClick = (link) => {
+        setActiveLink(link)
+    }
+
 
     // REDIRECTION //
     const navigate = useNavigate()
@@ -103,11 +116,14 @@ const Header = () => {
         }
     }
 
+
     // REDIRECT TO ITEM DETAILS //
     const redirection = (itemId) => {
-        navigate(`./produit_details/${itemId}`)  
+        navigate(`/produit_details/${itemId}`, { replace: true })
+        window.location.reload()
         setSearchActive(false)
     }
+
 
 
     return (
@@ -117,9 +133,15 @@ const Header = () => {
                     <ul>
                         <li><img src={logo} className='logo'/></li>
                         <div className='angles'>
-                            <li className='home'><Link to="/home">Home</Link></li>
-                            <li className='produits'><Link to="/produits">Produits</Link></li>
-                            <li className='services'><Link to="/services">services</Link></li>
+                            <li className={activeLink === 'home' ? 'home active' : 'home'}>
+                                <Link to="/home" onClick={() => handleNavLinkClick('home')}>Home</Link>
+                            </li>
+                            <li className={activeLink === 'produits' ? 'produits active' : 'produits'}>
+                                <Link to="/produits" onClick={() => handleNavLinkClick('produits')}>Blog</Link>
+                            </li>
+                            <li className={activeLink === 'services' ? 'services active' : 'services'}>
+                                <Link to="/services" onClick={() => handleNavLinkClick('services')}>Services</Link>
+                            </li>
                         </div>
                         <li className='search_barre'>
                             <input placeholder='recherche'onChange={(e) => searchGet(e.target.value)}/>

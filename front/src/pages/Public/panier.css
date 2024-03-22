@@ -116,6 +116,7 @@
   margin-bottom: 100px;
 }
 
+/*
 .our_products_global_container {
   width: 1400px;
   margin: 0 auto;
@@ -133,6 +134,7 @@
   font-family: "Petit Formal Script", cursive;
   padding: 15px;
 }
+*/
 
 .shopping_continue_back {
   width: 220px;
@@ -148,6 +150,13 @@
 
 .shopping_continue_back:hover {
   background-color: rgba(0, 128, 0, 0.764);
+}
+
+.shopping_total_price_and_commande {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
 }
 
 .shopping_total_price {

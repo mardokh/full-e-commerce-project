@@ -73,13 +73,28 @@ header nav ul li a {
     align-items: center;
 }
 
-.home a {
+.home.active a {
     background-color: #268703;
     padding: 8px;
     border-radius: 50%;
     width: 80px;
     color: white;
 }
+.produits.active a {
+    background-color: #268703;
+    padding: 8px;
+    border-radius: 50%;
+    width: 80px;
+    color: white;
+}
+.services.active a {
+    background-color: #268703;
+    padding: 8px;
+    border-radius: 50%;
+    width: 80px;
+    color: white;
+}
+
 
 .home, .produits, .services {
     display: inline;
@@ -101,11 +116,11 @@ header nav ul li a {
 .favorites_products_count {
     position: absolute;
     background-color: #7cba00;
-    padding: 1px;
+    padding: 1.5px;
     border-radius: 50%;
     font-family: monospace;
     top: -17px;
-    right: -5px;
+    right: -7px;
     color: white;
 }
 
@@ -148,7 +163,7 @@ header nav ul li a {
 .shopping_cart_icon_count {
     position: absolute;
     background-color: #7cba00;
-    padding: 1px;
+    padding: 1.5px;
     border-radius: 50%;
     font-family: monospace;
     top: -14px;

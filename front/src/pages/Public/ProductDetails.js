@@ -42,13 +42,16 @@ const ProductDetails = () => {
    
     return (
         <div className="details_global_container">
-                <div className="details_img_container" style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>
-                    <div className="details_info_container">
-                        <p>{product.name}</p>
-                        <p>Prix : {product.price}</p>
-                        <p>Details : {product.details}</p>
-                        <button className="details_btn">Ajouter au panier</button>
-                    </div>
+                <div className="details_sideImg_img_container">
+                    <div className="details_side_img"></div>
+                    <div className="details_img_container" style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>
+                </div>
+                <div className="details_info_container">
+                    <p className="details_name">{product.name}</p>
+                    <p className="details_price">Prix : {product.price}</p>
+                    <button className="details_shopping_add_btn">Ajouter au panier</button>
+                    <p>Details : {product.details}</p>
+                </div>
         </div>
     )
    
