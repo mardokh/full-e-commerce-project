@@ -1,23 +1,30 @@
 .details_global_container {
-    width: 800px;
+    width: 90%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 150px auto;
+    background-color: rgba(244, 244, 244, 0.717);
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .details_img_container {
-    height: 400px;
-    width: 300px;
+    height: 600px;
+    width: 500px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: gainsboro;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
 }
 
-.details_btn {
+.details_shopping_add_btn {
     padding: 15px;
-    width: 150px;
+    width: 300px;
+    background-color: green;
+    color: white;
+    border: none;
 }
 
 .details_info_container {
@@ -27,4 +34,31 @@
     text-align: left;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.details_side_img {
+    width: 250px;
+    height: 600px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+}
+
+.details_sideImg_img_container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 900px;
+    margin-left: 30px;
+}
+
+.details_price {
+    padding: 15px;
+    width: 300px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+}
+
+.details_name {
+    font-size: 25px;
+    font-family:'Oleo Script';
+    color: gray;
 }
