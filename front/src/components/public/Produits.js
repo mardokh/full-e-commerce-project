@@ -4,7 +4,7 @@ import { productService } from '../../_services/product.service'
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import { useNavigate, Link } from 'react-router-dom'
 import { favoriteProductService } from '../../_services/favoriteProduct.service'
-import Cookies from 'js-cookie'
+//import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
 import CustomLoader from '../../_utils/customeLoader/customLoader'
 
@@ -49,49 +49,25 @@ const Produits = () => {
             const productsResponse = await productService.getAllproducts()
 
             const productsData = productsResponse.data.data
+            
+            // Get all favotes products
+            const favoritesProducts = await favoriteProductService.favoriteProductGetAll()
+        
+            // Get favorite product id from favoritesProducts table
+            const favoriteIds = favoritesProducts.data.data === "aucun produit favori" ? false : favoritesProducts.data.data.map(favorite => favorite.product_id) 
 
-            // Get cookie from browser
-            const isFavoritesCookieExists = Cookies.get('client_id_favorites_products')
+            // Update state
+            setProducts(productsData.map(product => ({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                note: product.note,
+                image: product.image,
+                favorite: favoriteIds === false ? false : favoriteIds.includes(product.id) ? true : false
+            })))
 
-            // If cookie exist
-            if (isFavoritesCookieExists) {
-
-                // Get all favotes products
-                const favoritesProducts = await favoriteProductService.favoriteProductGetAll()
-
-                if (favoritesProducts.data.data === "aucun produit favori") {
-
-                    //Update state
-                    setProducts(productsData)
-
-                    // Update loader 
-                    setISload(true)
-                }
-                else {
-                    // Get favorite product id from favoritesProducts table
-                    const favoriteIds = favoritesProducts.data.data.map(favorite => favorite.product_id)
-
-                    // Update state
-                    setProducts(productsData.map(product => ({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        note: product.note,
-                        image: product.image,
-                        favorite: favoriteIds.includes(product.id) ? true : false
-                    })))
-
-                    // Update loader 
-                    setISload(true)
-                }
-            }
-            else {
-                //Update state
-                setProducts(productsData)
-
-                // Update loader 
-                setISload(true)
-            }
+            // Update loader 
+            setISload(true)
         }
         catch (err) {
             handleError(err)
@@ -202,7 +178,9 @@ const Produits = () => {
                         <button className='add_cart' onClick={() => addToCart(product.id)}>ajouter au panier</button>
                     </div>
                 </div>
-                )) : <div>{products}</div>
+                )) : <div className='produits_section_vide'>
+                        <p>{products}</p>
+                    </div>
             }
         </div>
     )

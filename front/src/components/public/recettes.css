@@ -67,3 +67,22 @@
 .favRecipe {
     color: gold;
 }
+
+.recette_section_vide {
+    width: 100%;
+    height: 300px;
+    background-color: rgba(244, 244, 244, 0.717);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recette_section_vide p {
+    width: 200px;
+    height: 50px;
+    border: 1px solid gray;
+    border-style: dashed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

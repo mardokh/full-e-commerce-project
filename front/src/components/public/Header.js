@@ -97,7 +97,7 @@ const Header = () => {
     // UPDATE STATE //
     useEffect(() => {
         getFavEndShop()
-    }, [favoritesProductsCount, favoritesRecipesCount, shoppingCartCount])
+    }, [favoritesProducts, favoritesRecipes, favoritesProductsCount, favoritesRecipesCount, shoppingCarts, shoppingCartCount])
 
 
     // SERACH BAR HANDLE //

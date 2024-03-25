@@ -45,53 +45,29 @@ const Panier = () => {
 
         try {
             // Get all products 
-            const shoppingResponse = await shoppingSerive.shoppingGet()
+            const productsResponse = await shoppingSerive.shoppingGet()
 
-            const shoppingData = shoppingResponse.data.data
+            const productsData = productsResponse.data.data
+            
+            // Get all favotes products
+            const favoritesProducts = await favoriteProductService.favoriteProductGetAll()
+        
+            // Get favorite product id from favoritesProducts table
+            const favoriteIds = favoritesProducts.data.data === "aucun produit favori" ? false : favoritesProducts.data.data.map(favorite => favorite.product_id) 
 
-            // Get cookie from browser
-            const isFavoritesCookieExists = Cookies.get('client_id_favorites_products')
+            // Update state
+            setProducts(productsData.map(shopping => ({
+                id: shopping.shopping_cart_product.id,
+                name: shopping.shopping_cart_product.name,
+                price: shopping.shopping_cart_product.price,
+                image: shopping.shopping_cart_product.image,
+                total_price: shopping.total_price,
+                product_count: shopping.product_count,
+                favorite: favoriteIds === false ? false : favoriteIds.includes(shopping.shopping_cart_product.id) ? true : false
+            })))
 
-            // If cookie exist
-            if (isFavoritesCookieExists) {
-
-                // Get all favotes products
-                const favoritesProducts = await favoriteProductService.favoriteProductGetAll()
-
-                if (favoritesProducts.data.data === "aucun produit favori") {
-
-                    //Update state
-                    setProducts(shoppingData)
-
-                    // Update loader 
-                    setISload(true)
-                }
-                else {
-                    // Get favorite product id from favoritesProducts table
-                    const favoriteIds = favoritesProducts.data.data.map(favorite => favorite.product_id)
-
-                    // Update state
-                    setProducts(shoppingData.map(shopping => ({
-                        id: shopping.shopping_cart_product.id,
-                        name: shopping.shopping_cart_product.name,
-                        price: shopping.shopping_cart_product.price,
-                        image: shopping.shopping_cart_product.image,
-                        total_price: shopping.total_price,
-                        product_count: shopping.product_count,
-                        favorite: favoriteIds.includes(shopping.shopping_cart_product.id) ? true : false
-                    })))
-
-                    // Update loader 
-                    setISload(true)
-                }
-            }
-            else {
-                //Update state
-                setProducts(shoppingData)
-
-                // Update loader 
-                setISload(true)
-            }
+            // Update loader 
+            setISload(true)
         }
         catch (err) {
             handleError(err)

@@ -14,7 +14,7 @@ exports.getAllProducts = async (req, res) => {
 
         // Check if some products exists
         if (products.length === 0) {
-            return res.status(404).json({data: "No product found"})
+            return res.status(404).json({data: "section vide"})
         } 
         
         // Send successfylly response

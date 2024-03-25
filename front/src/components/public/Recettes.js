@@ -172,7 +172,9 @@ const Recettes = () => {
                         </div>
                     </div>
                 </div>
-            )) : <div>{recipes}</div>
+            )) : <div className="recette_section_vide">
+                    <p>{recipes}</p>
+                </div>
             }
         </div>
     )
