@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { productService } from "../../_services/product.service"
 import "./product_details.css"
 
@@ -9,6 +9,7 @@ const ProductDetails = () => {
     // STATES
     const [product, setProduct] = useState([])
     const [isLoad, setISload] = useState(false)
+    const navigate = useNavigate()
 
 
     // GET ID PARAMS

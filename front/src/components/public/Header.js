@@ -119,8 +119,8 @@ const Header = () => {
 
     // REDIRECT TO ITEM DETAILS //
     const redirection = (itemId) => {
-        navigate(`/produit_details/${itemId}`, { replace: true })
-        window.location.reload()
+        navigate(`/produit_details/${itemId}`)
+        navigate(0)
         setSearchActive(false)
     }
 
@@ -149,7 +149,7 @@ const Header = () => {
                             <div className='serachBar_result_container'>
                                 {searchActive &&
                                     research.map(search => (
-                                        <div key={search.id}>                                        
+                                        <div key={search.id}>                                      
                                             <div className='searchBar_item_container' onClick={() => redirection(search.id)}>
                                                 <div className='searchBar_item_image' style={{backgroundImage: `url('http://localhost:8989/uploads/${search.image}')`}}></div>
                                                 <p>{search.name}</p>
