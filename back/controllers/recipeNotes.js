@@ -9,6 +9,54 @@ const { v4: uuidv4 } = require('uuid')
 const cookieName = 'client_id_recipes_notes'
 
 
+const calculateAndUpdateRecipeNotes = async () => {
+    try {
+        const result = await RecipeNote.findAll({
+            attributes: [
+                'recipe_id',
+                [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 1 THEN 1 ELSE 0 END')), 'note_count_for_1'],
+                [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 2 THEN 1 ELSE 0 END')), 'note_count_for_2'],
+                [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 3 THEN 1 ELSE 0 END')), 'note_count_for_3'],
+                [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 4 THEN 1 ELSE 0 END')), 'note_count_for_4'],
+                [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 5 THEN 1 ELSE 0 END')), 'note_count_for_5'],
+            ],
+            where: {},
+            group: ['recipe_id'],
+        })
+
+        const noteResult = result.map(async (row) => {
+            const total_notes =
+                (1 * row.dataValues.note_count_for_1 +
+                    2 * row.dataValues.note_count_for_2 +
+                    3 * row.dataValues.note_count_for_3 +
+                    4 * row.dataValues.note_count_for_4 +
+                    5 * row.dataValues.note_count_for_5) /
+
+                (Number(row.dataValues.note_count_for_1) +
+                    Number(row.dataValues.note_count_for_2) +
+                    Number(row.dataValues.note_count_for_3) +
+                    Number(row.dataValues.note_count_for_4) +
+                    Number(row.dataValues.note_count_for_5));
+
+            // Update recipe note in the recipes table
+            await Recipe.update({ note: total_notes }, { where: { id: row.recipe_id } })
+
+            return {
+                recipe_id: row.recipe_id,
+                total_notes: total_notes,
+            }
+        })
+
+        // Wait for all the updates to complete
+        await Promise.all(noteResult)
+    } 
+    catch (error) {
+        console.error('Error calculating and updating recipe notes:', error)
+        throw error // Rethrow the error to handle it appropriately
+    }
+}
+
+
 // ADD RECIPE NOTE //
 exports.addRecipeNote = async (req, res) => {
 
@@ -43,44 +91,7 @@ exports.addRecipeNote = async (req, res) => {
             }
 
             // Calculate notes and insert into recipes table
-            const result = await RecipeNote.findAll({
-                attributes: [
-                    'recipe_id',
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 1 THEN 1 ELSE 0 END')), 'note_count_for_1'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 2 THEN 1 ELSE 0 END')), 'note_count_for_2'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 3 THEN 1 ELSE 0 END')), 'note_count_for_3'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 4 THEN 1 ELSE 0 END')), 'note_count_for_4'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 5 THEN 1 ELSE 0 END')), 'note_count_for_5'],
-                ],
-                where: {},
-                group: ['recipe_id'],
-                })
-
-                const noteResult = result.map(async (row) => {
-                const total_notes =
-                  ( 1 * row.dataValues.note_count_for_1 +
-                    2 * row.dataValues.note_count_for_2 +
-                    3 * row.dataValues.note_count_for_3 +
-                    4 * row.dataValues.note_count_for_4 +
-                    5 * row.dataValues.note_count_for_5 ) /
-            
-                  ( Number(row.dataValues.note_count_for_1) +
-                    Number(row.dataValues.note_count_for_2) +
-                    Number(row.dataValues.note_count_for_3) +
-                    Number(row.dataValues.note_count_for_4) +
-                    Number(row.dataValues.note_count_for_5) )
-            
-                // Update recipe note in the recipes table
-                await Recipe.update({ note: total_notes }, { where: { id: row.recipe_id } })
-            
-                return {
-                    recipe_id: row.recipe_id,
-                    total_notes: total_notes,
-                }
-            })
-            
-            // Wait for all the updates to complete
-            await Promise.all(noteResult)
+            await calculateAndUpdateRecipeNotes()
 
             // Send successfully
             return res.json({ data: 'success' })
@@ -105,44 +116,7 @@ exports.addRecipeNote = async (req, res) => {
             })
 
             // Calculate notes and insert into recipes table
-            const result = await RecipeNote.findAll({
-                attributes: [
-                    'recipe_id',
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 1 THEN 1 ELSE 0 END')), 'note_count_for_1'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 2 THEN 1 ELSE 0 END')), 'note_count_for_2'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 3 THEN 1 ELSE 0 END')), 'note_count_for_3'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 4 THEN 1 ELSE 0 END')), 'note_count_for_4'],
-                    [sequelize.fn('SUM', sequelize.literal('CASE WHEN `note` = 5 THEN 1 ELSE 0 END')), 'note_count_for_5'],
-                ],
-                where: {},
-                group: ['recipe_id'],
-                })
-
-                const noteResult = result.map(async (row) => {
-                const total_notes =
-                  ( 1 * row.dataValues.note_count_for_1 +
-                    2 * row.dataValues.note_count_for_2 +
-                    3 * row.dataValues.note_count_for_3 +
-                    4 * row.dataValues.note_count_for_4 +
-                    5 * row.dataValues.note_count_for_5 ) /
-            
-                  ( Number(row.dataValues.note_count_for_1) +
-                    Number(row.dataValues.note_count_for_2) +
-                    Number(row.dataValues.note_count_for_3) +
-                    Number(row.dataValues.note_count_for_4) +
-                    Number(row.dataValues.note_count_for_5) )
-            
-                // Update recipe note in the recipes table
-                await Recipe.update({ note: total_notes }, { where: { id: row.recipe_id } })
-            
-                return {
-                    recipe_id: row.recipe_id,
-                    total_notes: total_notes,
-                }
-            })
-            
-            // Wait for all the updates to complete
-            await Promise.all(noteResult)
+            await calculateAndUpdateRecipeNotes()
 
             // Create & send cookie
             res.cookie(cookieName, clientId, { maxAge: 30 * 24 * 60 * 60 * 1000})
