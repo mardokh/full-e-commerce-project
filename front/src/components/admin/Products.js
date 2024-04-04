@@ -18,6 +18,7 @@ const Produits = () => {
     const { productsOnEdit } = useContext(MyContext)
     const { updateProductsEditDisplay } = useContext(MyContext)
     const { updateProductsEditId } = useContext(MyContext)
+    const { updateProductsOnAdd } = useContext(MyContext)
     let PageSize = 4;
 
 
@@ -45,6 +46,7 @@ const Produits = () => {
     // LOAD RECIPES ON PRODUCT ADD //
     if (productsOnAdd || productsOnEdit) {
         loadProducts()
+        updateProductsOnAdd(false)
     }
 
 

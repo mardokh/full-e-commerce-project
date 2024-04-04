@@ -21,10 +21,11 @@ const jwtSession = require('./routes/check_jwt_session')
 // MODELS IMPORTS //
 const shoppingCart = require('./models/shoppingCart')
 const product = require('./models/product')
-const recipe = require('./models/recipe')
 const favoriteProduct = require('./models/favoriteProduct')
-const favoriteRecipe = require('./models/favoriteRecipe')
 const productNote = require('./models/productNote')
+const productImages = require('./models/productImages')
+const recipe = require('./models/recipe')
+const favoriteRecipe = require('./models/favoriteRecipe')
 const recipeNote = require('./models/recipeNotes')
 const admin = require('./models/admin')
 
@@ -82,6 +83,10 @@ DB.authenticate()
     favoriteProduct.belongsTo(product, { foreignKey: 'product_id', as: 'favorite_product', onDelete: 'CASCADE' })
     product.hasOne(favoriteProduct, { foreignKey: 'product_id', onDelete: 'SET NULL' })
 
+    // table associations :
+    productImages.belongsTo(product, { foreignKey: 'productId', onDelete: 'CASCADE' })
+    product.hasMany(productImages, { foreignKey: 'productId', onDelete: 'SET NULL' })
+
     // tables associations : favoriteRecipes to recipes - recipes to favoriteRecipes
     favoriteRecipe.belongsTo(recipe, { foreignKey: 'recipe_id', as: 'favorite_recipe', onDelete: 'CASCADE' })
     recipe.hasOne(favoriteRecipe, { foreignKey: 'recipe_id', onDelete: 'SET NULL' })
@@ -95,6 +100,7 @@ DB.authenticate()
     productNote.sync({alter: true})
     recipeNote.sync({alter: true})
     admin.sync({alter: true})
+    productImages.sync({alter: true})
     
     // start server
     app.listen(8989, () => { 

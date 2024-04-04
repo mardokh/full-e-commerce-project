@@ -33,7 +33,7 @@ var upload = multer({
 
 
 // PUT PRODUCT //
-router.put('/add', checkTokenMIddleware, upload.single('image'), controller.putProduct)
+router.put('/add', checkTokenMIddleware, upload.fields([{name: 'image', maxCount: 1}, {name: 'images', maxCount: 10}]), controller.putProduct)
 
 
 // UPDATE PRODUCT //

@@ -14,12 +14,13 @@ const Recipes = () => {
     const [isLoad, setISload] = useState(false)
     const [refNotFound, setRefNotFound] = useState(false)
     const flag = useRef(false)
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1)
     const { updateRecipesAddDisplay } = useContext(MyContext)
     const { recipesOnadd } = useContext(MyContext)
     const { recipesOnEdit } = useContext(MyContext)
     const { updateRecipesEditDisplay } = useContext(MyContext)
     const { updateRecipesEditId } = useContext(MyContext)
+    const { updateRecipesOnAdd } = useContext(MyContext)
     let PageSize = 4;
 
 
@@ -47,6 +48,7 @@ const Recipes = () => {
     // LOAD RECIPES ON PRODUCT ADD //
     if (recipesOnadd || recipesOnEdit) {
         loadRecipes()
+        updateRecipesOnAdd(false)
     }
 
 

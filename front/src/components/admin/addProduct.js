@@ -9,7 +9,7 @@ const AddImage = require('../../images/AddImage.jpg')
 const AddProduct = () => {
 
     // STATES //
-    const [product, setProduct] = useState({name: "", price: "", details: "", image: ""})
+    const [product, setProduct] = useState({name: "", price: "", details: "", image: "", images: ""})
     const [imageUrl, setImageUrl] = useState()
     const { updateProductsAddDisplay } = useContext(MyContext)
     const { updateProductsOnAdd } = useContext(MyContext)
@@ -28,6 +28,21 @@ const AddProduct = () => {
             formData.append('price', product.price)
             formData.append('details', product.details)
             formData.append('image', product.image)
+            for (const file of product.images) {
+                formData.append('images', file);
+            }
+
+
+            /*
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1])
+            
+
+            product.images.forEach(file => {
+                console.log(file)
+            })
+            */
+    
 
             // Api call for add product
             await productService.addProduct(formData)
@@ -37,6 +52,8 @@ const AddProduct = () => {
 
             // Close add product windows
             updateProductsAddDisplay(false)
+
+
         }
         catch (error) {
             console.error('Error : ', error)
@@ -68,6 +85,17 @@ const AddProduct = () => {
         }
     }
 
+
+    // UPDATE IMAGES STATE //
+    const handleImagesChange = (e) => {
+        const newImages = Array.from(e.target.files).map(image => image)
+        setProduct(prevProduct => ({
+            ...prevProduct,
+            images: [...prevProduct.images, ...newImages]
+        }))
+    }
+    
+
     
     // PRODUCT ADD CLOSE //
     const closeAddProductWindows = () => {
@@ -93,8 +121,12 @@ const AddProduct = () => {
                     <input type='number' name='price' value={product.price} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></input>
                 </div>
                 <div className='add_product_item add_product_img_input'>
-                    <label>image</label>
+                    <label>image principale</label>
                     <input type='file' name='image' onChange={(e) => handleImageChange(e.target.files[0])} />
+                </div>
+                <div className='add_product_item add_product_imgs_input'>
+                    <label>autres images</label>
+                    <input type="file" name="images[]" onChange={handleImagesChange} multiple /> 
                 </div>
                 <div>
                     <input className='btn_new_product_add' type='submit' value="confirmer"/>

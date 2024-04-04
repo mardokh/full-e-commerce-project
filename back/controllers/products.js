@@ -1,5 +1,6 @@
 // MODULES IMPORTS // 
 const Product = require('../models/product')
+const productImages = require('../models/productImages')
 const fs = require('fs')
 const path = require('path')
 
@@ -63,10 +64,13 @@ exports.putProduct = async (req, res) => {
         const {name, details, price} = req.body
 
         // Img product path extract
-        const image = req.file.filename
+        const image = req.files.image[0].filename
+
+        // Imgs product path extract
+        const images = req.files['images']
 
         // Check product inputs
-        if (!name || !details || !price || !image) {
+        if (!name || !details || !price || !image || !images) {
             return res.status(400).json({message: 'Missing data input !'})
         }
 
@@ -80,8 +84,13 @@ exports.putProduct = async (req, res) => {
             return res.status(409).json({message: `this product : ${name} is already exist !`})
         }
 
-        // Create product from database
-        await Product.create(inputs)
+        // Create product
+        const createProduct = await Product.create(inputs)
+
+        // Input product images
+        images.map(async file => {
+            await productImages.create({productId: createProduct.id, images: file.filename})
+        })
 
         // Send successfylly response
         return res.status(201).json({message: 'Product successfully creating'})
@@ -229,7 +238,7 @@ exports.deleteProduct = async (req, res) => {
         fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
             
         // Send successfully response
-        return res.json({ message: 'Product and associated image successfully deleted' })
+        return res.json({ message: 'Product successfully deleted' })
     }
     catch (err) {
         return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack })

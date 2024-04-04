@@ -32,6 +32,10 @@ const product = DB.define('product', {
         type: DataTypes.STRING(255),
         defaultValue: ''
     },
+    images: {
+        type: DataTypes.STRING(255),
+        defaultValue: ''
+    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: true
