@@ -22,7 +22,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 128, 0, 0.433);
+    background-color: rgba(0, 128, 0, 0.575);
+    backdrop-filter: blur(2px);
     z-index: 1;
     position: fixed;
 }

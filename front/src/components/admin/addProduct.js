@@ -154,7 +154,7 @@ const AddProduct = () => {
                 <div className="images_display_container">
                     {product.images.map((image, index) => (
                         <div className="add_product_images_container" key={index}>
-                            <span onClick={() => deleteImage(index)}>X</span>
+                            <i class="fa-solid fa-circle-xmark" id='add_product_images_close_icon' onClick={() => deleteImage(index)}></i>
                             <div className="add_product_images" style={{backgroundImage: `url('${URL.createObjectURL(image)}')`}}></div>
                         </div>
                     ))}
