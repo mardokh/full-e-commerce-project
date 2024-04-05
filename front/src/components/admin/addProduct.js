@@ -2,6 +2,7 @@ import React, {useState, useRef, useContext} from 'react'
 import './addProduct.css'
 import { productService } from '../../_services/product.service'
 import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 const AddImage = require('../../images/AddImage.jpg')
 
 
@@ -9,8 +10,9 @@ const AddImage = require('../../images/AddImage.jpg')
 const AddProduct = () => {
 
     // STATES //
-    const [product, setProduct] = useState({name: "", price: "", details: "", image: "", images: ""})
+    const [product, setProduct] = useState({name: "", price: "", details: "", image: "", images: []})
     const [imageUrl, setImageUrl] = useState()
+    const [loader, setLoader] = useState(false)
     const { updateProductsAddDisplay } = useContext(MyContext)
     const { updateProductsOnAdd } = useContext(MyContext)
 
@@ -23,6 +25,9 @@ const AddProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            // Load data
+            setLoader(true)
+
             const formData = new FormData()
             formData.append('name', product.name)
             formData.append('price', product.price)
@@ -32,17 +37,16 @@ const AddProduct = () => {
                 formData.append('images', file);
             }
 
-
             /*
+            console.log(formData.getAll('images'))
+
             for (const pair of formData.entries()) {
                 console.log(pair[0], pair[1])
-            
 
             product.images.forEach(file => {
                 console.log(file)
             })
             */
-    
 
             // Api call for add product
             await productService.addProduct(formData)
@@ -52,7 +56,6 @@ const AddProduct = () => {
 
             // Close add product windows
             updateProductsAddDisplay(false)
-
 
         }
         catch (error) {
@@ -94,7 +97,6 @@ const AddProduct = () => {
             images: [...prevProduct.images, ...newImages]
         }))
     }
-    
 
     
     // PRODUCT ADD CLOSE //
@@ -103,35 +105,63 @@ const AddProduct = () => {
     }
 
 
+    const deleteImage = (index) => {
+        setProduct(prevImages => {
+            const updatedImages = [...prevImages.images]
+            updatedImages.splice(index, 1)
+            return { ...prevImages, images: updatedImages }
+        })
+    }
+    
+
     return (
         <div className="add_product_global_container">
             <i class="fa-solid fa-circle-xmark" id='add_product_close_icon' onClick={closeAddProductWindows}></i>
-            <div className="add_product_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
-            <form className='add_product_container' onSubmit={handleSubmit}>
-                <div className='add_product_item'>
-                    <label>Name</label>
-                    <input type='text' name='name' value={product.name} onChange={(e) => handleInputChange(e.target.name, e.target.value)}/>
+            {loader ?
+            <div className='add_product_loader_spin'>
+                <CustomLoader />
+            </div>
+            :
+            <>
+                <div className='add_product_form_image_container'>
+                    <div className="add_product_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
+                    <form className='add_product_container' onSubmit={handleSubmit}>
+                        <div className='add_product_item'>
+                            <label>Name</label>
+                            <input type='text' name='name' value={product.name} onChange={(e) => handleInputChange(e.target.name, e.target.value)}/>
+                        </div>
+                        <div className='add_product_item'>
+                            <label>Details</label>
+                            <textarea name='details' value={product.details} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></textarea>
+                        </div>
+                        <div className='add_product_item'>
+                            <label>Price</label>
+                            <input type='number' name='price' value={product.price} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></input>
+                        </div>
+                        <div className='add_product_item add_product_img_input'>
+                            <label>image principale</label>
+                            <input type='file' name='image' onChange={(e) => handleImageChange(e.target.files[0])} />
+                        </div>
+                        <div className='add_product_item add_product_imgs_input'>
+                            <label>autres images</label>
+                            <input type="file" name="images[]" onChange={handleImagesChange} multiple /> 
+                        </div>
+                        <div>
+                            <input className='btn_new_product_add' type='submit' value="confirmer"/>
+                        </div>
+                    </form>
                 </div>
-                <div className='add_product_item'>
-                    <label>Details</label>
-                    <textarea name='details' value={product.details} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></textarea>
+                <div className="images_display_container">
+                    {product.images.map((image, index) => (
+                        <div className="add_product_images_container" key={index}>
+                            <span onClick={() => deleteImage(index)}>X</span>
+                            <div className="add_product_images" style={{backgroundImage: `url('${URL.createObjectURL(image)}')`}}></div>
+                        </div>
+                    ))}
                 </div>
-                <div className='add_product_item'>
-                    <label>Price</label>
-                    <input type='number' name='price' value={product.price} onChange={(e) => handleInputChange(e.target.name, e.target.value)}></input>
-                </div>
-                <div className='add_product_item add_product_img_input'>
-                    <label>image principale</label>
-                    <input type='file' name='image' onChange={(e) => handleImageChange(e.target.files[0])} />
-                </div>
-                <div className='add_product_item add_product_imgs_input'>
-                    <label>autres images</label>
-                    <input type="file" name="images[]" onChange={handleImagesChange} multiple /> 
-                </div>
-                <div>
-                    <input className='btn_new_product_add' type='submit' value="confirmer"/>
-                </div>
-            </form>
+
+            </>
+            }
         </div>
     )
 }

@@ -128,7 +128,7 @@ exports.getShoppingCart = async (req, res) => {
 
         else {
             // IF CLIENT DOESN'T HAVE (client_id) COOKIE
-            return res.status(404).json({ data: "Vous n'avez jouté aucun article." })
+            return res.status(404).json({ data: "Vous n'avez jouté aucun article" })
         }
     } 
     catch (err) {
