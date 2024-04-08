@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react'
+import React, {useState, useRef, useContext, useEffect} from 'react'
 import './addProduct.css'
 import { productService } from '../../_services/product.service'
 import MyContext from '../../_utils/contexts'
@@ -19,8 +19,19 @@ const AddProduct = () => {
 
     // REFERENCE //
     const imageFlag = useRef(false)
+    const imagesDisplayContainerRef = useRef()
 
 
+    const scrollToRightEnd = () => {
+        imagesDisplayContainerRef.current.scrollTo({left: imagesDisplayContainerRef.current.scrollWidth, behavior: 'smooth'})
+    }
+
+
+    useEffect(() => {
+        scrollToRightEnd()
+    }, [product])
+    
+    
     // FORM SUBMIT //
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -151,7 +162,7 @@ const AddProduct = () => {
                         </div>
                     </form>
                 </div>
-                <div className="images_display_container">
+                <div className="images_display_container" ref={imagesDisplayContainerRef}>
                     {product.images.map((image, index) => (
                         <div className="add_product_images_container" key={index}>
                             <i class="fa-solid fa-circle-xmark" id='add_product_images_close_icon' onClick={() => deleteImage(index)}></i>
