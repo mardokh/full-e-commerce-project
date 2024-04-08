@@ -26,6 +26,7 @@ const ProductDetails = () => {
         if (flag.current === false) {
             productService.getOneProduct(id)
             .then(res => {
+                console.log(res)
                 setProduct(res.data.data)
                 setISload(true)
             })
@@ -44,7 +45,11 @@ const ProductDetails = () => {
     return (
         <div className="details_global_container">
                 <div className="details_sideImg_img_container">
-                    <div className="details_side_img"></div>
+                    <div className="details_side_img">
+                        {product.product_images.map((file, index) => (
+                            <div key={index} className="details_sideImg_img" style={{backgroundImage: `url('http://localhost:8989/uploads/${file.images}')`}}></div>
+                        ))}
+                    </div>
                     <div className="details_img_container" style={{backgroundImage: `url('http://localhost:8989/uploads/${product.image}')`}}></div>
                 </div>
                 <div className="details_info_container">

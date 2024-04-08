@@ -46,6 +46,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 128, 0, 0.433);
+    backdrop-filter: blur(2px);
     z-index: 1;
     position: fixed;
 }

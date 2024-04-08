@@ -110,3 +110,8 @@
 .login_btn_cnx_new_account_container {
     margin-top: 25px;
 }
+
+.login_failed {
+    font-size: 13px;
+    color: rgb(204, 3, 3);
+}

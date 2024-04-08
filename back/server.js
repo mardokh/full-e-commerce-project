@@ -85,7 +85,7 @@ DB.authenticate()
 
     // table associations :
     productImages.belongsTo(product, { foreignKey: 'productId', onDelete: 'CASCADE' })
-    product.hasMany(productImages, { foreignKey: 'productId', onDelete: 'SET NULL' })
+    product.hasMany(productImages, { foreignKey: 'productId', as: 'product_images', onDelete: 'SET NULL' })
 
     // tables associations : favoriteRecipes to recipes - recipes to favoriteRecipes
     favoriteRecipe.belongsTo(recipe, { foreignKey: 'recipe_id', as: 'favorite_recipe', onDelete: 'CASCADE' })

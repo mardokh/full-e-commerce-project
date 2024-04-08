@@ -40,7 +40,8 @@ exports.getOneProduct = async (req, res) => {
         }
 
         // Get product from database
-        const product = await Product.findOne({where: {id: productId}})
+        const product = await Product.findOne({where: {id: productId}, 
+            include: [{model: productImages, attributes: ['images'], as: 'product_images'}]})
         
         // Check if product exist
         if (product === null) {

@@ -10,6 +10,8 @@ const Login = () => {
 
     // STATES //
     const [loader, setLoader] = useState(false)
+    const [loginFailed, setLoginFailed] = useState("")
+    const [loginFailedDisplay, setLoginFailedDisplay] = useState(false)
 
     // REDIRECTION //
     const navigate = useNavigate()
@@ -31,6 +33,18 @@ const Login = () => {
     }
 
 
+    // Handle errors
+    const handleError = (err) => {
+        setLoader(false)
+        if (err.response && err.response.status) {
+            setLoginFailed(err.response.data.message)
+            setLoginFailedDisplay(true)
+        } else {
+            console.log('Error:', err.message)
+        }
+    }
+
+
     // ON SUBMIT FORM //
     const submitFrom = async (e) => {
         e.preventDefault()
@@ -49,7 +63,7 @@ const Login = () => {
             navigate("/admin")
         }
         catch (err) {
-            console.error('Error :', err)
+            handleError(err)
         }
     }
 
@@ -72,6 +86,11 @@ const Login = () => {
                             <input type="password" name="password" onChange={(e) => inputChange(e.target.name, e.target.value)} />
                         </div>
                         <div className="login_btn_cnx_new_account_container">
+                            <div className="login_failed_container">
+                                {loginFailedDisplay &&
+                                    <p className="login_failed">{loginFailed}</p>
+                                }
+                            </div>
                             <div className="login_btn_connexion_container">
                                 {loader ? 
                                 <BouncingDotsLoader/>
