@@ -1,3 +1,4 @@
+// MODULES IMPORTS //
 import React, {useState, useRef, useContext, useEffect} from 'react'
 import './addProduct.css'
 import { productService } from '../../_services/product.service'
@@ -6,7 +7,7 @@ import CustomLoader from '../../_utils/customeLoader/customLoader'
 const AddImage = require('../../images/AddImage.jpg')
 
 
-
+// MAIN FUNCTION
 const AddProduct = () => {
 
     // STATES //
@@ -17,16 +18,15 @@ const AddProduct = () => {
     const { updateProductsOnAdd } = useContext(MyContext)
 
 
-    // REFERENCE //
+    // REFERENCES //
     const imageFlag = useRef(false)
     const imagesDisplayContainerRef = useRef()
 
 
+    // IMAGES CONTAINER SCROLL //
     const scrollToRightEnd = () => {
         imagesDisplayContainerRef.current.scrollTo({left: imagesDisplayContainerRef.current.scrollWidth, behavior: 'smooth'})
     }
-
-
     useEffect(() => {
         scrollToRightEnd()
     }, [product])
@@ -116,6 +116,7 @@ const AddProduct = () => {
     }
 
 
+    // IMAGES ITEM DELETE //
     const deleteImage = (index) => {
         setProduct(prevImages => {
             const updatedImages = [...prevImages.images]
@@ -123,8 +124,9 @@ const AddProduct = () => {
             return { ...prevImages, images: updatedImages }
         })
     }
-    
 
+
+    // MAIN RENDERING //
     return (
         <div className="add_product_global_container">
             <i class="fa-solid fa-circle-xmark" id='add_product_close_icon' onClick={closeAddProductWindows}></i>
@@ -177,4 +179,6 @@ const AddProduct = () => {
     )
 }
 
+
+// MODULE EXPORT //
 export default AddProduct
