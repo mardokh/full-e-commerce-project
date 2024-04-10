@@ -53,6 +53,17 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.details_sideImg_img_active {
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: 1px solid green;
 }
 
 .details_sideImg_img_container {
