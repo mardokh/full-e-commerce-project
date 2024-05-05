@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./header.css";
-import { useNavigate } from "react-router-dom";
-import { AccountService } from "../../_services/account.service";
-const mario = require("../../images/homewallpaper.jpg");
+import React, { useState, useEffect, useRef } from "react"
+import "./header.css"
+import { useNavigate } from "react-router-dom"
+import { AdminService } from "../../_services/admin.service"
+const mario = require("../../images/homewallpaper.jpg")
 
 
 const Header = () => {
     
-    const [showSetList, setShowSetList] = useState(false);
-    const navigate = useNavigate();
-    const settingRef = useRef(null);
+    const [showSetList, setShowSetList] = useState(false)
+    const navigate = useNavigate()
+    const settingRef = useRef(null)
 
 
     const showSettingList = () => {
-        setShowSetList(!showSetList);
+        setShowSetList(!showSetList)
     };
 
 
     const logout = () => {
-        AccountService.logout();
-        navigate("/auth/login");
+        AdminService.logout()
+        navigate("/auth/admin")
     };
 
 

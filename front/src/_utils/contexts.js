@@ -227,6 +227,7 @@ export const MyProvider = ({ children }) => {
             // Shopping cart count
             shoppingCartCount,
             updateShoppingCartCount,
+        
         }}>
         {children}
         </MyContext.Provider>

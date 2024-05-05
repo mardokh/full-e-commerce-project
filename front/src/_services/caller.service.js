@@ -1,5 +1,4 @@
 import axios from "axios"
-import { AccountService } from "./account.service"
 
 
 const Axios = axios.create({
@@ -8,13 +7,14 @@ const Axios = axios.create({
 })
 
 
-
 Axios.interceptors.request.use( (request) => {
 
-    const token = AccountService.getToken()
+    const adminToken = localStorage.getItem('admin_token')
+    const userToken = localStorage.getItem('user_token')
+
     
-    if (token) {
-        request.headers.Authorization = 'Bearer '+AccountService.getToken()
+    if (adminToken || userToken) {
+        request.headers.Authorization = 'Bearer '+adminToken ? adminToken : userToken ? userToken : null
     }
     return request
 })

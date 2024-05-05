@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState, useContext } from "react"
 import { shoppingSerive } from '../../_services/shoppingCart.service'
 import './panier.css'
 //import OurProducts from '../../components/public/our_products'
-import Footer from '../../components/public/Footer'
 import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
 import { favoriteProductService } from '../../_services/favoriteProduct.service'
@@ -354,7 +353,6 @@ const Panier = () => {
                 <OurProducts/>
             </div>
             */}
-            <Footer />
         </div>
     ) 
 }

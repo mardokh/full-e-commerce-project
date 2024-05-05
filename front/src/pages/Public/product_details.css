@@ -1,4 +1,4 @@
-.details_global_container {
+.details_parent_container {
     width: 90%;
     display: flex;
     align-items: center;
@@ -6,7 +6,6 @@
     margin: 150px auto;
     background-color: rgba(244, 244, 244, 0.717);
     padding-top: 50px;
-    padding-bottom: 50px;
 }
 
 .details_img_container {
@@ -18,6 +17,7 @@
     border: 1px solid gainsboro;
     border-radius: 10px;
     position: relative;
+    background-color: white;
 }
 
 #details_right_arrow {
@@ -46,13 +46,15 @@
 .details_shopping_add_btn {
     padding: 15px;
     width: 300px;
-    background-color: green;
+    background-color: rgb(82, 187, 82);
     color: white;
     border: none;
+    border-radius: 20px;
+    font-size: 16px;
 }
 
 .details_info_container {
-    height: 300px;
+    height: 500px;
     width: 400px;
     display: flex;
     text-align: left;
@@ -117,7 +119,7 @@
 .details_name {
     font-size: 25px;
     font-family:'Oleo Script';
-    color: gray;
+    color: green;
 }
 
 .right_arrow_disabled {
@@ -125,3 +127,101 @@
     pointer-events: none;
 }
   
+.details_product_details {
+    width: 300px;
+    line-height: 30px;
+    text-align: justify;
+}
+
+.details_line_between_products_comments {
+    height: 1px;
+    width: 90%;
+    margin: 0 auto;
+    background-color: gainsboro;
+}
+
+.details_comments_title {
+    text-align: left;
+    font-size: 15px;
+    margin-top: 10px;
+    color: gray;
+}
+
+.details_comments_write_reviews_button_global_container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.details_comments_write_reviews_button_parent_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.details_reviews_container {
+    width: 90%;
+    margin: 50px auto;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.details_reviews_item {
+    width: 700px;
+    line-height: 20px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+}
+
+.details_reviews_name {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.details_footer {
+    margin-top: 200px;
+}
+
+.details_write_reviews_btn {
+    height: 40px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background-color: rgb(141, 211, 141);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.details_product_details_global_container {
+    width: 90%;
+    margin: 50px auto;
+    margin-bottom: 150px;
+}
+
+.details_product_details_parent_container {
+    width: 800px;
+    text-align: left;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.details_comment_form {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 128, 0, 0.433);
+    top: 0;
+    position: fixed;
+    z-index:1;
+}

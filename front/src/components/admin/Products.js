@@ -27,9 +27,9 @@ const Produits = () => {
         if (flag.current === false) {
             productService.getAllproducts()
                 .then(res => {            
-                    setProducts(res.data.data);
+                    setProducts(res.data.data)
                     setRefNotFound(false)
-                    setIsLoad(true);
+                    setIsLoad(true)
                 })
                 .catch(err => handleError(err));
         }

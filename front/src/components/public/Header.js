@@ -9,23 +9,28 @@ import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
 import { searchBarService } from '../../_services/searchBar.service'
 import { shoppingSerive } from '../../_services/shoppingCart.service'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
+import UserAccount from '../../pages/User/account'
 
 
 const Header = () => {
 
-    // STATES FROM CONTEXT //
+    // CONTEXT //
     const { favoritesProductsCount } = useContext(MyContext)
     const { favoritesRecipesCount } = useContext(MyContext)
     const { shoppingCartCount } = useContext(MyContext)
+    const { userAccountlogin } = useContext(MyContext)
+    const { userAccountloginLoading } = useContext(MyContext)
 
 
-    // STATES FROM DATABASE //
+    // STATES //
     const [favoritesProducts, setFavoriteProducts] = useState(0)
     const [favoritesRecipes, setFavoriteRecipes] = useState(0)
     const [shoppingCarts, setShoppingCarts] = useState(0)
     const [useEffectFlag, setUseEffectFlag] = useState(false)
     const [research, setResearch] = useState()
     const [searchActive, setSearchActive] = useState(false)
+    const [userOptionsDisp, setuserOptionsDisp] = useState(false)
 
     
     // GET CURRENT ACTIVE LINK //
@@ -125,6 +130,25 @@ const Header = () => {
     }
 
 
+    // REDIRECT TO USER INSCRIPTION //
+    const inscriptionFormdisplay = () => {
+        setuserOptionsDisp(false)
+        navigate('/login_inscription/main/inscription')
+    }
+
+
+    // OPEN/CLOSE USER OPTION //
+    const userOptions = () => {
+        setuserOptionsDisp(!userOptionsDisp)
+    }
+
+
+    // REDIRECT TO USER CONNECTION //
+    const connectionFormDisp = () => {
+        setuserOptionsDisp(false)
+        navigate('/login_inscription/main/connexion')
+    }
+
 
     return (
         <div className='header_div'>
@@ -166,6 +190,26 @@ const Header = () => {
                         <div className='shopping_cart_icon_container'>
                             <Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping" id='shopping_cart_icon'></i></Link>
                             <span style={{display: shoppingCarts === 0 ? 'none' : 'initial'}} className='shopping_cart_icon_count'>{shoppingCarts}</span>
+                        </div>
+                        <div className='user_account_icon_container'>
+                            <i class="fa-solid fa-user" id='user_account_icon' onClick={userOptions}></i>
+                            {userOptionsDisp &&
+                                <div className='user_options_container'>
+                                    {userAccountloginLoading ?
+                                        <div>
+                                            <CustomLoader/>
+                                        </div>
+                                    : userAccountlogin ?
+                                        <div>
+                                            <UserAccount/>
+                                        </div>
+                                    : <div>
+                                        <button onClick={connectionFormDisp}>Se connecter</button>
+                                        <button onClick={inscriptionFormdisplay}>S'inscrire</button>
+                                      </div>
+                                    }
+                                </div>
+                            }
                         </div>
                     </ul>
                 </nav>

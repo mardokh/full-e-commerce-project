@@ -1,23 +1,25 @@
-// MODULES IMPORTATION  //
+// MODULES IMPORTS //
 const {DataTypes} = require('sequelize')
 
 
 // DEFINE MODEL //
 module.exports = (sequelize) => {
-    return recipeNote = sequelize.define('recipe_note', {
+    return comments = sequelize.define('comments', {
         id: {
             type: DataTypes.INTEGER(11),
             primaryKey: true,
             autoIncrement: true
         },
-        client_id: {
+        comment: {
             type: DataTypes.STRING(255),
+            allowNull: false
         },
-        recipe_id: {
-            type: DataTypes.INTEGER(11)
-        },
-        note: {
-            type: DataTypes.INTEGER(11)
+        user_id: {
+            type: DataTypes.INTEGER(11),
+            references: {
+                model: 'users',
+                key: 'id'
+            }
         }
     })
 }

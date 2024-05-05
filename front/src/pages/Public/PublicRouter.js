@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route} from 'react-router-dom';
-import { Layout, Home, Panier, Contact, Produits, Services, ProductDetails, RecipeDetails, Favorites} from '../Public';
+import { Layout, Home, Panier, Contact, Produits, Services, ProductDetails, RecipeDetails, Favorites, InscriptionLogin} from '../Public';
 import Error from '../../_utils/error';
 
 
@@ -18,6 +18,7 @@ const PublicRouter = () => {
                 <Route path='/produit_details/:id' element={<ProductDetails/>} />
                 <Route path='/recette_details/:id' element={<RecipeDetails/>} />
                 <Route path='/favorites' element={<Favorites/>} />
+                <Route path='/login_inscription/main/:role' element={<InscriptionLogin/>} />
                 <Route path='*' element={<Error/>} />
             </Route>
         </Routes>

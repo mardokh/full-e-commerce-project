@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Layout, ProductsManage, CommandesManage, EditProductManage, AddRecipeManage, RecipeManage, EditRecipeManage } from '../Admin'
+import { Layout, ProductsManage, CommandesManage, EditProductManage, AddRecipeManage, RecipeManage, EditRecipeManage, LoginRegister } from '../Admin'
 import Error from '../../_utils/error' 
 
 
@@ -16,6 +16,7 @@ const AdminRouter = () => {
                 <Route path='/add_recipe' element={<AddRecipeManage/>} />
                 <Route path='/recipes_manage' element={<RecipeManage/>} />
                 <Route path='/edit_recipe/:id' element={<EditRecipeManage/>} />
+                <Route path='/login_register' element={<LoginRegister/>} />
                 <Route path='*' element={<Error/>} />
             </Route>
         </Routes>
