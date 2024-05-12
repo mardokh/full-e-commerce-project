@@ -1,6 +1,7 @@
 // MODULES IMPORTS // 
-const Product = require('../models/product')
-const productImages = require('../models/productImages')
+const DB = require('../db.config')
+const Product = DB.product
+const productImages = DB.productImages
 const fs = require('fs')
 const path = require('path')
 

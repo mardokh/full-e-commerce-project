@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from "react"
 import { favoriteRecipeService } from "../../_services/favoriteRecipe.service"
 import "./favorites_recipes.css"
 import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const FavoritesRecipes = () => {
@@ -65,7 +66,7 @@ const FavoritesRecipes = () => {
 
     // Loader //
     if (!isLoad) {
-        return <div>Loading...</div>
+        return <CustomLoader/>
     }
 
 
@@ -74,11 +75,12 @@ const FavoritesRecipes = () => {
             {refRecipes.current ?
                 recipes.map(recipe => (
                     <div key={recipe.favorite_recipe.id} className="favorites_Recipes_container">
-                        <div className="favorites_Recipes_name favorites_Recipes_items">
-                            <p>{recipe.favorite_recipe.name}</p>
+                        <div className="favorites_Recipes_close_icon_container">
+                            <i class="fa-solid fa-circle-xmark" id="favorites_Recipes_close_icon" onClick={() => deleteFavoriteRecipe(recipe.favorite_recipe.id)}></i>
                         </div>
-                        <div>
-                            <i onClick={() => deleteFavoriteRecipe(recipe.favorite_recipe.id)} class="fa-solid fa-trash"></i>
+                        <div className="favorites_Recipes_image" style={{backgroundImage: `url('http://localhost:8989/uploads/${recipe.favorite_recipe.image}')`}}></div>
+                        <div className="favorites_Recipes_name">
+                            <p>{recipe.favorite_recipe.name}</p>
                         </div>
                     </div>  
                 )) : (<div>{recipes}</div>)

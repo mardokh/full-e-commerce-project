@@ -38,3 +38,13 @@
 .user_connection_input_container input[type = 'submit']:hover {
     background-color: green;
 }
+
+.user_connection_failed_container p {
+    color: rgb(203, 46, 46);
+    font-size: 12px;
+}
+
+.user_connection_forget_pass_container {
+    margin-top: 50px;
+    font-size: 15px;
+}

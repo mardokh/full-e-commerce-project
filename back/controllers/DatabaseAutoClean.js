@@ -1,6 +1,7 @@
 // MODULES IMPORTS //
-const FavoriteProduct = require('../models/favoriteProduct')
-const FavoriteRecipe = require('../models/favoriteRecipe')
+const DB = require('../db.config')
+const FavoriteProduct = DB.favoriteProduct
+const FavoriteRecipe = DB.favoriteRecipe
 const { Op } = require('sequelize')
 const cron = require('node-cron')
 

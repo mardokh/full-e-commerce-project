@@ -4,6 +4,7 @@ import { productService } from "../../_services/product.service"
 import "./product_details.css"
 import Footer from "../../components/public/Footer"
 import ProductsComments from "../../components/public/productsComments"
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const ProductDetails = () => {
@@ -85,7 +86,7 @@ const ProductDetails = () => {
 
     // LOADING //
     if (!isLoad) {
-        return <div>Loading ...</div>
+        return <CustomLoader/>
     }
     
 
@@ -189,9 +190,6 @@ const ProductDetails = () => {
                     <p>Rhoncus, odio vitae vehicula pretium, ex eros porta nulla, id pulvinar eros porta nulla, id pulvinar elit dui non Interdum et malesuada fames ac ante ipsum primis in mauris consequat elit dui non ipsum. Interdum et malesuada fames ac ante ipsum primis in mauris consequat ultrices. Phasellus consequat magna eget velit tincidunt, sit amet luctus quam consectetur.</p>
                 </div>
             </section>
-            <div className="details_footer">
-                <Footer />
-            </div>
         </div>
     )
    

@@ -9,7 +9,7 @@ import BouncingDotsLoader from "../../_utils/customeLoader/dotsLoader"
 const AdminLogin = () => {
 
     // STATES //
-    const [credentials, setCredentials] = useState({identifiant: "", password: ""})
+    const [credentials, setCredentials] = useState({})
     const [loader, setLoader] = useState(false)
     const [loginFailed, setLoginFailed] = useState("")
     const [loginFailedDisplay, setLoginFailedDisplay] = useState(false)
@@ -66,12 +66,12 @@ const AdminLogin = () => {
 
 
     return (
-            <form className="loginAdmin_form_container">
+            <form className="loginAdmin_form_container" onSubmit={submitFrom}>
                 <div className="loginAdmin_input_container">
-                    <input type="email" placeholder="email"/>
+                    <input type="text" name="identifiant" placeholder="identifiant" onChange={(e) => inputChange(e.target.name, e.target.value)}/>
                 </div>
                 <div className="loginAdmin_input_container">
-                    <input type="password" placeholder="password"/>
+                    <input type="password" name="password" placeholder="password" onChange={(e) => inputChange(e.target.name, e.target.value)}/>
                 </div>
                 <div className="loginAdmin_input_container">
                     <input className="loginAdmin_submit_btn" type="submit" value="connexion"/>

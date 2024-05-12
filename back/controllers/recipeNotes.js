@@ -1,6 +1,7 @@
 // MODULES IMPORTS //
-const RecipeNote = require('../models/recipeNotes')
-const Recipe = require('../models/recipe')
+const DB = require('../db.config')
+const RecipeNote = DB.recipeNote
+const Recipe = DB.recipe
 const sequelize = require('../db.config')
 const { v4: uuidv4 } = require('uuid')
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, {useEffect, useState, useContext, useRef} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './header.css'
 import logo from '../../images/logo.png'
@@ -9,8 +9,10 @@ import Cookies from 'js-cookie'
 import MyContext from '../../_utils/contexts'
 import { searchBarService } from '../../_services/searchBar.service'
 import { shoppingSerive } from '../../_services/shoppingCart.service'
+import { UserService } from '../../_services/user.service'
+import CornerAccount from '../../pages/User/cornerAccount'
 import CustomLoader from '../../_utils/customeLoader/customLoader'
-import UserAccount from '../../pages/User/account'
+
 
 
 const Header = () => {
@@ -19,8 +21,6 @@ const Header = () => {
     const { favoritesProductsCount } = useContext(MyContext)
     const { favoritesRecipesCount } = useContext(MyContext)
     const { shoppingCartCount } = useContext(MyContext)
-    const { userAccountlogin } = useContext(MyContext)
-    const { userAccountloginLoading } = useContext(MyContext)
 
 
     // STATES //
@@ -31,6 +31,13 @@ const Header = () => {
     const [research, setResearch] = useState()
     const [searchActive, setSearchActive] = useState(false)
     const [userOptionsDisp, setuserOptionsDisp] = useState(false)
+    //const [accountLogin, setAccountLogin] = useState(false)
+    const [isLoad, setISload] = useState(false)
+    const [isLogout, setIsLogout] = useState(true)
+
+
+    // REF //
+    const userOptionsRef = useRef(null)
 
     
     // GET CURRENT ACTIVE LINK //
@@ -150,6 +157,72 @@ const Header = () => {
     }
 
 
+    // GET USER LOGIN COOKIE //
+    const loginUserId = Cookies.get('userId')
+
+
+    // SET CORNER ACCOUNT CONNECTED FUNCTION
+    const cornerAccountConnected = async () => {
+
+        try {
+
+            // Check login cookie
+            if (loginUserId) {
+
+                setIsLogout(false)
+
+                 // Check token validity
+                const res = await UserService.isLogged()
+                
+
+                // Set loader
+                setISload(true)
+            }
+        }
+        catch (err) {
+            console.error('Error :', err)
+        }
+    }
+
+
+    // SET CORNER ACCOUNT ONLOAD
+    useEffect(() => {
+        cornerAccountConnected()
+    }, [loginUserId])
+
+
+    // USER OPTIONS CLICK EVENT HANDLING //
+    const handleClickOutside = (event) => {
+        if (userOptionsRef.current && !userOptionsRef.current.contains(event.target)) {
+            setuserOptionsDisp(false)
+        }
+    }
+
+
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+        document.removeEventListener("click", handleClickOutside);
+        }
+    }, [])
+
+
+    // REDIRECT TO USER ACCOUNT //
+    const redirectToAccount = () => {
+        setuserOptionsDisp(false)
+        navigate(`/user/account/${loginUserId}`)
+    }
+
+
+    // LOGOUT //
+    const userLogout = () => {
+        UserService.logout()
+        Cookies.remove('userId')
+        window.location.reload()
+    }
+
+
     return (
         <div className='header_div'>
             <header>
@@ -191,22 +264,25 @@ const Header = () => {
                             <Link to="/panier"><i class="fa-sharp fa-solid fa-bag-shopping" id='shopping_cart_icon'></i></Link>
                             <span style={{display: shoppingCarts === 0 ? 'none' : 'initial'}} className='shopping_cart_icon_count'>{shoppingCarts}</span>
                         </div>
-                        <div className='user_account_icon_container'>
+                        <div className='user_account_icon_container' ref={userOptionsRef}>
                             <i class="fa-solid fa-user" id='user_account_icon' onClick={userOptions}></i>
                             {userOptionsDisp &&
                                 <div className='user_options_container'>
-                                    {userAccountloginLoading ?
+                                    { isLogout ? (
                                         <div>
-                                            <CustomLoader/>
+                                            <button onClick={connectionFormDisp}>Se connecter</button>
+                                            <button onClick={inscriptionFormdisplay}>S'inscrire</button>
                                         </div>
-                                    : userAccountlogin ?
-                                        <div>
-                                            <UserAccount/>
+                                    ): !isLoad ? (
+                                        <CustomLoader/>
+                                    ):
+                                    <div className='cornerAccount_account_container'>
+                                        <CornerAccount/>
+                                        <div id="cornerAccount_btn_container">
+                                            <button onClick={redirectToAccount}>mon compte</button>
+                                            <button onClick={userLogout}>deconnexion</button>
                                         </div>
-                                    : <div>
-                                        <button onClick={connectionFormDisp}>Se connecter</button>
-                                        <button onClick={inscriptionFormdisplay}>S'inscrire</button>
-                                      </div>
+                                    </div>
                                     }
                                 </div>
                             }
@@ -217,5 +293,6 @@ const Header = () => {
         </div>
     )
 }
+
 
 export default Header

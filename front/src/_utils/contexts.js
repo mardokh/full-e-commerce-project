@@ -153,6 +153,22 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Inscription sumbit switch
+    const [sumbitSwitch, setSumbitSwitch] = useState(false)
+
+    const updateSumbitSwitch = (switchSub) => {
+        setSumbitSwitch(switchSub)
+    }
+
+
+    // Corner account login
+    const [accountLogin, setAccountLogin] = useState(false)
+
+    const updateAccountLogin = (login) => {
+        setAccountLogin(login)
+    }
+
+
     return (
         <MyContext.Provider value={{
 
@@ -227,7 +243,14 @@ export const MyProvider = ({ children }) => {
             // Shopping cart count
             shoppingCartCount,
             updateShoppingCartCount,
-        
+
+            // Inscription sumbit switch
+            sumbitSwitch,
+            updateSumbitSwitch,
+
+            // Corner account login
+            accountLogin,
+            updateAccountLogin,
         }}>
         {children}
         </MyContext.Provider>

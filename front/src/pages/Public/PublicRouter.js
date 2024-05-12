@@ -1,7 +1,8 @@
-import React from 'react';
-import { Routes, Route} from 'react-router-dom';
-import { Layout, Home, Panier, Contact, Produits, Services, ProductDetails, RecipeDetails, Favorites, InscriptionLogin} from '../Public';
-import Error from '../../_utils/error';
+import React from 'react'
+import { Routes, Route} from 'react-router-dom'
+import UserAuthGuard from '../../_utils/userAuthGuard'
+import { Layout, Home, Panier, Contact, Produits, Services, ProductDetails, RecipeDetails, Favorites, InscriptionLogin, UserAccount } from '../Public'
+import Error from '../../_utils/error'
 
 
 const PublicRouter = () => {
@@ -19,6 +20,7 @@ const PublicRouter = () => {
                 <Route path='/recette_details/:id' element={<RecipeDetails/>} />
                 <Route path='/favorites' element={<Favorites/>} />
                 <Route path='/login_inscription/main/:role' element={<InscriptionLogin/>} />
+                <Route path='/user/*' element={<UserAuthGuard><UserAccount/></UserAuthGuard>} />
                 <Route path='*' element={<Error/>} />
             </Route>
         </Routes>

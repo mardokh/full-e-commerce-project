@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from "react"
 import { favoriteProductService } from "../../_services/favoriteProduct.service"
 import "./favorites_products.css"
 import MyContext from '../../_utils/contexts'
+import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
 const FavoritesProducts = () => {
@@ -65,7 +66,7 @@ const FavoritesProducts = () => {
 
     // Loader //
     if (!isLoad) {
-        return <div>Loading...</div>
+        return <CustomLoader/>
     }
 
 
@@ -74,14 +75,12 @@ const FavoritesProducts = () => {
             {refProducts.current ?
                 products.map(product => (
                     <div key={product.favorite_product.id} className="favorites_Products_container">
-                        <div className="favorites_Products_name favorites_Products_items">
+                        <div className="favorites_Products_close_icon_container">
+                            <i class="fa-solid fa-circle-xmark" id="favorites_Products_close_icon" onClick={() => deleteFavoriteProduct(product.favorite_product.id)}></i>
+                        </div>
+                        <div className="favorites_Products_image" style={{backgroundImage: `url('http://localhost:8989/uploads/${product.favorite_product.image}')`}}></div>
+                        <div className="favorites_Products_name">
                             <p>{product.favorite_product.name}</p>
-                        </div>
-                        <div className="favorites_Products_price favorites_Products_items">
-                            <p>{product.favorite_product.price} Da</p>
-                        </div>
-                        <div>
-                            <i onClick={() => deleteFavoriteProduct(product.favorite_product.id)} class="fa-solid fa-trash"></i>
                         </div>
                     </div>  
                 )) : (<div>{products}</div>)

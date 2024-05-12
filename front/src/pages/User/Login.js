@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import "./login.css"
 import { UserService } from "../../_services/user.service"
 import BouncingDotsLoader from "../../_utils/customeLoader/dotsLoader"
 import { useNavigate } from "react-router-dom"
+import Cookies from 'js-cookie'
 
 
 const Login = () => {
@@ -30,7 +31,7 @@ const Login = () => {
     // Handle errors
     const handleError = (err) => {
         if (err.response && err.response.status === 401) {
-            setLoginFailed(err.response.message)
+            setLoginFailed(err.response.data.message)
             setLoginFailedDisplay(true)
         } else {
             console.log('Error:', err.message)
@@ -49,6 +50,9 @@ const Login = () => {
             // Save token to local storage
             UserService.saveToken(res.data.access_token)
 
+            // Set corner account connected         
+            Cookies.set('userId', res.data.user_id)
+
             // Redirect
             navigate(`/user/account/${res.data.user_id}`)
         }
@@ -57,7 +61,6 @@ const Login = () => {
             handleError(err)
         }
     }
-
 
 
     return (
@@ -72,14 +75,14 @@ const Login = () => {
                 <div className="user_connection_input_container user_connection_input_container_submit_btn">
                     <input type="submit" value="connexion" />
                 </div>
-                <div style={{marginTop: '50px', fontSize: '15px'}}>
-                    <p>mot de passe oublier ?</p>
-                </div>
                 {loginFailedDisplay &&
-                    <div>
+                    <div className="user_connection_failed_container">
                         <p>{loginFailed}</p>
                     </div>
                 }
+                <div className="user_connection_forget_pass_container">
+                    <p>mot de passe oublier ?</p>
+                </div>
             </form>
         </div>
     )

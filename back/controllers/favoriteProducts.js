@@ -1,7 +1,8 @@
 // MODULES IMPORTS //
+const DB = require('../db.config')
+const FavoriteProduct = DB.favoriteProduct
+const Product = DB.product
 const { v4: uuidv4 } = require('uuid')
-const FavoriteProduct = require('../models/favoriteProduct')
-const Product = require('../models/product')
 
 // GLOBALS VARIABLS //
 const cookieName = 'client_id_favorites_products'
@@ -115,7 +116,7 @@ exports.getFavoritesProducts = async (req, res) => {
 
             // Get all favorites products from database
             const favoritesProducts = await FavoriteProduct.findAll({where: {client_id: client_id},
-                include: [{ model: Product, attributes: ['id', 'name', 'price'], as: 'favorite_product' }]})
+                include: [{ model: Product, attributes: ['id', 'name', 'price', 'image'], as: 'favorite_product' }]})
             
             // IF THE CLIENT HASN'T ADDED ANY FAVORITE
             if (!favoritesProducts.length > 0) {

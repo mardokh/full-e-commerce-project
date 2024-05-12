@@ -14,20 +14,20 @@ const Header = () => {
 
     const showSettingList = () => {
         setShowSetList(!showSetList)
-    };
+    }
 
 
     const logout = () => {
         AdminService.logout()
         navigate("/auth/admin")
-    };
+    }
 
 
     const handleClickOutside = (event) => {
         if (settingRef.current && !settingRef.current.contains(event.target)) {
-        setShowSetList(false);
+        setShowSetList(false)
         }
-    };
+    }
 
 
     useEffect(() => {
@@ -35,8 +35,8 @@ const Header = () => {
 
         return () => {
         document.removeEventListener("click", handleClickOutside);
-        };
-    }, []);
+        }
+    }, [])
 
 
     return (

@@ -16,8 +16,23 @@
 .inscriptionLogin_component_container {
     width: 50%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.inscriptionLogin_component_sing_in {
+    position: absolute;
+    top: 120px;
+    font-size: 30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.inscriptionLogin_component_sing_up {
+    position: absolute;
+    top: 60px;
+    font-size: 30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .inscriptionLogin_switcher_blog {

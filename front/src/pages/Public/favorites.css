@@ -1,0 +1,17 @@
+.favories_fav_products_container {
+    width: 90%;
+    margin: 150px auto;
+}
+
+.favories_fav_recipes_container {
+    width: 90%;
+    margin: 80px auto;
+}
+
+.favories_title {
+    text-align: left;
+    margin-bottom: 50px;
+    font-size: 25px;
+    font-family: "Oleo Script Swash Caps", system-ui;
+    color: green;
+}

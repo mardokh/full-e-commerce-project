@@ -1,7 +1,8 @@
 // MODULES IMPORTS //
+const DB = require('../db.config')
+const ShoppingCart = DB.shoppingCart
+const Product = DB.product
 const { v4: uuidv4 } = require('uuid')
-const ShoppingCart = require('../models/shoppingCart')
-const Product = require('../models/product')
 const {Sequelize} = require('sequelize')
 
 

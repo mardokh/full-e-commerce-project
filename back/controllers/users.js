@@ -1,6 +1,7 @@
 // MODULES IMPORTS //
+const DB = require('../db.config')
+const Users = DB.users
 const bcrypt = require('bcrypt')
-const Users = require('../models/users')
 const jwt = require('jsonwebtoken')
 
 
@@ -21,7 +22,7 @@ exports.createUser = async (req, res) => {
 
         // Check if user exist
         if (user !== null) {
-            return res.status(409).json({message: 'This user already exist'})
+            return res.status(409).json({message: 'Cette adresse exist deja !'})
         }
 
         // Password hash
@@ -60,7 +61,7 @@ exports.loginUser = async (req, res) => {
 
         // Check if user exist
         if (user === null) {
-            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect email !'})
+            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
         }
 
         // Check password from database
@@ -68,7 +69,7 @@ exports.loginUser = async (req, res) => {
 
         // Check if password
         if (!passe) {
-            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect password !'})
+            return res.status(401).json({message: 'Mot de passe ou identifiant incorrect !'})
         }
 
         // Generate json web token

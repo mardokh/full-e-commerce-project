@@ -1,5 +1,6 @@
 // MODULES IMPORT //
-const Recipe = require('../models/recipe')
+const DB = require('../db.config')
+const Recipe = DB.recipe
 const fs = require('fs')
 const path = require('path')
 

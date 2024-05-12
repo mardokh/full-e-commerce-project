@@ -1,7 +1,8 @@
 // MODULES IMPORTS //
+const DB = require('../db.config')
+const FavoriteRecipe = DB.favoriteRecipe
+const Recipe = DB.recipe
 const { v4: uuidv4 } = require('uuid')
-const FavoriteRecipe = require('../models/favoriteRecipe')
-const Recipe = require('../models/recipe')
 
 
 // GLOBALS VARIABLS //

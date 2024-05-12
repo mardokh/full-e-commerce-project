@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { AdminService } from "../_services/admin.service"
+import CustomLoader from '../_utils/customeLoader/customLoader'
 
 
 const AdminAuthGuard = ({ children }) => {
@@ -18,12 +19,12 @@ const AdminAuthGuard = ({ children }) => {
 
 
     if (!isCheckComplete || log === null) {
-        return <div>Loading...</div>
+        return <CustomLoader/>
     }
 
     
     if (log === false) {
-        return <Navigate to="/auth/login" />
+        return <Navigate to="/auth/admin"/>
     }
 
     return children
