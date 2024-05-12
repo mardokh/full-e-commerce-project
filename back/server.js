@@ -5,17 +5,17 @@ const cookieParser = require('cookie-parser')
 
 
 // ROUTES IMPORTS //
-const shopping = require('./routes/shoppingCart')
-const products = require('./routes/products')
-const recipes = require('./routes/recipes')
-const favoritesProducts = require('./routes/favoriteProducts')
-const favoritesRecipes = require('./routes/favoriteRecipes')
-const productNotes = require('./routes/productNotes')
-const recipeNotes = require('./routes/recipeNotes')
+const Shopping = require('./routes/shoppingCart')
+const Products = require('./routes/products')
+const Recipes = require('./routes/recipes')
+const FavoritesProducts = require('./routes/favoriteProducts')
+const FavoritesRecipes = require('./routes/favoriteRecipes')
+const ProductNotes = require('./routes/productNotes')
+const RecipeNotes = require('./routes/recipeNotes')
 const Admin = require('./routes/admin')
 const User = require('./routes/user')
-const searchBar = require('./routes/searchBar')
-const jwtSession = require('./routes/check_jwt_session')
+const SearchBar = require('./routes/searchBar')
+const JwtSession = require('./routes/check_jwt_session')
 
 
 // IMPORT DATABASE CONNECTER //
@@ -42,17 +42,17 @@ app.use('/uploads', express.static('uploads'))
 
 // ROUTES //
 app.get('/', (req, res) => res.send('Welcom you are connected'))
-app.use('/shopping', shopping)
-app.use('/products', products)
-app.use('/recipes', recipes)
-app.use('/favorites/products', favoritesProducts)
-app.use('/favorites/recipes', favoritesRecipes)
-app.use('/products/notes', productNotes)
-app.use('/recipes/notes', recipeNotes)
-app.use('/search', searchBar)
+app.use('/shopping', Shopping)
+app.use('/products', Products)
+app.use('/recipes', Recipes)
+app.use('/favorites/products', FavoritesProducts)
+app.use('/favorites/recipes', FavoritesRecipes)
+app.use('/products/notes', ProductNotes)
+app.use('/recipes/notes', RecipeNotes)
+app.use('/search', SearchBar)
 app.use('/admin', Admin)
 app.use('/user', User)
-app.use('/session', jwtSession)
+app.use('/session', JwtSession)
 app.get('*', (req, res) => res.status(404).send('404 not found !'))
 
 
