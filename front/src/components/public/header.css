@@ -161,10 +161,6 @@ header nav ul li a {
     position: relative;
 }
 
-#shopping_cart_icon {
-    color: green;
-}
-
 .shopping_cart_icon_count {
     position: absolute;
     background-color: #7cba00;
@@ -174,12 +170,6 @@ header nav ul li a {
     top: -14px;
     right: -5px;
     color: white;
-}
-
-#user_account_icon {
-    font-size: 25px;
-    color: green;
-    cursor: pointer;
 }
 
 .user_inscription_form_windows_global_container {
@@ -305,3 +295,22 @@ header nav ul li a {
     width: 210px;
 }
 
+/* -----
+SVG Icons - svgicons.sparkk.fr
+----- */
+
+.svg-icon-header {
+    width: 2em;
+    height: 2em;
+  }
+  
+  .svg-icon-header path,
+  .svg-icon-header polygon,
+  .svg-icon-header rect {
+    fill: green;
+  }
+  
+  .svg-icon-header circle {
+    stroke: green;
+    stroke-width: 1;
+  }

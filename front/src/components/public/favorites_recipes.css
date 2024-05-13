@@ -18,6 +18,7 @@
     justify-content: space-evenly;
     align-items: center;
     position: relative;
+    cursor: pointer;
 }
 
 .fa-trash {
@@ -39,5 +40,13 @@
 }
 
 #favorites_Recipes_close_icon {
+    visibility: hidden;
     font-size: 22px;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+}
+
+.favorites_Recipes_container:hover #favorites_Recipes_close_icon {
+    visibility: visible;
+    opacity: 1;
 }

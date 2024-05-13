@@ -10,6 +10,9 @@ const FavoritesProducts = () => {
     // STATES //
     const [products, setProducts] = useState([])
     const [isLoad, setISload] = useState(false)
+
+
+    // CONTEXTS //
     const { updateFavoritesProductsCount } = useContext(MyContext)
      
 
@@ -33,6 +36,7 @@ const FavoritesProducts = () => {
         }
         return () => refUseEffect.current = true
     }, [])
+
 
 
     // DELETE FAVORITE //
