@@ -37,7 +37,7 @@ exports.getOneProduct = async (req, res) => {
         
         // Check product id validity
         if (!productId) {
-            return res.status(400).json({message: 'Missing id params !'})
+            return res.status(400).json({message: 'Missing id params getOneProduct !'})
         }
 
         // Get product from database
@@ -113,7 +113,7 @@ exports.updateProduct = async (req, res) => {
 
         // Check product id validity
         if (!id) {
-            return res.status(400).json({message: 'Missing id params !'})
+            return res.status(400).json({message: 'Missing id params updateProduct!'})
         }
 
         // Get product from database
@@ -167,7 +167,7 @@ exports.trasProduct = async (req, res) => {
 
         // Check product id validity
         if (!productId) {
-            return res.status(400).json({message: 'Missing id params !'})
+            return res.status(400).json({message: 'Missing id params trasProduct!'})
         }
 
         // Get product from database
@@ -200,7 +200,7 @@ exports.untrashProduct = async (req, res) => {
 
         // Check product id validity
         if (!productId) {
-            return res.status(400).json({message: 'Missing id params !'})
+            return res.status(400).json({message: 'Missing id params untrashProduct!'})
         }
 
         // Untrash product from database

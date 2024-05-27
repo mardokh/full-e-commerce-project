@@ -1,3 +1,6 @@
+
+/* PRODUCTS DETAILS SECTION */
+
 .details_parent_container {
     width: 90%;
     display: flex;
@@ -133,35 +136,6 @@
     text-align: justify;
 }
 
-.details_line_between_products_comments {
-    height: 1px;
-    width: 90%;
-    margin: 0 auto;
-    background-color: gainsboro;
-}
-
-.details_comments_title {
-    text-align: left;
-    font-size: 15px;
-    margin-top: 10px;
-    color: gray;
-}
-
-.details_comments_write_reviews_button_global_container {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: flex-start;
-
-}
-
-.details_comments_write_reviews_button_parent_container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-}
-
 .details_reviews_container {
     width: 90%;
     margin: 50px auto;
@@ -171,30 +145,9 @@
     justify-content: flex-start;
 }
 
-.details_reviews_item {
-    width: 700px;
-    line-height: 20px;
-    border: 1px solid gainsboro;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 50px;
-    margin-left: 10px;
-}
-
 .details_reviews_name {
     margin-bottom: 10px;
     font-weight: bold;
-}
-
-.details_write_reviews_btn {
-    height: 40px;
-    margin-top: 15px;
-    border-radius: 5px;
-    background-color: rgb(141, 211, 141);
-    border: none;
-    padding: 10px;
-    cursor: pointer;
 }
 
 .details_product_details_global_container {
@@ -220,4 +173,61 @@
     top: 0;
     position: fixed;
     z-index:1;
+}
+
+.details_comment_and_notes_container {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 20px auto;
+    align-items: center;
+    background-color: rgba(244, 244, 244, 0.717);
+    padding: 15px;
+}
+
+.details_comment_and_notes_sub_container {
+    width: 100%;
+}
+
+
+/* COMMENTS LINE/BTN SECTION */
+
+.details_line_between_products_comments { 
+    height: 1px;
+    width: 90%;
+    margin: 0 auto;
+    background-color: gainsboro;
+}
+
+.details_comments_write_reviews_button_global_container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.details_comments_write_reviews_button_parent_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+
+.details_comments_title {
+    text-align: left;
+    font-size: 15px;
+    margin-top: 10px;
+    color: gray;
+}
+
+.details_write_reviews_btn {
+    height: 40px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background-color: rgb(141, 211, 141);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
 }

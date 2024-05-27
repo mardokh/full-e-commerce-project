@@ -96,7 +96,7 @@ exports.getUser = async (req, res) => {
 
         // Check id validity
         if (!userId) {
-            return res.status(400).json({message: 'Missing id params !'})
+            return res.status(400).json({message: 'Missing id params from getUser !'})
         }
 
         // Get user from database

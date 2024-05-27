@@ -58,8 +58,7 @@ const Account = () => {
                         <div className="user_account_profile_img" style={{backgroundImage: `url(${profileImg})`}}></div>
                         <div className="user_account_notice_container">
                             <p>
-                            Ce compte vous permet de suivre vos commandes, d'annuler ou retourner un article, de signaler la panne d'un article, d'imprimer vos factures, de retrouver vos bons d'achat, de suivre vos remboursements, de communiquer avec le Service Client de Cdiscount ou avec votre vendeur C le marché.
-                            Nous vous donnons rendez-vous très bientôt dans votre boîte mail avec tous les bons plans Cdiscount, les dernières nouveautés produits ou encore nos ventes flashs
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque elementum elit vitae eleifend gravida. Etiam felis tortor, fringilla ut orci in, rutrum placerat tellus. Duis efficitur turpis ac tempor placerat. Aliquam auctor quam faucibus, ullamcorper diam ut, auctor velit. Nulla faucibus rutrum turpis ac laoreet. Sed ut ipsum tellus. Aliquam tempus vulputate nunc, eu facilisis erat mattis et. Phasellus lobortis molestie orci, vel egestas ex suscipit id. Vestibulum varius, orci sed hendrerit scelerisque, ex lorem malesuada eros, id rhoncus sapien orci sit amet neque. Etiam vulputate arcu suscipit, facilisis sapien a, tempor nulla.
                             </p>
                         </div>
                     </div>

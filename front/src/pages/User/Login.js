@@ -50,8 +50,8 @@ const Login = () => {
             // Save token to local storage
             UserService.saveToken(res.data.access_token)
 
-            // Set corner account connected         
-            Cookies.set('userId', res.data.user_id)
+            // Set connected cookie
+            Cookies.set('userId', res.data.user_id, { expires: 1/24 })
 
             // Redirect
             navigate(`/user/account/${res.data.user_id}`)

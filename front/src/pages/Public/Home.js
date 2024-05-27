@@ -3,7 +3,7 @@ import SlideShow from '../../components/public/SlideShow'
 import Produits from '../../components/public/Produits'
 import Recettes from '../../components/public/Recettes'
 import RecettesBanner from '../../components/public/Recettes_banner'
-import ProductNotes from '../../components/public/productNotes'
+//import ProductNotes from '../../components/public/productNotes'
 import RecipeNotes from '../../components/public/recipeNotes'
 import './layout.css'
 import MyContext from "../../_utils/contexts"
@@ -28,7 +28,7 @@ const Home = () => {
         {/* Products notes */}
         {productsNotesDisplay &&
         <div className="container_products_notes">
-            <ProductNotes />
+            {/*ProductNotes }*/}
         </div>
         }
 

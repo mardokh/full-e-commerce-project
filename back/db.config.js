@@ -17,14 +17,12 @@ db.sequelize = sequelize
 db.shoppingCart = require('./models/shoppingCart')(sequelize)
 db.product = require('./models/product')(sequelize)
 db.favoriteProduct = require('./models/favoriteProduct')(sequelize)
-db.productNote = require('./models/productNote')(sequelize)
 db.productImages = require('./models/productImages')(sequelize)
 db.recipe = require('./models/recipe')(sequelize)
 db.favoriteRecipe = require('./models/favoriteRecipe')(sequelize)
-db.recipeNote = require('./models/recipeNotes')(sequelize)
 db.admin = require('./models/admin')(sequelize)
 db.users = require('./models/users')(sequelize)
-db.comments = require('./models/comments')(sequelize)
+db.productsNotesComments = require('./models/productsNotesComments')(sequelize)
 
 
 // tables associations : shoppingCarts - products
@@ -43,9 +41,9 @@ db.product.hasMany(productImages, { foreignKey: 'productId', as: 'product_images
 db.favoriteRecipe.belongsTo(recipe, { foreignKey: 'recipe_id', as: 'favorite_recipe', onDelete: 'CASCADE' })
 db.recipe.hasOne(favoriteRecipe, { foreignKey: 'recipe_id', onDelete: 'SET NULL' })
 
-// tables associations : comments - users
-db.comments.belongsTo(users, { foreignKey: 'user_id', as: 'user_comments', onDelete: 'CASCADE' })
-db.users.hasMany(comments, { foreignKey: 'user_id', onDelete: 'SET NULL' })
+// tables associations : productsNotesComments - users
+db.productsNotesComments.belongsTo(users, { foreignKey: 'user_id', as: 'products_notes_comments', onDelete: 'CASCADE' })
+db.users.hasOne(productsNotesComments, { foreignKey: 'user_id', onDelete: 'SET NULL'})
 
 
 // synchronizate models

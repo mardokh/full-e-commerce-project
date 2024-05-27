@@ -4,17 +4,21 @@ const {DataTypes} = require('sequelize')
 
 // DEFINE MODEL //
 module.exports = (sequelize) => {
-    return productNote = sequelize.define('product_note', {
+
+    return productsNotesComments = sequelize.define('productsNotesComments', {
         id: {
             type: DataTypes.INTEGER(11),
             primaryKey: true,
             autoIncrement: true
         },
-        client_id: {
-            type: DataTypes.STRING(255),
+        user_id: {
+            type: DataTypes.INTEGER(11)
         },
         product_id: {
             type: DataTypes.INTEGER(11)
+        },
+        comment: {
+            type: DataTypes.STRING(255)
         },
         note: {
             type: DataTypes.INTEGER(11)

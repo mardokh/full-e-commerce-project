@@ -169,6 +169,22 @@ export const MyProvider = ({ children }) => {
     }
 
 
+    // Reviews displaying
+    const [reviewsOnDisplay, setReviewsOnDisplay] = useState(false)
+
+    const updateReviewsOnDisplay = (switchDisp) => {
+        setReviewsOnDisplay(switchDisp)
+    }
+
+
+    // User have comment
+    const [userHaveComment, setUserHaveComment] = useState(false)
+
+    const updateUserHaveComment = (switchDisp) => {
+        setUserHaveComment(switchDisp)
+    }
+
+
     return (
         <MyContext.Provider value={{
 
@@ -251,6 +267,14 @@ export const MyProvider = ({ children }) => {
             // Corner account login
             accountLogin,
             updateAccountLogin,
+
+            // Reviews displaying
+            reviewsOnDisplay,
+            updateReviewsOnDisplay,
+
+            // User have comment
+            userHaveComment,
+            updateUserHaveComment,
         }}>
         {children}
         </MyContext.Provider>
