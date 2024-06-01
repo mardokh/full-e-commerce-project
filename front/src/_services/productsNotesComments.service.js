@@ -12,6 +12,11 @@ let addProductsNotesComments = (prodNote) => {
     return Axios.put('/review/add', prodNote)
 }
 
+// UPDATE REVIEW //
+let updateProductsNotesComments = (newReview) => {
+    return Axios.patch('/review/update', newReview)
+}
+
 // DELETE REVIEW //
 let deleteProductsNotesComments = (productId) => {
     return Axios.delete('/review/delete/'+productId)
@@ -20,5 +25,5 @@ let deleteProductsNotesComments = (productId) => {
 
 // EXPORTS //
 export const productsNotesCommentsService = {
-    addProductsNotesComments, getProductsNotesComments, deleteProductsNotesComments
+    addProductsNotesComments, getProductsNotesComments, deleteProductsNotesComments, updateProductsNotesComments
 }

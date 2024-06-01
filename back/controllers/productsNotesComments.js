@@ -114,6 +114,31 @@ exports.getProductsNotesComments = async (req, res) => {
 }
 
 
+// UPDATE REVIEW //
+exports.updateProductsNotesComments = async (req, res) => {
+
+    try {
+        // Extract product id & note
+        const {user_id, comment, note} = req.body
+
+        // Check inputs 
+        if (!user_id || !comment || !note) {
+            return res.status(400).json({message: 'Missing inputs in request body !'})
+        }
+
+        // Update review
+        await ProductsNotesComments.update(req.body, {where: {user_id: user_id}})
+
+        // Sucessfully response
+        return res.json({message: 'avis modifier aec succées'})
+        
+    }
+    catch (err) {
+        return res.status(500).json({ message: 'Database error !', error: err.message, stack: err.stack })
+    }
+}
+
+
 // DELETE REVIEWS //
 exports.deleteProductsNotesComments = async (req, res) => {
 

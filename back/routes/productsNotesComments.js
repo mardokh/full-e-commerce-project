@@ -15,6 +15,9 @@ router.get('', controller.getProductsNotesComments)
 // ADD REVEIW //
 router.put('/add', controller.addProductsNotesComments)
 
+// UPDATE REVEIW //
+router.patch('/update', controller.updateProductsNotesComments)
+
 // DELETE REVIWE
 router.delete('/delete/:id', controller.deleteProductsNotesComments)
 

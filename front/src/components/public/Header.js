@@ -36,7 +36,7 @@ const Header = () => {
     const [isLogout, setIsLogout] = useState(true)
 
 
-    // REF //
+    // REFERENCES //
     const userOptionsRef = useRef(null)
 
     

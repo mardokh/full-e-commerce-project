@@ -8,7 +8,7 @@ import CustomLoader from '../../_utils/customeLoader/customLoader'
 const EditProduct = () => {
 
     // STATES //
-    const [product, setProduct] = useState({name: "", details: "", price: "", image: ""})
+    const [product, setProduct] = useState({})
     const [imageUrl, setImageUrl] = useState()
     const [isLoad, setISload] = useState(false)
     const { productsEditId } = useContext(MyContext)
