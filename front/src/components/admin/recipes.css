@@ -2,7 +2,8 @@
     padding: 10px;
     height: 800px;
     width: 100%;
-    background-color: rgb(241, 241, 248);
+    margin-top: 80px;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -18,16 +19,16 @@
     border-collapse: separate;
     border-spacing: 0 15px;
     margin: 0px auto;
-    background-color: rgb(241, 241, 248);
+    background-color: white;
 }
 
 .recipe_manage_table_container th {
     padding: 10px;
-    background-color: white;
+    background-color: rgb(241, 241, 251);
 }
 
 .recipe_manage_table_container td {
-    background-color: white;
+    background-color: rgb(241, 241, 251);
 }
 
 
@@ -59,28 +60,6 @@
 
 a {
     text-decoration: none;
-}
-
-.recipe_manager_add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    width: 250px;
-    margin: 20px auto;
-    border: 1px solid green;
-    border-style: dashed;
-    border-width: 2px;
-    cursor: pointer;
-}
-
-.recipe_manager_add:hover {
-    background-color: aliceblue;
-}
-
-.recipe_manager_add p {
-    color: green;
-    font-size: 15px;
 }
 
 
@@ -120,9 +99,4 @@ a {
 
 .pagination-bar {
     justify-content: center;
-}
-
-#recipe_manage_add_icon {
-    font-size: 2rem;
-    color: green
 }

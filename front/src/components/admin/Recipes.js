@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState, useMemo, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { recipeService } from '../../_services/recipe.service'
 import Pagination from '../../pagination/Pagination'
 import "./recipes.css"
-import MyContext from '../../_utils/contexts'
 import CustomLoader from '../../_utils/customeLoader/customLoader'
 
 
@@ -15,13 +14,11 @@ const Recipes = () => {
     const [refNotFound, setRefNotFound] = useState(false)
     const flag = useRef(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const { updateRecipesAddDisplay } = useContext(MyContext)
-    const { recipesOnadd } = useContext(MyContext)
-    const { recipesOnEdit } = useContext(MyContext)
-    const { updateRecipesEditDisplay } = useContext(MyContext)
-    const { updateRecipesEditId } = useContext(MyContext)
-    const { updateRecipesOnAdd } = useContext(MyContext)
-    let PageSize = 4;
+    let PageSize = 4
+
+
+    // NAVIGATION //
+    const navigate = useNavigate()
 
 
     // MAIN LOAD PRODUCTS //
@@ -43,13 +40,6 @@ const Recipes = () => {
     useEffect(() => {
         loadRecipes()
     }, [])
-
-
-    // LOAD RECIPES ON PRODUCT ADD //
-    if (recipesOnadd || recipesOnEdit) {
-        loadRecipes()
-        updateRecipesOnAdd(false)
-    }
 
 
     // LOAD PRODUCTS ERRORS HANDLE //
@@ -85,21 +75,15 @@ const Recipes = () => {
 
     // PAGINATION HANDLE 
     const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return recipes.slice(firstPageIndex, lastPageIndex);
+        const firstPageIndex = (currentPage - 1) * PageSize
+        const lastPageIndex = firstPageIndex + PageSize
+        return recipes.slice(firstPageIndex, lastPageIndex)
     }, [currentPage, recipes])
 
 
-    // ADD RECIPE PAGE DISPLAYER //
-    const displayRecipeAddForm = () => {
-        updateRecipesAddDisplay(true)
-    }
-
-
+    // EDIT PRODUCT PAGE REDIRECTION //
     const displayRecipeEditForm = (recipeId) => {
-        updateRecipesEditDisplay(true)
-        updateRecipesEditId(recipeId)
+        navigate(`../edit_recipe/${recipeId}`)
     }
 
 
@@ -113,7 +97,6 @@ const Recipes = () => {
     return (
         <div className='recipe_manage_global_container'>
             <div className='recipe_manage_sub_container'>
-                <div className='recipe_manager_add' onClick={displayRecipeAddForm} title='add recipe'><i class="fa-solid fa-plus" id='recipe_manage_add_icon'></i></div>
                 <div className='recipe_manage_container'>
                     <table className='recipe_manage_table_container'>
                         <thead>

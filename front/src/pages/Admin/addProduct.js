@@ -1,8 +1,7 @@
 // MODULES IMPORTS //
-import React, {useState, useRef, useContext, useEffect} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import './addProduct.css'
 import { productService } from '../../_services/product.service'
-import MyContext from '../../_utils/contexts'
 import CustomLoader from '../../_utils/customeLoader/customLoader'
 const AddImage = require('../../images/AddImage.jpg')
 
@@ -14,8 +13,7 @@ const AddProduct = () => {
     const [product, setProduct] = useState({name: "", price: "", details: "", image: "", images: []})
     const [imageUrl, setImageUrl] = useState()
     const [loader, setLoader] = useState(false)
-    const { updateProductsAddDisplay } = useContext(MyContext)
-    const { updateProductsOnAdd } = useContext(MyContext)
+    const [onLoader, setOnLoader] = useState(false)
 
 
     // REFERENCES //
@@ -37,43 +35,39 @@ const AddProduct = () => {
         e.preventDefault()
         try {
             // Load data
+            setOnLoader(true)
             setLoader(true)
-
+    
             const formData = new FormData()
             formData.append('name', product.name)
             formData.append('price', product.price)
             formData.append('details', product.details)
             formData.append('image', product.image)
             for (const file of product.images) {
-                formData.append('images', file);
+                formData.append('images', file)
             }
-
-            /*
-            console.log(formData.getAll('images'))
-
-            for (const pair of formData.entries()) {
-                console.log(pair[0], pair[1])
-
-            product.images.forEach(file => {
-                console.log(file)
-            })
-            */
-
+    
             // Api call for add product
             await productService.addProduct(formData)
+    
+            setProduct({ name: "", price: "", details: "", image: "", images: [] })
 
-            // Update products state
-            updateProductsOnAdd(true)
+            setImageUrl("")
 
-            // Close add product windows
-            updateProductsAddDisplay(false)
+            imageFlag.current = false
+    
+            // Update loader
+            setLoader(false)
+    
+            // Close windows
+            setTimeout(() => setOnLoader(false), 2000)
 
         }
         catch (error) {
             console.error('Error : ', error)
         }
     }
-
+    
 
     // UPDATE INPUTS STATE //
     const handleInputChange = (name, value) => {
@@ -109,12 +103,6 @@ const AddProduct = () => {
         }))
     }
 
-    
-    // PRODUCT ADD CLOSE //
-    const closeAddProductWindows = () => {
-        updateProductsAddDisplay(false)
-    }
-
 
     // IMAGES ITEM DELETE //
     const deleteImage = (index) => {
@@ -124,21 +112,38 @@ const AddProduct = () => {
             return { ...prevImages, images: updatedImages }
         })
     }
+    
 
 
     // MAIN RENDERING //
     return (
+
         <div className="add_product_global_container">
-            <i class="fa-solid fa-circle-xmark" id='add_product_close_icon' onClick={closeAddProductWindows}></i>
-            {loader ?
-            <div className='add_product_loader_spin'>
-                <CustomLoader />
-            </div>
-            :
-            <>
-                <div className='add_product_form_image_container'>
-                    <div className="add_product_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`,}}></div>
-                    <form className='add_product_container' onSubmit={handleSubmit}>
+            {onLoader &&
+                <div className='add_product_load_success_global_container'>
+                    <div className='add_product_load_success_container'>
+                        {loader ?
+                        <div className='add_product_loader_spin'>
+                            <CustomLoader />
+                        </div>
+                        :
+                        <div className='add_product_success_container'>
+                            <svg className="add_product_success_icon" viewBox="0 0 20 20">
+							    <path d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"></path>
+						    </svg>
+                            <p>produit ajouter avec succes</p>
+                        </div>
+                        } 
+                    </div>
+                </div>
+            }
+            <div className='add_product_form_global_container'>
+                <div className='add_product_form_container'>
+                    <div className='add_product_principale_image_container'>
+                        <p>Aperçu image principale</p>
+                        <div className="add_product_image" style={{backgroundImage: `url('${!imageFlag.current ? AddImage : imageUrl}')`}}></div>
+                    </div>
+                    <div className='add_product_container'>
                         <div className='add_product_item'>
                             <label>Name</label>
                             <input type='text' name='name' value={product.name} onChange={(e) => handleInputChange(e.target.name, e.target.value)}/>
@@ -159,23 +164,25 @@ const AddProduct = () => {
                             <label>autres images</label>
                             <input type="file" name="images[]" onChange={handleImagesChange} multiple /> 
                         </div>
-                        <div>
-                            <input className='btn_new_product_add' type='submit' value="confirmer"/>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div className="images_display_container" ref={imagesDisplayContainerRef}>
-                    {product.images.map((image, index) => (
-                        <div className="add_product_images_container" key={index}>
-                            <i class="fa-solid fa-circle-xmark" id='add_product_images_close_icon' onClick={() => deleteImage(index)}></i>
-                            <div className="add_product_images" style={{backgroundImage: `url('${URL.createObjectURL(image)}')`}}></div>
-                        </div>
-                    ))}
+                <div className='add_product_images_secondaire_container'>
+                    <p>Aperçu des images secondaire</p>
+                    <div className="add_product_image_container" ref={imagesDisplayContainerRef}>
+                        {product.images.map((image, index) => (
+                            <div className="add_product_images_container" key={index}>
+                                <i class="fa-solid fa-circle-xmark" id='add_product_images_close_icon' onClick={() => deleteImage(index)}></i>
+                                <div className="add_product_images" style={{backgroundImage: `url('${URL.createObjectURL(image)}')`}}></div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-
-            </>
-            }
+                <div className='add_product_btn_container'>
+                    <button className='btn_new_product_add' onClick={handleSubmit}>ajouter</button>
+                </div>
+            </div>
         </div>
+        
     )
 }
 

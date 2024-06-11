@@ -1,25 +1,28 @@
-import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { productService } from '../../_services/product.service';
 import Pagination from '../../pagination/Pagination';
 import './product.css';
-import MyContext from '../../_utils/contexts'
 import CustomLoader from '../../_utils/customeLoader/customLoader'
+import Kpi from "../../components/admin/KPI"
+
 
 const Produits = () => {
 
-    // STATES / CONTEXTS / CONST
+    // STATES //
     const [products, setProducts] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [refNotFound, setRefNotFound] = useState(false);
     const flag = useRef(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const { updateProductsAddDisplay } = useContext(MyContext)
-    const { productsOnAdd } = useContext(MyContext)
-    const { productsOnEdit } = useContext(MyContext)
-    const { updateProductsEditDisplay } = useContext(MyContext)
-    const { updateProductsEditId } = useContext(MyContext)
-    const { updateProductsOnAdd } = useContext(MyContext)
+
+
+    // GLOBAL VARIABLES //
     let PageSize = 4;
+
+
+    // NAVIGATION //
+    const navigate = useNavigate()
 
 
     // MAIN LOAD PRODUCTS //
@@ -43,13 +46,6 @@ const Produits = () => {
     },[])
 
 
-    // LOAD RECIPES ON PRODUCT ADD //
-    if (productsOnAdd || productsOnEdit) {
-        loadProducts()
-        updateProductsOnAdd(false)
-    }
-
-
     // LOAD PRODUCTS ERRORS HANDLE //
     const handleError = (err) => {
         if (err.response && err.response.status) {
@@ -65,21 +61,21 @@ const Produits = () => {
     // DELETE AN PRODUCT //
     const deleteProduct = async (productId) => {
         try {
-            await productService.deleteProduct(productId);
-            const productsGet = await productService.getAllproducts();
-            setProducts(productsGet.data.data);
+            await productService.deleteProduct(productId)
+            const productsGet = await productService.getAllproducts()
+            setProducts(productsGet.data.data)
         } catch (err) {
-            handleError(err);
+            handleError(err)
         }
-    };
+    }
     
 
     // PAGINATION HANDLE 
     const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return products.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, products]);
+        const firstPageIndex = (currentPage - 1) * PageSize
+        const lastPageIndex = firstPageIndex + PageSize
+        return products.slice(firstPageIndex, lastPageIndex)
+    }, [currentPage, products])
 
 
     useEffect(() => {
@@ -90,16 +86,9 @@ const Produits = () => {
     })
 
 
-    // ADD PRODUCT PAGE DISPLAYER //
-    const displayProductAddForm = () => {
-        updateProductsAddDisplay(true)
-    }
-
-
-    // EDIT PRODUCT PAGE DISPLAYER //
+    // EDIT PRODUCT PAGE REDIRECTION //
     const displayProductEditForm = (productId) => {
-        updateProductsEditDisplay(true)
-        updateProductsEditId(productId)
+        navigate(`../edit_produt/${productId}`)
     }
     
 
@@ -112,8 +101,8 @@ const Produits = () => {
     // RENDERING //
     return (
         <div className='product_manage_global_container'>
+            <div className='product_manage_kpi_container'><Kpi/></div>
             <div className='product_manage_sub_container'>
-                <div className='product_manager_add' onClick={displayProductAddForm} title='add product'><i class="fa-solid fa-plus" id='product_manage_add_icon'></i></div>
                 <div className='product_manage_container'>
                     <table className='product_manage_table_container'>
                         <thead>

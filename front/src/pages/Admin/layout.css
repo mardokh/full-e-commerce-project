@@ -1,19 +1,23 @@
 .admin_layout_global {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     height: 800px;
 }
 
 .admin_layout {
-    display: flex;
-    justify-content: center;
     width: 100%;
-    background-color: rgb(241, 241, 248);
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
 }
 
 .admin_layout_header {
     width: 100%;
+}
+
+.admin_sub_container {
+    width: 88%;
+    display: flex;
+    flex-direction: column;
 }
 
 .product_manage_add_product_container {

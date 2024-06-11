@@ -37,7 +37,7 @@ router.put('/add', checkTokenMIddleware, upload.fields([{name: 'image', maxCount
 
 
 // UPDATE PRODUCT //
-router.patch('/update', checkTokenMIddleware, upload.single('image'), controller.updateProduct)
+router.patch('/update', checkTokenMIddleware, upload.fields([{name: 'image', maxCount: 1}, {name: 'images', maxCount: 10}]), controller.updateProduct)
 
 
 // TRASH PRODUCT //

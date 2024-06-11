@@ -108,7 +108,7 @@ exports.putProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
 
     try {
-        // Body request destructuring
+        // Body request destructuring        
         const {id, name, details, price, image} = req.body
 
         // Check product id validity
@@ -124,33 +124,41 @@ exports.updateProduct = async (req, res) => {
             return res.status(404).json({message: 'This product do not exist !'})
         }
 
-        // Set image product input
+        // Set main image
         let newImage = image
-        if (req.file && req.file.filename) {
-            newImage = req.file.filename
+        if (req.file && req.files.image[0].filename) {
+            newImage = req.files.image[0].filename
         }
 
-       // Set product inputs
-       const updateProduct = {
-        name,
-        details,
-        price,
-        image: newImage,
-       }
+        // Set product inputs
+        const updateProduct = {
+            name,
+            details,
+            price,
+            image: newImage,
+        }
 
-       // Update product from database
-       await Product.update(updateProduct, {where: {id: id}})
+        // Update product from database
+        await Product.update(updateProduct, {where: {id: id}})
 
-       // Get the image filename associated
-       const imageFilename = product.image
+        // Set secondarys news images
+        const newImages = req.files['images']
 
-       // Delete the associated image file
-       if (imageFilename !== image) {
-            fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
-       }
+        newImages.map(async file => {
+            await productImages.create({productId: id, images: file.filename})
+        })
 
-       // Send successfully response
-       return res.json({message: 'Product updated successfully'})
+        // Get the image filename associated
+        const imageFilename = product.image
+
+        // Delete the associated image file
+        if (imageFilename !== newImage) {
+                fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
+        }
+       
+        // Send successfully response
+        return res.json({message: 'Product updated successfully'})
+        
     }
     catch (err) {
         return res.status(500).json({message: 'Database error !', error: err.message, stack: err.stack})
@@ -230,15 +238,16 @@ exports.deleteProduct = async (req, res) => {
             return res.status(404).json({ message: 'Product not found !' })
         }
 
+        // Delete main image
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', product.image))
+
+        // Delete socondarys images
+        const images = await productImages.findAll({where: {productId: productId}})
+        images.map(file => fs.unlinkSync(path.join(__dirname, '..', 'uploads', file.images)))
+
         // Delete product
         await Product.destroy({ where: { id: productId }, force: true })
 
-        // Get the image filename associated
-        const imageFilename = product.image
-
-        // Delete the associated image file
-        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageFilename))
-            
         // Send successfully response
         return res.json({ message: 'Product successfully deleted' })
     }

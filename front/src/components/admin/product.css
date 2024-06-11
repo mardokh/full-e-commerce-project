@@ -1,11 +1,10 @@
 .product_manage_global_container {
     padding: 10px;
-    height: 800px;
     width: 100%;
-    background-color: rgb(241, 241, 248);
     display: flex;
     flex-direction: column;
     justify-content: start;
+    margin-bottom: 100px;
 }
 
 .product_manage_sub_container {
@@ -23,16 +22,15 @@
     border-collapse: separate;
     border-spacing: 0 15px;
     margin: 0px auto;
-    background-color: rgb(241, 241, 248);
 }
 
 .product_manage_table_container th {
     padding: 10px;
-    background-color: white;
+    background-color: rgb(241, 241, 251);
 }
 
 .product_manage_table_container td {
-    background-color: white;
+    background-color: rgb(241, 241, 251);
 }
 
 .product_manage_img_container {
@@ -77,28 +75,6 @@ a {
     text-decoration: none;
 }
 
-.product_manager_add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    width: 250px;
-    margin: 20px auto;
-    border: 1px solid green;
-    border-style: dashed;
-    border-width: 2px;
-    cursor: pointer;
-}
-
-.product_manager_add:hover {
-    background-color: aliceblue;
-}
-
-.product_manager_add p {
-    color: green;
-    font-size: 15px;
-}
-
 
 #fa_caret_left {
     cursor: pointer;
@@ -138,7 +114,8 @@ a {
     justify-content: center;
 }
 
-#product_manage_add_icon {
-    font-size: 2rem;
-    color: green;
+.product_manage_kpi_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
